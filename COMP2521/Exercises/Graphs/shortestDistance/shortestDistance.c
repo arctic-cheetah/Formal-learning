@@ -16,19 +16,17 @@ void print_array (int *array, int length) {
 	printf("\n");
 }
 
-//Find a vertex which has not been visited to find the minimum distance
-int MinDistance(int *NodeDistance, int *HasVisited, int size) {
+int MinDistance (int length, int *NodeDistance, int *HasVisited) {
+	//Find a vertex which has not been visited to find the minimum distance
 	int min = INF;
-	int min_index;
-	
-	for (int i = 0; i < size; i +=1) {
-		if (!HasVisited[i] && NodeDistance[i] <= min) {
+	int currNode;
+	for (int i = 0; i < length; i+=1) {
+		if (NodeDistance[i] <= min && !HasVisited[i]) {
 			min = NodeDistance[i];
-			min_index = i;
+			currNode = i; 
 		}
 	}
-	
-	return min_index;	
+	return currNode;
 }
 
 
@@ -36,61 +34,57 @@ int MinDistance(int *NodeDistance, int *HasVisited, int size) {
 
 int shortestDistance(Graph g, int src, int dest) {
 
-	//
-	if (src == dest) {
+	if (src == dest && GraphIsAdjacent(g, src, dest) ) {
 		return 0;
 	}
 	
-	//Remember we count from zero
-	int size = GraphNumVertices(g);
-
+	int NumOfVertex = GraphNumVertices(g);
+	int *NodeDistance = calloc(NumOfVertex, sizeof(Vertex) );
+	int *HasVisited = calloc(NumOfVertex, sizeof(Vertex) );
 	
-	int *HasVisited = calloc(GraphNumVertices(g), sizeof(Vertex));
-	int *NodeDistance = calloc(GraphNumVertices(g), sizeof(Vertex));
-	//HasVisited[start] = 1;
-	//Set the distance of all the nodes to INF except starting vertex
-	for (int i = 0; i < size; i +=1) {
+	for (int i = 0; i < NumOfVertex; i +=1) {
 		NodeDistance[i] = INF;
 	}
 	NodeDistance[src] = 0;
 	
-	//Loop until all the vertices have been visited
 	int i = 0;
-	while (i < size) {
-	
-		//Obtain a vertex that has not been visited
-		int v = MinDistance(NodeDistance, HasVisited, size);
-		//Mark the visited vertex
-		HasVisited[v] = 1;
+	while (i < NumOfVertex) {
+		
+		//Find the the current node with the smallest distance
+		//This will always initally be the src vertex 
+		int currNode = MinDistance(NumOfVertex, NodeDistance, HasVisited);
+		HasVisited[currNode] = 1;
 		
 		int j = 0;
-		while (j < size) {
-			//Update the distance of the selected vertex
-			if (!HasVisited[j] && GraphIsAdjacent(g, v, j)
-				&& (NodeDistance[v] + GraphIsAdjacent(g, v, j) < NodeDistance[j] )
-				) {
-				
-				NodeDistance[j] = NodeDistance[v] + GraphIsAdjacent(g, v, j);
-			}
+		while (j < NumOfVertex) {
 			
+			int newDist = GraphIsAdjacent(g, currNode, j) + NodeDistance[currNode];
+			if (newDist < NodeDistance[j] 
+			&& GraphIsAdjacent(g, currNode, j)  && !HasVisited[j]
+			) {
+				NodeDistance[j] = newDist;
+			}
+
 			j +=1;
 		}
 		
 		i +=1;
 	}
+	
+	//print_array(NodeDistance, NumOfVertex);
+	
 	int distance;
-	//print_array(HasVisited, size);
-	//print_array(NodeDistance, size);
 	if (NodeDistance[dest] == INF) {
 		distance = -1;
 	}
 	else {
 		distance = NodeDistance[dest];
-	} 
-	free(HasVisited);
+	}
 	free(NodeDistance);
+	free(HasVisited);
+	
 	return distance;
-}
+}	
 
 
 
