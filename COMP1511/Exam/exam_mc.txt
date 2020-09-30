@@ -1,0 +1,51 @@
+[COMP1511 Final Exam]
+You should edit the empty space between the curly braces.
+You should not edit anything else in this file.
+
+You can test this file conforms to the correct syntax with "1511 autotest-exam prac_mc"
+
+You should submit this file with the command "give cs1511 exam_mc exam_mc.txt"
+
+If you need a new copy of the file, move this file to a safe place,
+then run "1511 fetch-exam".
+
+q1: What does `part1_q1.c` print? (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored)
+[q1] {{{  }}}
+
+q2: What does `part1_q2.c` print? (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored)
+[q2] {{{  }}}
+
+q3: What does `part1_q3.c` print? (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored)
+[q3] {{{  }}}
+
+q4: What are the four values of x while `part1_q4.c` runs? (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored)
+[q4] {{{  }}}
+
+q5: Which issues does `part1_q5.c` have? (see the exam paper for details)
+Enter your answer as a string of letters inside the curly braces (extra spaces will be ignored)
+[q5]{{{   }}}
+
+q6: What value will `interval` have? (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored)
+[q6] {{{  }}}
+
+q7: What value will `my_number` have before line 21? (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored)
+[q7] {{{  }}}
+
+q8: Which code fragment would be most appropriate? (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored) -- it should be A, B, C or D.
+[q8] {{{  }}}
+
+q9: Choose the correct answer. (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored) -- it should be A, B, C or D.
+[q9] {{{  }}}
+
+q10: Enter what you think the values of a and b will be. (see the exam paper for details)
+Enter your answer inside the curly braces (extra spaces will be ignored)
+If you think a = 100, and b = 200, you should write: 100 200
+[q10] {{{  }}}

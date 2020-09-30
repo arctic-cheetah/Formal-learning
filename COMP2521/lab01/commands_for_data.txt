@@ -1,0 +1,8 @@
+seq 100000 | sort -R > nums
+seq 100000 | sort -n > nums
+seq 100000 | sort -rn > nums
+
+./randList 100000 > nums
+./randList 100000 | sort -n > nums
+./randList 100000 | sort -rn > nums
+

@@ -1,0 +1,1054 @@
+[93m[4mStyle feedback tool v0.12.0[0m (bugs/feedback to andrew.bennett@unsw.edu.au)
+
+ - beats.c - 
+
+Note: indentation is shown with [41mred[0m/[42mgreen[0m highlights, to indicate [41mincorrect[0m and [42mcorrect[0m indentation.
+(if you're colorblind, ask your tutor to help you reconfigure the colorscheme in your terminal!)
+
+[91m        Error: No zid(s) in header.[0m
+     1  [42m[0m// Assignment 2 20T1 COMP1511: CS bEats
+     2  [42m[0m// beats.c
+     3  [42m[0m//
+     4  [42m[0m// This program was written by Jeremy Mang
+     5  [42m[0m// on 10/04/2020
+     6  [42m[0m//
+     7  [42m[0m// Version 1.0.0: Assignment released.
+     8  [42m[0m// Version 1.0.1: Fix default return value of add_musical_note_to_beat.
+     9  [42m[0m
+    10  [42m[0m#include <stdio.h>
+    11  [42m[0m#include <stdlib.h>
+    12  [42m[0m#include <assert.h>
+    13  [42m[0m
+    14  [42m[0m// Add any extra #includes your code needs here.
+    15  [42m[0m#include <string.h>
+    16  [42m[0m#include "beats.h"
+    17  [42m[0m
+    18  [42m[0m// Add your own #defines here.
+    19  [42m[0m
+    20  [42m[0m#define MAX_LENGTH 122
+    21  [42m[0m
+    22  [42m[0m////////////////////////////////////////////////////////////////////////
+    23  [42m[0m
+    24  [42m[0m// You don't have to use the provided struct track, you are free to
+    25  [42m[0m// make your own struct instead.
+    26  [42m[0m// If you use the provided struct track, you will have to add fields
+    27  [42m[0m// to store other information.
+    28  [42m[0m
+    29  [42m[0mstruct track {
+    30  [42m    [0mstruct beat *current; // Points to the selected beat in a track
+    31  [42m    [0mstruct beat *head; //The first beat in a track
+    32  [42m[0m};
+    33  [42m[0m
+    34  [42m[0m// You don't have to use the provided struct beat, you are free to
+    35  [42m[0m// make your own struct instead.
+    36  [42m[0m// If you use the provided struct beat, you may add fields
+    37  [42m[0m// to it to store other information.
+    38  [42m[0m
+    39  [42m[0mstruct beat {
+    40  [42m    [0m// You may choose to add or change fields in this struct.
+    41  [42m    [0mstruct note *notes; // points to the next note in the beat
+    42  [42m    [0mstruct beat *next;
+    43  [42m[0m};
+    44  [42m[0m
+    45  [42m[0m// You don't have to use the provided struct note, you are free to
+    46  [42m[0m// make your own struct instead.
+    47  [42m[0m// If you use the provided struct note, you add fields
+    48  [42m[0m// to it to store other information.
+    49  [42m[0m
+    50  [42m[0mstruct note {
+    51  [42m    [0m// You may choose to add or change fields in this struct.
+    52  [42m    [0mint octave;
+    53  [42m    [0mint key;
+    54  [42m    [0mstruct note *next;
+    55  [42m[0m};
+    56  [42m[0m
+    57  [42m[0m// Add any other structs you define here.
+    58  [42m[0m
+    59  [42m[0m////////////////////////////////////////////////////////////////////////
+    60  [42m[0m
+    61  [42m[0m// Add prototypes for any extra functions you create here.
+    62  [42m[0mint octave_num_check  (char musicArray[]);
+    63  [42m[0mint key_num_check (char musicArray []);
+    64  [42m[0mint music_to_beat(Beat beat, int octave, int key);
+    65  [42m[0m
+    66  [42m[0m
+    67  [42m[0m// Return a malloced Beat with fields initialized.
+    68  [42m[0mBeat create_beat(void) {
+    69  [42m    [0mBeat new_beat = malloc(sizeof (struct beat));
+    70  [42m    [0massert(new_beat != NULL);
+    71  [42m    [0m
+    72  [42m    [0mnew_beat->next = NULL;
+    73  [42m    [0mnew_beat->notes = NULL;
+    74  [42m    [0m
+    75  [42m    [0m// You do not need to change this function, unless you change
+    76  [42m    [0m// the implementation of struct beat.
+    77  [42m    [0m
+    78  [42m    [0mreturn new_beat;
+    79  [42m[0m}
+    80  [42m[0m
+    81  [42m[0m// You need to implement the following functions.
+    82  [42m[0m// You can find descriptions of what each function should do in beats.h
+    83  [42m[0m
+    84  [42m[0m////////////////////////////////////////////////////////////////////////
+    85  [42m[0m//                         Stage 1 Functions                          //
+    86  [42m[0m////////////////////////////////////////////////////////////////////////
+    87  [42m[0m
+    88  [42m[0m// Add a note to the end of a beat.
+    89  [42m[0mint add_note_to_beat(Beat beat, int octave, int key) {// We need to somehow check if the user entered an input greater than before...
+[91m                                                                                        ^ LINE LENGTH: lines must be less than 80 characters (yes, this includes comments)[0m
+    90  [42m    [0m//printf("add_note_to_beat not implemented yet.\n");
+    91  [42m    [0mstruct note *newNote = malloc(sizeof(struct note));
+    92  [42m⋮�[0m�··struct note *prev = NULL;
+    93  [42m⋮�[0m�··struct note *curr = beat->notes;
+    94  [42m⋮�[0m�··int returnVal = VALID_NOTE; // This variable checks for a valid note
+[91m                                       ^ INLINE COMMENTS: it's usually better for comments to go on the line above[0m
+    95  [42m    [0m
+    96  [42m⋮�[0m�··//Check if User input is valid
+    97  [42m    [0mif(0 <= octave && octave < 10){
+[91m              ^ WHITESPACE: You had 'if(' and '){' where you should have had a space before the bracket e.g. 'if (', and a space before the '{' e.g. ') {'[0m
+    98  [42m    ⋮�[0m�··if( 0 <= key && key < 12){
+    99  [42m    ⋮··�[0m�⋮···returnVal = VALID_NOTE;
+   100  [42m    ⋮�[0m�··}
+   101  [42m    ⋮�[0m�··else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'                 (+ 1 other whitespace errors)[0m
+   102  [42m    ⋮··�[0m�⋮···free(newNote);
+   103  [42m    ⋮··�[0m�⋮···return INVALID_KEY;
+   104  [42m    ⋮�[0m�··}
+   105  [42m    [0m}
+   106* [41m   �[0m��···else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'[0m
+[91m         ^ INDENTATION: indent error: expected 4, actual 7[0m
+   107* [41m   ⋮·[0m··⋮···free(newNote);
+   108* [41m   ⋮·[0m··⋮···return INVALID_OCTAVE;
+   109* [41m   �[0m��···}
+   110  [42m    [0m
+   111  [42m⋮�[0m�··if(beat->notes != NULL){
+[91m              ^ WHITESPACE: You had 'if(' and '){' where you should have had a space before the bracket e.g. 'if (', and a space before the '{' e.g. ') {'[0m
+   112  [42m⋮··�[0m�⋮···//Check previous Octave/Key size to the user input
+   113  [42m⋮··�[0m�⋮···//For ascending order
+   114  [42m⋮··�[0m�⋮···while(curr != NULL){
+[91m                  ^ WHITESPACE: You had 'while(' and '){' where you should have had a space before the bracket e.g. 'while (', and a space before the '{' e.g. ') {'[0m
+   115  [42m⋮···⋮[0m···⋮···prev = curr;
+   116  [42m⋮···⋮[0m···⋮···curr = curr->next;
+   117  [42m⋮··�[0m�⋮···}
+   118  [42m⋮··�[0m�⋮···//Go to the last note and check
+   119  [42m⋮··�[0m�⋮···if (prev->octave < octave){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   120  [42m⋮···⋮[0m···⋮···returnVal = VALID_NOTE;
+   121  [42m⋮··�[0m�⋮···}
+   122  [42m⋮··�[0m�⋮···else if (prev->octave == octave){
+[91m                                                 ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   123  [42m⋮···⋮[0m···⋮···if(prev->key < key){
+   124  [42m⋮···⋮··[0m·⋮···⋮···returnVal = VALID_NOTE;
+   125  [42m⋮···⋮[0m···⋮···}
+   126  [42m⋮···⋮[0m···⋮···else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'                 (+ 1 other whitespace errors)[0m
+   127  [42m⋮···⋮··[0m·⋮···⋮···free(newNote);
+   128  [42m⋮···⋮··[0m·⋮···⋮···return NOT_HIGHEST_NOTE;
+   129  [42m⋮···⋮[0m···⋮···}
+   130  [42m⋮··�[0m�⋮···}
+   131  [42m⋮··�[0m�⋮···else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'[0m
+   132  [42m⋮···⋮[0m···⋮···free(newNote);
+   133  [42m⋮···⋮[0m···⋮···return NOT_HIGHEST_NOTE;
+   134  [42m⋮··�[0m�⋮···}
+   135  [42m⋮�[0m�··}
+   136  [42m⋮�[0m�··//Assign octave/key values to the note after checking
+   137  [42m⋮�[0m�··newNote->key = key;
+   138  [42m⋮�[0m�··newNote->octave = octave;
+   139  [42m    [0m
+   140  [42m    [0mif(beat->notes == NULL){//Check if a beat does not have a note
+[91m              ^ WHITESPACE: You had 'if(' and '){' where you should have had a space before the bracket e.g. 'if (', and a space before the '{' e.g. ') {'[0m
+   141  [42m    ⋮�[0m�··beat->notes = newNote;
+   142  [42m    ⋮�[0m�··newNote->next = NULL;
+   143  [42m    [0m}
+   144  [42m    [0melse{//If a beat has a note, add a new note to
+[91m             ^ WHITESPACE: You had ' else{', where you should have had 'else {'[0m
+   145  [42m    ⋮�[0m�··//the end of the linked list
+   146  [42m    ⋮�[0m�··prev = NULL;
+   147  [42m    ⋮�[0m�··curr = beat->notes;
+   148  [42m    ⋮�[0m�··while(curr != NULL){
+[91m                  ^ WHITESPACE: You had 'while(' and '){' where you should have had a space before the bracket e.g. 'while (', and a space before the '{' e.g. ') {'[0m
+   149  [42m⋮···⋮[0m···⋮···prev = curr;
+   150  [42m⋮···⋮[0m···⋮···curr = curr->next;
+   151  [42m    ⋮�[0m�··}
+   152  [42m    ⋮�[0m�··prev->next = newNote;
+   153  [42m    ⋮�[0m�··newNote->next = NULL;
+   154  [42m    [0m}
+   155  [42m    [0mreturn returnVal;
+   156  [42m[0m}
+   157  [42m[0m
+   158  [42m[0m// Print the contents of a beat.
+   159  [42m[0mvoid print_beat(Beat beat) {
+   160  [42m    [0mstruct note *curr = beat->notes;
+   161  [42m    [0mint noteCount = 0;
+   162  [42m⋮�[0m�··while (curr != NULL){
+[91m                                 ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   163  [42m⋮··�[0m�⋮···if(noteCount > 0) {
+   164  [42m⋮···⋮[0m···⋮···printf(" | ");
+   165  [42m⋮··�[0m�⋮···}
+   166  [42m⋮··�[0m�⋮···if(curr->key >= 10) {
+[91m                  ^ WHITESPACE: You had 'if(', where you should have had a space before the bracket e.g. 'if ('                 (+ 1 other whitespace errors)[0m
+   167  [42m⋮···⋮[0m···⋮···printf("%d %d", curr->octave, curr->key);
+   168  [42m⋮··�[0m�⋮···}
+   169  [42m⋮··�[0m�⋮···else {
+   170  [42m⋮···⋮[0m···⋮···printf("%d 0%d", curr->octave, curr->key);
+   171  [42m⋮··�[0m�⋮···}
+   172  [42m        [0m
+   173  [42m⋮··�[0m�⋮···curr = curr->next;
+   174  [42m⋮··�[0m�⋮···noteCount++;
+   175  [42m⋮�[0m�··}
+   176  [42m    [0mprintf("\n");
+   177  [42m[0m}
+   178  [42m[0m
+   179  [42m[0m// Count the number of notes in a beat that are in a given octave.
+   180  [42m[0mint count_notes_in_octave(Beat beat, int octave) {
+   181  [42m    [0mint octaveCount = 0;
+   182  [42m    [0mstruct note *curr = beat->notes;
+   183  [42m    [0m
+   184  [42m    [0mwhile (curr != NULL){
+[91m                                 ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   185  [42m    ⋮�[0m�··if(curr->octave == octave){
+   186  [42m    ⋮··�[0m�⋮···octaveCount++;
+   187  [42m    ⋮�[0m�··}
+   188  [42m    ⋮�[0m�··curr = curr->next;
+   189  [42m    [0m}
+   190  [42m    [0mreturn octaveCount;
+   191  [42m[0m}
+   192  [42m[0m
+   193  [42m[0m////////////////////////////////////////////////////////////////////////
+   194  [42m[0m//                         Stage 2 Functions                          //
+   195  [42m[0m////////////////////////////////////////////////////////////////////////
+   196  [42m[0m
+   197  [42m[0m// Return a malloced track with fields initialized.
+   198  [42m[0mTrack create_track(void) {
+   199  [42m    [0m// Note: there is no fprintf in this function, as the
+   200  [42m    [0m// Stage 1 autotests call create_track but expect it to return NULL
+   201  [42m    [0m// (so this function should do nothing in Stage 1).
+   202  [42m    [0m
+   203  [42m    [0mstruct track *newTrack = malloc(sizeof(struct track));
+   204  [42m    [0massert(newTrack != NULL);
+   205  [42m⋮�[0m�··newTrack->head = NULL;
+   206  [42m⋮�[0m�··newTrack->current = NULL;
+   207  [42m    [0m
+   208  [42m    [0mreturn newTrack;
+   209  [42m[0m}
+   210  [42m[0m
+   211  [42m[0m// Add a beat after the current beat in a track.
+   212  [42m[0m//If a beat exists after the track
+   213  [42m[0m//Add the beat after the first beat and so on.
+   214  [42m[0m//Otherwise, add the beat to the track
+   215  [42m[0mvoid add_beat_to_track(Track track, Beat beat) { //Check this logic JEREMY!
+   216  [42m    [0m//int beatCount = 0; //This counts the number of beats in a Track
+   217  [42m    [0mif (track->head == NULL){
+[91m                                     ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'                 (+ 1 other whitespace errors)[0m
+   218  [42m    ⋮�[0m�··track->head = beat;
+   219  [42m    ⋮�[0m�··//beatCount = 1;
+   220  [42m    [0m}
+   221  [42m    [0melse{
+[91m             ^ WHITESPACE: You had ' else{', where you should have had 'else {'[0m
+   222  [42m⋮··�[0m�⋮···struct beat *newBeat = beat; //These were my error//create_beat(); //malloc (sizeof (struct beat));
+[91m                                                                                        ^ LINE LENGTH: lines must be less than 80 characters (yes, this includes comments)[0m
+   223  [42m⋮··�[0m�⋮···struct beat *curr = newBeat;
+   224  [42m        [0m
+   225  [42m⋮··�[0m�⋮···//Add the beat as the first element
+   226  [42m⋮··�[0m�⋮···//of the linked list if no beat
+   227  [42m⋮··�[0m�⋮···//is selected
+   228  [42m    ⋮�[0m�··if(track->current == NULL) {
+[91m                  ^ WHITESPACE: You had 'if(', where you should have had a space before the bracket e.g. 'if ('[0m
+   229  [42m⋮···⋮[0m···⋮···newBeat->next = track->head;
+   230  [42m    ⋮··�[0m�⋮···track->head = newBeat;
+   231  [42m    ⋮�[0m�··}
+   232  [42m    ⋮�[0m�··else {//Add the beat after the selected beat
+   233  [42m    ⋮··�[0m�⋮···curr = track->current;
+   234  [42m    ⋮··�[0m�⋮···newBeat->next = curr->next;
+   235  [42m    ⋮··�[0m�⋮···curr->next = newBeat;
+   236  [42m            [0m
+   237  [42m    ⋮�[0m�··}
+   238  [42m    ⋮�[0m�··//Testing for the length of the list
+   239  ⋮···⋮···/*while(curr != NULL) {
+   240  ⋮···⋮···⋮···curr = curr->next;
+   241  ⋮···⋮···⋮···beatCount++;
+   242  ⋮···⋮···}
+   243  ⋮···⋮···printf("There are/is %d beat\n", beatCount);
+   244  ⋮···⋮···*///Remember to remove the scaffold
+   245  [42m    [0m}
+   246  [42m    [0m
+   247  [42m[0m}
+   248  [42m[0m
+   249  [42m[0m//Set a track's current beat to the next beat.
+   250  [42m[0m//By changing the Track's "current" pointer
+   251  [42m[0m//to the next beat
+   252  [42m[0mint select_next_beat(Track track) {
+   253  [42m    [0m//Move to the next beat
+   254  [42m    [0mstruct beat *curr = track->head;
+   255  [42m    [0m
+   256  [42m    [0mif(track->current == NULL){
+[91m              ^ WHITESPACE: You had 'if(' and '){' where you should have had a space before the bracket e.g. 'if (', and a space before the '{' e.g. ') {'[0m
+   257  [42m    ⋮�[0m�··if (track->head == NULL){
+   258  [42m    ⋮··�[0m�⋮···track->current = track->head;
+   259  [42m    ⋮··�[0m�⋮···return TRACK_STOPPED;
+   260  [42m    ⋮�[0m�··}
+   261  [42m    ⋮�[0m�··else {
+   262  [42m⋮···⋮[0m···⋮···track->current = track->head;
+   263  [42m⋮···⋮[0m···⋮···return TRACK_PLAYING;
+   264  [42m    ⋮�[0m�··}
+   265  [42m    [0m}
+   266  [42m    [0melse{
+[91m             ^ WHITESPACE: You had ' else{', where you should have had 'else {'                 (+ 1 other whitespace errors)[0m
+   267  [42m⋮··�[0m�⋮···curr = track->current;
+   268  [42m⋮··�[0m�⋮···track->current = curr->next;
+   269  [42m⋮··�[0m�⋮···//Check if current pointer is pointing an NULL
+   270  [42m⋮··�[0m�⋮···//Or a beat
+   271  [42m⋮··�[0m�⋮···//Then return a value
+   272  [42m⋮··�[0m�⋮···if(track->current == NULL) {
+[91m                  ^ WHITESPACE: You had 'if(', where you should have had a space before the bracket e.g. 'if ('[0m
+   273  [42m⋮···⋮[0m···⋮···//printf("Track Stopped\n");
+   274  [42m⋮···⋮[0m···⋮···return TRACK_STOPPED;
+   275  [42m⋮··�[0m�⋮···}
+   276  [42m⋮··�[0m�⋮···else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'[0m
+   277  [42m⋮···⋮[0m···⋮···//printf("Track Playing\n");
+   278  [42m⋮···⋮[0m···⋮···return TRACK_PLAYING;
+   279  [42m⋮··�[0m�⋮···}
+   280  [42m    [0m}
+   281  [42m    [0m
+   282  [42m[0m}
+   283  [42m[0m
+   284  [42m[0m// Print the contents of a track.
+   285  [42m[0mvoid print_track(Track track) {
+   286  [42m⋮�[0m�··int beatCount = 1;
+   287  [42m    [0mstruct beat *currBeat = track->head;
+   288  [42m    [0mwhile (currBeat != NULL){
+[91m                                     ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   289  [42m    ⋮�[0m�··//print out the selected beat
+   290  [42m    ⋮�[0m�··if(track->current == currBeat) {
+   291  [42m    ⋮··�[0m�⋮···printf(">");
+   292  [42m    ⋮�[0m�··}
+   293  [42m    ⋮�[0m�··else {
+   294  [42m    ⋮··�[0m�⋮···printf(" ");
+   295  [42m    ⋮�[0m�··}
+   296  [42m    ⋮�[0m�··//print out the beat
+   297  [42m    ⋮�[0m�··printf("[%d] ", beatCount);
+   298  [42m        [0m
+   299  [42m    ⋮�[0m�··int noteCount = 0;
+   300  [42m    ⋮�[0m�··//print out the notes
+   301  [42m    ⋮�[0m�··struct note *currNote = currBeat->notes;
+   302  [42m    ⋮�[0m�··while (currNote != NULL) {
+   303  [42m    ⋮··�[0m�⋮···if (noteCount > 0){
+[91m                                       ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'                 (+ 1 other whitespace errors)[0m
+   304  [42m    ⋮···⋮[0m···⋮···printf(" | ");
+   305  [42m    ⋮··�[0m�⋮···}
+   306  [42m            [0m
+   307  [42m    ⋮··�[0m�⋮···if (currNote->key >= 10){
+[91m                                             ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   308  [42m    ⋮···⋮[0m···⋮···printf("%d %d", currNote->octave, currNote->key);
+   309  [42m    ⋮··�[0m�⋮···}
+   310  [42m    ⋮··�[0m�⋮···else {
+   311  [42m    ⋮···⋮[0m···⋮···printf("%d 0%d", currNote->octave, currNote->key);
+   312  [42m    ⋮··�[0m�⋮···}
+   313  [42m            [0m
+   314  [42m    ⋮··�[0m�⋮···noteCount++;
+   315  [42m    ⋮··�[0m�⋮···currNote = currNote->next;
+   316  [42m    ⋮�[0m�··}
+   317  [42m        [0m
+   318  [42m    ⋮�[0m�··printf("\n");
+   319  [42m⋮··�[0m�⋮···currBeat = currBeat->next;
+   320  [42m⋮··�[0m�⋮···beatCount++;
+   321  [42m    [0m}
+   322  [42m    [0m
+   323  [42m    [0mreturn;
+   324  [42m[0m}
+   325  [42m[0m
+   326  [42m[0m// Count the number beats after the current beat in a track.
+   327  [42m[0mint count_beats_left_in_track(Track track) {
+   328  [42m    [0m//printf("count_beats_left_in_track not implemented yet.\n");
+   329  [42m    [0mint beatCount = 0;
+   330  [42m    [0mstruct beat *curr = track->current;
+   331  [42m    [0mif(curr != NULL){
+[91m              ^ WHITESPACE: You had 'if(' and '){' where you should have had a space before the bracket e.g. 'if (', and a space before the '{' e.g. ') {'[0m
+   332  [42m    ⋮�[0m�··curr = curr->next;
+   333  [42m⋮··�[0m�⋮···while (curr != NULL){
+   334  [42m⋮···⋮[0m···⋮···curr = curr->next;
+   335  [42m⋮···⋮[0m···⋮···beatCount++;
+   336  [42m⋮··�[0m�⋮···}
+   337  [42m    [0m}
+   338  [42m    [0melse {
+   339  [42m    ⋮�[0m�··curr = track->head;
+   340  [42m    ⋮�[0m�··while (curr != NULL){
+[91m                                     ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'                 (+ 1 other whitespace errors)[0m
+   341  [42m    ⋮··�[0m�⋮···curr = curr->next;
+   342  [42m    ⋮··�[0m�⋮···beatCount++;
+   343  [42m    ⋮�[0m�··}
+   344  [42m    [0m}
+   345  [42m    [0m
+   346  [42m    [0mreturn beatCount;
+   347  [42m[0m}
+   348  [42m[0m
+   349  [42m[0m////////////////////////////////////////////////////////////////////////
+   350  [42m[0m//                         Stage 3 Functions                          //
+   351  [42m[0m////////////////////////////////////////////////////////////////////////
+   352  [42m[0m
+   353  [42m[0m// Free the memory of a beat, and any memory it points to.
+   354  [42m[0mvoid free_beat(Beat beat) {
+   355  [42m    [0m// Note: there is no printf in this function, as the
+   356  [42m    [0m// Stage 1 & 2 autotests call free_beat but don't check whether
+   357  [42m    [0m// the memory has been freed (so this function should do nothing in
+   358  [42m    [0m// Stage 1 & 2, rather than exit).
+   359  [42m    [0m
+   360  [42m    [0mstruct note *curr, *prev;
+   361  [42m    [0mcurr = beat->notes;
+   362  [42m    [0mbeat->notes = NULL;
+   363  [42m    [0m//Free all the notes
+   364  [42m    [0mwhile (curr != NULL) {
+   365  [42m    ⋮�[0m�··prev = curr;
+   366  [42m    ⋮�[0m�··curr = curr->next;
+   367  [42m    ⋮�[0m�··free (prev);
+   368  [42m    [0m}
+   369  [42m    [0m// Then free the beat
+   370  [42m⋮�[0m�··free (beat);
+   371  [42m    [0m
+   372  [42m    [0mreturn;
+   373  [42m[0m}
+   374  [42m[0m
+   375  [42m[0m// Free the memory of a track, and any memory it points to.
+   376  [42m[0mvoid free_track(Track track) {
+   377  [42m    [0m// Note: there is no printf in this function, as the
+   378  [42m    [0m// Stage 1 & 2 autotests call free_track but don't check whether
+   379  [42m    [0m// the memory has been freed (so this function should do nothing in
+   380  [42m    [0m// Stage 1 & 2, rather than print an error).
+   381  [42m    [0m
+   382  [42m    [0mstruct beat *curr, *prev;
+   383  [42m    [0mcurr = track->head;
+   384  [42m    [0mtrack->head = NULL;
+   385  [42m    [0m
+   386  [42m    [0m//Go to each beat,
+   387  [42m    [0m//and free each note,
+   388  [42m    [0m//then repeat until curr reaches NULL
+   389  [42m    [0mwhile (curr != NULL) {
+   390  [42m    ⋮�[0m�··prev = curr;
+   391  [42m    ⋮�[0m�··curr = curr->next;
+   392  [42m    ⋮�[0m�··//Free beat and all the notes associated with that beat
+   393  [42m    ⋮�[0m�··free_beat(prev);
+   394  [42m    [0m}
+   395  [42m    [0mfree (track);
+   396  [42m    [0m
+   397  [42m    [0mreturn;
+   398  [42m[0m}
+   399  [42m[0m
+   400  [42m[0m// Remove the currently selected beat from a track.
+   401  [42m[0mint remove_selected_beat(Track track) {
+   402  [42m    [0m//printf("remove_selected_beat not implemented yet.");
+   403  [42m    [0mif(track->current == NULL){ //check if the track has stopped
+[91m              ^ WHITESPACE: You had 'if(' and '){' where you should have had a space before the bracket e.g. 'if (', and a space before the '{' e.g. ') {'[0m
+   404  [42m    ⋮�[0m�··return TRACK_STOPPED;
+   405  [42m    [0m}
+   406  [42m    [0m//begin deletion of a beat if a beat is selected
+   407  [42m    [0melse {
+   408  [42m    ⋮�[0m�··//loop through the list of beats
+   409  [42m⋮··�[0m�⋮···struct beat *curr = track->head;
+   410  [42m⋮··�[0m�⋮···struct beat *prev = curr;
+   411  [42m        [0m
+   412  [42m⋮··�[0m�⋮···while (curr != track->current){
+[91m                                               ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   413  [42m⋮···⋮[0m···⋮···prev = curr;
+   414  [42m⋮···⋮[0m···⋮···curr = curr->next;
+   415  [42m⋮··�[0m�⋮···}
+   416  [42m⋮··�[0m�⋮···//need to consider removal of the 1st beat
+   417  [42m⋮··�[0m�⋮···// and if the 1st beat is the last or not
+   418  [42m⋮··�[0m�⋮···if (curr == track->head){
+[91m                                         ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   419  [42m⋮···⋮[0m···⋮···int i = 0;
+   420  [42m⋮···⋮[0m···⋮···// move the pointer by 1 element in the list
+   421  [42m⋮···⋮[0m···⋮···while (i < 1){
+[91m                                  ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   422  [42m⋮···⋮··[0m·⋮···⋮···prev = curr;
+   423  [42m⋮···⋮··[0m·⋮···⋮···curr = curr->next;
+   424  [42m⋮···⋮··[0m·⋮···⋮···i++;
+   425  [42m⋮···⋮[0m···⋮···}
+   426  [42m⋮···⋮[0m···⋮···track->head = curr;
+   427  [42m⋮···⋮[0m···⋮···//consider if the 1st beat is also the last
+   428  [42m⋮···⋮[0m···⋮···if( track->head == NULL) {
+[91m                        ^ WHITESPACE: You had '( ' and 'if(' where you should have had '(' (no trailing space), and a space before the bracket e.g. 'if ('[0m
+   429  [42m⋮···⋮··[0m·⋮···⋮···free_beat (prev);
+   430  [42m⋮···⋮··[0m·⋮···⋮···track->current = NULL;
+   431  [42m⋮···⋮[0m···⋮···}
+   432  [42m⋮···⋮[0m···⋮···else {
+   433  [42m⋮···⋮··[0m·⋮···⋮···free_beat (prev);
+   434  [42m⋮···⋮··[0m·⋮···⋮···track->current = curr;
+   435  [42m⋮···⋮[0m···⋮···}
+   436  [42m⋮··�[0m�⋮···}
+   437  [42m⋮··�[0m�⋮···// delete the selected beat other than than the first
+   438  [42m⋮··�[0m�⋮···else {
+   439  [42m⋮···⋮[0m···⋮···prev->next = curr->next;
+   440  [42m⋮···⋮[0m···⋮···free_beat (curr);
+   441  [42m⋮···⋮[0m···⋮···track->current = prev->next;
+   442  [42m⋮··�[0m�⋮···}
+   443  [42m⋮··�[0m�⋮···if (track->current != NULL)⋮···{
+   444  [42m⋮···⋮[0m···⋮···return TRACK_PLAYING;
+   445  [42m⋮··�[0m�⋮···}
+   446  [42m⋮··�[0m�⋮···else {
+   447  [42m⋮···⋮[0m···⋮···return TRACK_STOPPED;
+   448  [42m⋮··�[0m�⋮···}
+   449  [42m    [0m}
+   450  [42m[0m}
+   451  [42m[0m
+   452  [42m[0m////////////////////////////////////////////////////////////////////////
+   453  [42m[0m//                         Stage 4 Functions                          //
+   454  [42m[0m////////////////////////////////////////////////////////////////////////
+   455  [42m[0m
+   456  [42m[0m// Add note to beat, given its 'musical notation'.
+   457  [42m[0mint add_musical_note_to_beat(Beat beat, char *musical_notation) {
+   458  [42m    [0m
+   459  [42m⋮�[0m�··//max number of character is 122
+   460  [42m⋮�[0m�··//and max #'s are 120
+   461  [42m⋮�[0m�··//Because 9 11 is the highest number that can be made
+   462  [42m⋮�[0m�··//using letters and #'s
+   463  [42m⋮�[0m�··int hashtagCount = 0;
+   464  [42m    [0mint returnVal = 0;
+   465  [42m    [0mint octave = 0;
+   466  [42m    [0mint key = 0;
+   467  [42m    [0mchar musicArray [MAX_LENGTH];
+   468  [42m    [0mstrncpy (musicArray, musical_notation, MAX_LENGTH);
+   469  [42m    [0m
+   470  [42m    [0mif ('0' <= musicArray[0] && musicArray[0] <= '9' ) {
+   471  [42m    ⋮�[0m�··returnVal = VALID_NOTE;
+   472  [42m    ⋮�[0m�··octave = octave_num_check (musicArray);
+   473  [42m    [0m}
+   474  [42m    [0melse {
+   475  [42m    ⋮�[0m�··return INVALID_MUSICAL_NOTE;
+   476  [42m    [0m}
+   477  [42m    [0m
+   478  [42m    [0mif ( 'A' <= musicArray[1] && musicArray[1] <= 'G') {
+[91m                 ^ WHITESPACE: You had '( ', where you should have had '(' (no trailing space)[0m
+   479  [42m    ⋮�[0m�··returnVal = VALID_NOTE;
+   480  [42m    ⋮�[0m�··key = key_num_check (musicArray);
+   481  [42m    [0m}
+   482  [42m    [0melse {
+   483  [42m    ⋮�[0m�··return INVALID_MUSICAL_NOTE;
+   484  [42m    [0m}
+   485  [42m    [0m
+   486  [42m    [0m//loop to check if # is present in the array
+   487  [42m    [0mint i = 2;
+   488  [42m    [0mwhile (i < MAX_LENGTH && musicArray [i] != '\0') {
+   489  [42m        [0m
+   490  [42m⋮··�[0m�⋮···if (musicArray [i] == '#') {
+   491  [42m⋮···⋮[0m···⋮···hashtagCount++;
+   492  [42m⋮··�[0m�⋮···}
+   493  [42m⋮··�[0m�⋮···else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'[0m
+   494  [42m⋮···⋮[0m···⋮···return INVALID_MUSICAL_NOTE;
+   495  [42m⋮··�[0m�⋮···}
+   496  [42m    ⋮�[0m�··i++;
+   497  [42m    [0m}
+   498  [42m    [0mkey = key + hashtagCount;
+   499* [41m   �[0m��···//Check if note value is out of bounds
+   500  [42m    [0mif (key > 11) {
+   501  [42m    ⋮�[0m�··octave = octave + (key / 12);
+   502  [42m    ⋮�[0m�··key = key % 12 ;
+[91m                                ^ WHITESPACE: You had ' ;', where you should have had ';' (no space before semicolon)[0m
+   503  [42m    [0m}
+   504  [42m    [0m
+   505* [41m   �[0m��···returnVal = music_to_beat (beat, octave, key);
+   506     ⋮···/*
+   507      printf("Number of #'s are %d\n", hashtagCount);
+   508      printf("%d\n", octave);
+   509      printf("%d\n", key);
+   510      */
+   511  [42m    [0m
+   512  [42m    [0mreturn returnVal;
+   513  [42m[0m}
+   514  [42m[0m
+   515  [42m[0m
+   516  [42m[0m////////////////////////////////////////////////////////////////////////
+   517  [42m[0m//                         Stage 5 Functions                          //
+   518  [42m[0m////////////////////////////////////////////////////////////////////////
+   519  [42m[0m
+   520  [42m[0m// Cut a range of beats to the end of a track.
+   521  [42m[0mvoid cut_range_to_end(Track track, int range_length) {
+   522  [42m    [0m//printf("cut_range_to_end not implemented yet.");
+   523  [42m    [0mstruct beat *initialCurr = track->current;
+   524  [42m    [0mstruct beat *initialPrev = initialCurr;//track->current;
+   525  [42m    [0mstruct beat *lastCurr = track->current;
+   526  [42m    [0mstruct beat *lastPrev = track->current;
+   527  [42m    [0mstruct beat *listCount = track->current;
+   528  [42m    [0mint i = 1;
+   529  [42m    [0mint list_remain = 0;
+   530  [42m    [0m
+   531  [42m    [0m
+   532  [42m    [0mwhile (listCount != NULL) {
+   533  [42m⋮··�[0m�⋮···listCount = listCount->next;
+   534  [42m⋮··�[0m�⋮···list_remain++;
+   535  [42m⋮�[0m�··}
+   536  [42m⋮�[0m�··//printf("%d\n", list_remain);
+   537* [41m⋮�[0m�··⋮···//If the range_length is greater than the length of the remaining list
+[91m                ^ INDENTATION: indent error: expected 4, actual 8                 (+ 2 other indentation errors)[0m
+   538* [41m⋮�[0m�··⋮···//Then stop
+   539  [42m⋮�[0m�··if (range_length >= list_remain) {
+   540  [42m⋮··�[0m�⋮···return;
+   541  [42m⋮�[0m�··}
+   542  [42m⋮�[0m�··else if (range_length == 0 || range_length < 0) {
+   543  [42m⋮··�[0m�⋮···return;
+   544  [42m⋮�[0m�··}
+   545  [42m    [0m
+   546  [42m    [0mif (track->head != track->current) {
+   547  [42m    ⋮�[0m�··struct beat *holdCurr = track->head;
+   548  [42m        [0m
+   549  [42m    ⋮�[0m�··while (holdCurr->next != initialCurr) {
+   550  [42m    ⋮··�[0m�⋮···holdCurr = holdCurr->next;
+   551  [42m    ⋮�[0m�··}
+   552  [42m⋮··�[0m�⋮···//Get all the pointers required to shift
+   553  [42m⋮··�[0m�⋮···//In position pt1
+   554  [42m⋮··�[0m�⋮···while ( i < range_length) {
+[91m                        ^ WHITESPACE: You had '( ', where you should have had '(' (no trailing space)[0m
+   555  [42m⋮···⋮[0m···⋮···initialCurr = initialCurr->next;
+   556  [42m⋮···⋮[0m···⋮···i++;
+   557  [42m⋮··�[0m�⋮···}
+   558  [42m⋮··�[0m�⋮···//Get all the pointers required to shift
+   559  [42m⋮··�[0m�⋮···//In position pt2
+   560  [42m⋮··�[0m�⋮···while (lastCurr != NULL) {
+   561  [42m⋮···⋮[0m···⋮···lastPrev = lastCurr;
+   562  [42m⋮···⋮[0m···⋮···lastCurr = lastCurr->next;
+   563  [42m⋮··�[0m�⋮···}
+   564  [42m⋮··�[0m�⋮···holdCurr->next = initialCurr->next;
+   565  [42m⋮··�[0m�⋮···lastPrev->next = initialPrev;
+   566  [42m⋮··�[0m�⋮···initialCurr->next = lastCurr;
+   567  [42m        [0m
+   568  [42m    [0m}
+   569  [42m    [0melse {
+   570  [42m    ⋮�[0m�··//Get all the pointers required to shift
+   571  [42m⋮··�[0m�⋮···//In position pt1
+   572  [42m⋮··�[0m�⋮···while ( i < range_length) {
+[91m                        ^ WHITESPACE: You had '( ', where you should have had '(' (no trailing space)[0m
+   573  [42m⋮···⋮[0m···⋮···initialCurr = initialCurr->next;
+   574  [42m⋮···⋮[0m···⋮···i++;
+   575  [42m⋮··�[0m�⋮···}
+   576  [42m⋮··�[0m�⋮···//Get all the pointers required to shift
+   577  [42m⋮··�[0m�⋮···//In position pt2
+   578  [42m⋮··�[0m�⋮···while (lastCurr != NULL) {
+   579  [42m⋮···⋮[0m···⋮···lastPrev = lastCurr;
+   580  [42m⋮···⋮[0m···⋮···lastCurr = lastCurr->next;
+   581  [42m⋮··�[0m�⋮···}
+   582  [42m⋮··�[0m�⋮···track->head = initialCurr->next;
+   583  [42m⋮··�[0m�⋮···lastPrev->next = initialPrev;
+   584  [42m⋮··�[0m�⋮···initialCurr->next = lastCurr;
+   585  [42m    [0m}
+   586  [42m    [0m//printf("%d\n", i);
+   587  [42m    [0mreturn;
+   588  [42m[0m}
+   589  [42m[0m
+   590  [42m[0m// Reverse a list of beats within a range of a track.
+   591  [42m[0mint reverse_range(Track track, int range_length) {
+   592  [42m    [0m
+   593  [42m    [0mstruct beat *finalPoint = track->current;
+   594  [42m    [0mstruct beat *listCount = track->current;
+   595  [42m    [0mstruct beat *next = NULL;
+   596  [42m    [0mstruct beat *curr = track->current;
+   597  [42m    [0mstruct beat *prev = NULL;
+   598  [42m    [0mint i = 1;
+   599  [42m    [0mint list_remain = 0;
+   600  [42m    [0mint beat_change = range_length - 1;
+   601  [42m    [0m
+   602  [42m    [0mif (track->current == NULL) {
+   603  [42m    ⋮�[0m�··return 0;
+   604  [42m    [0m}
+   605  [42m    [0m
+   606  [42m    [0mwhile (listCount != NULL) {
+   607  [42m⋮··�[0m�⋮···listCount = listCount->next;
+   608  [42m⋮··�[0m�⋮···list_remain++;
+   609  [42m⋮�[0m�··}
+   610* [41m⋮�[0m�··⋮···//If the range_length is greater than the length of the remaining list
+   611* [41m⋮�[0m�··⋮···//Then stop
+   612  [42m⋮�[0m�··if (range_length >= list_remain) {
+   613  [42m⋮··�[0m�⋮···beat_change = list_remain - 1;
+   614  [42m⋮··�[0m�⋮···range_length = list_remain;
+   615  [42m⋮�[0m�··}
+   616  [42m⋮�[0m�··else if (range_length == 0 || range_length < 0) {
+   617  [42m⋮··�[0m�⋮···return 0;
+   618  [42m⋮�[0m�··}
+   619  [42m⋮�[0m�··while ( i <= range_length ) {
+[91m                    ^ WHITESPACE: You had '( ', where you should have had '(' (no trailing space)[0m
+   620  [42m⋮··�[0m�⋮···finalPoint = finalPoint->next;
+   621  [42m⋮··�[0m�⋮···i++;
+   622  [42m⋮�[0m�··}
+   623  [42m    [0m
+   624  [42m⋮�[0m�··if (track->head != track->current) {
+   625  [42m⋮··�[0m�⋮···struct beat *holdInitial = track->head;
+   626  [42m⋮··�[0m�⋮···while (holdInitial->next != curr) {
+   627  [42m⋮···⋮[0m···⋮···holdInitial = holdInitial->next;
+   628  [42m⋮··�[0m�⋮···}
+   629  [42m        [0m
+   630  [42m⋮··�[0m�⋮···//holdLast stores the last element of a linked list
+   631  [42m⋮··�[0m�⋮···prev = finalPoint;
+   632  [42m⋮··�[0m�⋮···while (curr != finalPoint) {
+   633  [42m⋮···⋮[0m···⋮···next = curr->next;
+   634  [42m⋮···⋮[0m···⋮···curr->next = prev;
+   635  [42m⋮···⋮[0m···⋮···prev = curr;
+   636  [42m⋮···⋮[0m···⋮···curr = next;
+   637  [42m⋮··�[0m�⋮···}
+   638  [42m⋮··�[0m�⋮···holdInitial->next = prev;
+   639  [42m⋮�[0m�··}
+   640  [42m    [0m
+   641  [42m⋮�[0m�··else {
+   642  [42m⋮··�[0m�⋮···prev = finalPoint;
+   643  [42m⋮··�[0m�⋮···while (curr != finalPoint) {
+   644  [42m⋮···⋮[0m···⋮···next = curr->next;
+   645  [42m⋮···⋮[0m···⋮···curr->next = prev;
+   646  [42m⋮···⋮[0m···⋮···prev = curr;
+   647  [42m⋮···⋮[0m···⋮···curr = next;
+   648  [42m⋮··�[0m�⋮···}
+   649  [42m⋮··�[0m�⋮···track->head = prev;
+   650  [42m⋮�[0m�··}
+   651  [42m    [0m
+   652  [42m    [0mreturn beat_change;
+   653  [42m[0m}
+   654  [42m[0m
+   655  [42m[0m////////////////////////////////////////////////////////////////////////
+   656  [42m[0m//                         Jeremy's Functions                         //
+   657  [42m[0m////////////////////////////////////////////////////////////////////////
+   658  [42m[0m
+   659  [42m[0mint octave_num_check  (char musicArray[]) {
+   660  [42m⋮�[0m�··int octave = 0;
+   661  [42m⋮�[0m�··if (musicArray[0] == '0'){
+[91m                                      ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   662  [42m⋮··�[0m�⋮···octave = 0;
+   663  [42m⋮�[0m�··}
+   664  [42m⋮�[0m�··else if (musicArray[0] == '1'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   665  [42m⋮··�[0m�⋮···octave = 1;
+   666  [42m⋮�[0m�··}
+   667  [42m⋮�[0m�··else if (musicArray[0] == '2'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   668  [42m⋮··�[0m�⋮···octave = 2;
+   669  [42m⋮�[0m�··}
+   670  [42m⋮�[0m�··else if (musicArray[0] == '3'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   671  [42m⋮··�[0m�⋮···octave = 3;
+   672  [42m⋮�[0m�··}
+   673  [42m⋮�[0m�··else if (musicArray[0] == '4'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   674  [42m⋮··�[0m�⋮···octave = 4;
+   675  [42m⋮�[0m�··}
+   676  [42m⋮�[0m�··else if (musicArray[0] == '5'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   677  [42m⋮··�[0m�⋮···octave = 5;
+   678  [42m⋮�[0m�··}
+   679  [42m⋮�[0m�··else if (musicArray[0] == '6'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   680  [42m⋮··�[0m�⋮···octave = 6;
+   681  [42m⋮�[0m�··}
+   682  [42m⋮�[0m�··else if (musicArray[0] == '7'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   683  [42m⋮··�[0m�⋮···octave = 7;
+   684  [42m⋮�[0m�··}
+   685  [42m⋮�[0m�··else if (musicArray[0] == '8'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   686  [42m⋮··�[0m�⋮···octave = 8;
+   687  [42m⋮�[0m�··}
+   688  [42m⋮�[0m�··else if (musicArray[0] == '9'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   689  [42m⋮··�[0m�⋮···octave = 9;
+   690  [42m⋮�[0m�··}
+   691  [42m⋮�[0m�··return octave;
+   692  [42m[0m}
+   693  [42m[0m
+   694  [42m[0mint key_num_check (char musicArray []) {
+   695  [42m⋮�[0m�··int key = 0;
+   696  [42m⋮�[0m�··if (musicArray[1] == 'A'){
+[91m                                      ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   697  [42m⋮··�[0m�⋮···key = 0;
+   698  [42m⋮�[0m�··}
+   699  [42m⋮�[0m�··else if (musicArray[1] == 'B'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   700  [42m⋮··�[0m�⋮···key = 2;
+   701  [42m⋮�[0m�··}
+   702  [42m⋮�[0m�··else if (musicArray[1] == 'C'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   703  [42m⋮··�[0m�⋮···key = 3;
+   704  [42m⋮�[0m�··}
+   705  [42m⋮�[0m�··else if (musicArray[1] == 'D'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   706  [42m⋮··�[0m�⋮···key = 5;
+   707  [42m⋮�[0m�··}
+   708  [42m⋮�[0m�··else if (musicArray[1] == 'E'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   709  [42m⋮··�[0m�⋮···key = 7;
+   710  [42m⋮�[0m�··}
+   711  [42m⋮�[0m�··else if (musicArray[1] == 'F'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   712  [42m⋮··�[0m�⋮···key = 8;
+   713  [42m⋮�[0m�··}
+   714  [42m⋮�[0m�··else if (musicArray[1] == 'G'){
+[91m                                           ^ WHITESPACE: You had '){', where you should have had a space before the '{' e.g. ') {'[0m
+   715  [42m⋮··�[0m�⋮···key = 10;
+   716  [42m⋮�[0m�··}
+   717  [42m⋮�[0m�··return key;
+   718  [42m[0m}
+   719  [42m[0m
+   720  [42m[0m// Add a note to the end of a beat.
+   721  [42m[0mint music_to_beat(Beat beat, int octave, int key) {
+   722* [41m// W[0me need to somehow check if the user entered an input greater than before...
+[91m        ^ INDENTATION: indent error: expected 4, actual 0[0m
+   723  [42m    [0m//printf("add_note_to_beat not implemented yet.\n");
+   724  [42m    [0mstruct note *newNote = malloc(sizeof(struct note));
+   725  [42m⋮�[0m�··struct note *prev = NULL;
+   726  [42m⋮�[0m�··struct note *curr = beat->notes;
+   727  [42m⋮�[0m�··int returnVal = VALID_NOTE; // This variable checks for a valid note
+   728  [42m    [0m
+   729  [42m⋮�[0m�··//Check for valid input, and also ensures octave and key are in their
+   730  [42m⋮�[0m�··//boundaries
+   731  [42m⋮�[0m�··if(0 <= octave && octave < 10){
+[91m              ^ WHITESPACE: You had 'if(' and '){' where you should have had a space before the bracket e.g. 'if (', and a space before the '{' e.g. ') {'[0m
+   732  [42m    ⋮�[0m�··if( 0 <= key && key < 12){
+   733  [42m    ⋮··�[0m�⋮···returnVal = VALID_NOTE;
+   734  [42m    ⋮�[0m�··}
+   735  [42m    ⋮�[0m�··else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'                 (+ 1 other whitespace errors)[0m
+   736  [42m    ⋮··�[0m�⋮···free(newNote);
+   737  [42m    ⋮··�[0m�⋮···return INVALID_MUSICAL_NOTE;
+   738  [42m    ⋮�[0m�··}
+   739  [42m    [0m}
+   740* [41m   �[0m��···else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'[0m
+   741* [41m   ⋮·[0m··⋮···free(newNote);
+   742* [41m   ⋮·[0m··⋮···return INVALID_MUSICAL_NOTE;
+   743* [41m   �[0m��···}
+[91m               ^ INDENTATION: indent error: expected 4, actual 7                 (+ 1 other indentation errors)[0m
+   744* [41m   �[0m��···newNote->key = key;
+   745  [42m⋮�[0m�··newNote->octave = octave;
+   746  [42m    [0m
+   747  [42m⋮�[0m�··//Check if a beat does not have a note
+   748  [42m⋮�[0m�··//and needs to be placed at the beginning of a linked list
+   749  [42m    [0mif(beat->notes == NULL){
+[91m              ^ WHITESPACE: You had 'if(' and '){' where you should have had a space before the bracket e.g. 'if (', and a space before the '{' e.g. ') {'[0m
+   750  [42m    ⋮�[0m�··beat->notes = newNote;
+   751  [42m    ⋮�[0m�··newNote->next = NULL;
+   752  [42m    ⋮�[0m�··return returnVal;
+   753  [42m    [0m}
+   754  [42m    [0m
+   755  [42m    [0m//Check if there are any duplicate notes
+   756  [42m    [0m//By looping through the list
+   757  [42m    [0mwhile (curr != NULL) {
+   758  [42m    ⋮�[0m�··if(curr->octave == octave) {
+[91m                  ^ WHITESPACE: You had 'if(', where you should have had a space before the bracket e.g. 'if ('[0m
+   759  [42m    ⋮··�[0m�⋮···if (curr->key == key) {
+   760  [42m    ⋮···⋮[0m···⋮···free (newNote);
+   761  [42m    ⋮···⋮[0m···⋮···return INVALID_MUSICAL_NOTE;
+   762  [42m    ⋮··�[0m�⋮···}
+   763  [42m    ⋮�[0m�··}
+   764  [42m    ⋮�[0m�··prev = curr;
+   765  [42m    ⋮�[0m�··curr = curr->next;
+   766  [42m    [0m}
+   767  [42m    [0mcurr = beat->notes;
+   768  [42m    [0mprev = NULL;
+   769  [42m    [0m
+   770  [42m    [0m//Check previous Octave/Key size to the user input
+   771  [42m⋮�[0m�··//and insert in the correct position
+   772  [42m⋮�[0m�··while(curr != NULL)
+[91m              ^ WHITESPACE: You had 'while(', where you should have had a space before the bracket e.g. 'while ('[0m
+   773  [42m⋮�[0m�··{
+   774  [42m        [0m
+   775  [42m⋮··�[0m�⋮···if ( curr->octave > octave)
+[91m                     ^ WHITESPACE: You had '( ', where you should have had '(' (no trailing space)[0m
+   776  [42m⋮··�[0m�⋮···{
+   777  [42m⋮···⋮[0m···⋮···//consider the case if newNote is inserted
+   778  [42m⋮···⋮[0m···⋮···//At the beginning of the list
+   779  [42m⋮···⋮[0m···⋮···if (prev == NULL)
+   780  [42m⋮···⋮[0m···⋮···{
+   781  [42m⋮···⋮··[0m·⋮···⋮···beat->notes = newNote;
+   782  [42m⋮···⋮··[0m·⋮···⋮···newNote->next = curr;
+   783  [42m⋮···⋮··[0m·⋮···⋮···return returnVal;
+   784  [42m⋮···⋮[0m···⋮···}
+   785  [42m⋮···⋮[0m···⋮···prev->next = newNote;
+   786  [42m⋮···⋮[0m···⋮···newNote->next = curr;
+   787  [42m⋮···⋮[0m···⋮···return returnVal;
+   788  [42m            [0m
+   789  [42m⋮··�[0m�⋮···}
+   790  [42m⋮··�[0m�⋮···else if ( curr->octave == octave)
+[91m                          ^ WHITESPACE: You had '( ', where you should have had '(' (no trailing space)[0m
+   791  [42m⋮··�[0m�⋮···{
+   792* [41m⋮···⋮[0m···//If currKey is at the end of the list
+[91m                ^ INDENTATION: indent error: expected 12, actual 8[0m
+   793* [41m⋮···⋮[0m···//then insert
+   794  [42m⋮···⋮[0m···⋮···struct note *currKey = curr;
+   795  [42m⋮···⋮[0m···⋮···prev = currKey;
+   796  [42m⋮···⋮[0m···⋮···if (currKey == NULL)
+   797  [42m⋮···⋮[0m···⋮···{
+   798  [42m⋮···⋮··[0m·⋮···⋮···prev->next = newNote;
+   799  [42m⋮···⋮··[0m·⋮···⋮···newNote->next = currKey;
+   800  [42m⋮···⋮··[0m·⋮···⋮···return returnVal;
+   801  [42m⋮···⋮[0m···⋮···}
+   802  [42m⋮···⋮[0m···⋮···else
+   803  [42m⋮···⋮[0m···⋮···{
+   804* [41m⋮···⋮··[0m·⋮···//check if key > currKey.
+   805* [41m⋮···⋮··[0m·⋮···//Assuming that newNote is inserted between
+   806* [41m⋮···⋮··[0m·⋮···//the same octaves
+   807* [41m⋮···⋮··[0m·⋮···int listCheck = 0;
+   808  [42m⋮···⋮··[0m·⋮···⋮···while ( currKey->key < key)
+[91m                                ^ WHITESPACE: You had '( ', where you should have had '(' (no trailing space)[0m
+   809  [42m⋮···⋮··[0m·⋮···⋮···{
+   810  [42m⋮···⋮···�[0m�···⋮···⋮···//Check if curr octave may be greater than
+   811  [42m⋮···⋮···�[0m�···⋮···⋮···//the next octave
+   812  [42m⋮···⋮···�[0m�···⋮···⋮···if ( currKey->octave > octave )
+[91m                                 ^ WHITESPACE: You had '( ', where you should have had '(' (no trailing space)[0m
+   813  [42m⋮···⋮···�[0m�···⋮···⋮···{
+   814  [42m⋮···⋮···⋮·�[0m�·⋮···⋮···⋮···prev->next = newNote;
+[91m                                ^ OVERDEEP_NESTING: nesting too deep: 6 (try moving some of the logic into another function)[0m
+   815  [42m⋮···⋮···⋮·�[0m�·⋮···⋮···⋮···newNote->next = currKey;
+   816  [42m⋮···⋮···⋮·�[0m�·⋮···⋮···⋮···return returnVal;
+   817  [42m⋮···⋮···�[0m�···⋮···⋮···}
+   818  [42m⋮···⋮···�[0m�···⋮···⋮···prev = currKey;
+   819  [42m⋮···⋮···�[0m�···⋮···⋮···currKey = currKey->next;
+   820  [42m                    [0m
+   821  [42m⋮···⋮···�[0m�···⋮···⋮···// currKey gets to the end of the list
+   822  [42m⋮···⋮···�[0m�···⋮···⋮···//
+   823  [42m⋮···⋮···�[0m�···⋮···⋮···if (currKey == NULL)
+   824  [42m⋮···⋮···�[0m�···⋮···⋮···{
+   825  [42m⋮···⋮···⋮·�[0m�·⋮···⋮···⋮···prev->next = newNote;
+[91m                                ^ OVERDEEP_NESTING: nesting too deep: 6 (try moving some of the logic into another function)[0m
+   826  [42m⋮···⋮···⋮·�[0m�·⋮···⋮···⋮···newNote->next = currKey;
+   827  [42m⋮···⋮···⋮·�[0m�·⋮···⋮···⋮···return returnVal;
+   828  [42m⋮···⋮···�[0m�···⋮···⋮···}
+   829  [42m⋮···⋮···�[0m�···⋮···⋮···listCheck++;
+   830  [42m⋮···⋮··[0m·⋮···⋮···}
+   831  [42m⋮···⋮··[0m·⋮···⋮···//Check for the case if the note is inserted
+   832  [42m⋮···⋮··[0m·⋮···⋮···//at the beginning
+   833  [42m⋮···⋮··[0m·⋮···⋮···if(listCheck == 0) {
+[91m                          ^ WHITESPACE: You had 'if(', where you should have had a space before the bracket e.g. 'if ('[0m
+   834  [42m⋮···⋮···�[0m�···⋮···⋮···beat->notes = newNote;
+[91m                            ^ OVERDEEP_NESTING: nesting too deep: 5 (try moving some of the logic into another function)[0m
+   835  [42m⋮···⋮···�[0m�···⋮···⋮···newNote->next = currKey;
+   836  [42m⋮···⋮···�[0m�···⋮···⋮···return returnVal;
+   837  [42m⋮···⋮··[0m·⋮···⋮···}
+   838  [42m⋮···⋮··[0m·⋮···⋮···else{
+[91m         ^ WHITESPACE: You had '	else{', where you should have had 'else {'[0m
+   839  [42m⋮···⋮···�[0m�···⋮···⋮···prev->next = newNote;
+[91m                            ^ OVERDEEP_NESTING: nesting too deep: 5 (try moving some of the logic into another function)[0m
+   840  [42m⋮···⋮···�[0m�···⋮···⋮···newNote->next = currKey;
+   841  [42m⋮···⋮···�[0m�···⋮···⋮···return returnVal;
+   842  [42m⋮···⋮··[0m·⋮···⋮···}
+   843  [42m⋮···⋮[0m···⋮···}
+   844  [42m⋮··�[0m�⋮···}
+   845  [42m⋮··�[0m�⋮···prev = curr;
+   846  [42m⋮··�[0m�⋮···curr = curr->next;
+   847  [42m⋮�[0m�··}
+   848  [42m⋮�[0m�··prev->next = newNote;
+   849  [42m⋮�[0m�··newNote->next = curr;
+   850  [42m    [0m
+   851  [42m    [0mreturn returnVal;
+   852  [42m[0m}
+   853  [42m[0m
+   854  [42m[0m
+   855  [42m[0m
+   856  [42m[0m
+   857  [42m[0m
+   858  [42m[0m
+   859  [42m[0m
+   860  [42m[0m
+   861  [42m[0m
+   862  [42m[0m
+   863  [42m[0m
+   864  [42m[0m
+   865  [42m[0m
+   866  [42m[0m
+   867  [42m[0m
+   868  [42m[0m
+   869  [42m[0m
+   870  [42m[0m
+   871  [42m[0m
+   872  [42m[0m
+   873  [42m[0m
+   874  [42m[0m
+   875  [42m[0m
+
+
+Note: the code contained too many errors to show them all at the same time...
+[4mSome errors have been suppressed[0m, fix the above errors and rerun the style tool to see more errors
+
+[95m[93m[1m-------------[0m
+[95m[93m[1mImprovements:[0m
+[95m[93m[1m-------------[0m
+
+
+[95m[93m[1m[4m# Header Comment[0m
+
+No zid(s) in header: please put your name and zID in the header comment.
+
+--------------------------------------------------------------------------------
+
+[95m[93m[1m[4m# Indentation[0m
+
+Remember that every time you have an [92m[1mopen curly bracket `{`[0m you need to indent
+your code [92m[1mfour more spaces across[0m, and when you have a [91m[1mclose curly bracket `}`[0m
+you need to indent your code [91m[1mfour spaces less[0m.
+
+For example, this is correct:
+
+if (youAreAwesome) [92m[1m{[0m
+    // There was an open curly brace, so the line below is indented
+    // 4 spaces more:
+    printf ("You are awesome!\n");
+[91m[1m}[0m
+// That was a close brace, so that line and all following lines are
+// indented 4 spaces fewer.
+
+PS: make sure you've run `1511 setup` to automatically configure
+indentation in gedit. It will make all of this a lot easier!
+
+--------------------------------------------------------------------------------
+
+[95m[93m[1m[4m# Mixing tabs and spaces![0m
+
+You have a combination of tabs and spaces in your code.
+
+Make sure you've run `1511 setup`, which will configure gedit correctly.
+
+If you're using a different editor, ask your tutor for help with getting 
+it set up.
+
+--------------------------------------------------------------------------------
+
+[95m[93m[1m[4m# Whitespace[0m
+
+Remember that you need to have whitespace around operators in your code.
+Or, in plain English: whenever you have something like a + or = (an "operator")
+in your code, you need to have spaces on either side of that operator (the +
+symbol)
+
+For example:
+    // Correct:
+    int result = a + b;
+
+    // Incorrect:
+    int result = a+b;
+
+    int result=a+b;
+
+    int result= a +b;
+
+This helps a lot with making your code more readable.
+
+--------------------------------------------------------------------------------
+
+[95m[93m[1m[4m# Line Length[0m
+
+Lines should be less than 80 characters long. Try splitting overly-long
+lines up across multiple lines, or find a way to rewrite that statement.
+
+
+The following lines are too long:
+
+   222  		struct beat *newBeat = beat; //These were my error//create_beat(); //malloc (sizeof (struct beat));
+    89  int add_note_to_beat(Beat beat, int octave, int key) {// We need to somehow check if the user entered an input greater than before...
+
+--------------------------------------------------------------------------------
+
+[95m[93m[1m[4m# Overly deep nesting[0m
+
+If your nesting is becoming too deep, it's better to move some of the
+logic into a function.
+
+[more details coming soon, for now ask your tutor for more information]
+
+[95m[4m
+(PS: don't forget to scroll up to see all of the output!)[0m

@@ -1,0 +1,204 @@
+london@london:~/COMP2521/lab01$ gdb ./useIntList
+GNU gdb (Ubuntu 8.1-0ubuntu3.2) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./useIntList...done.
+(gdb) r
+Starting program: /home/london/COMP2521/lab01/useIntList 
+1 2 3 4
+2
+3
+size is: 0 
+1 1 
+size is: 2 
+1 1 1 
+size is: 3 
+1 1 1 2 
+size is: 4 
+1 1 1 2 3 
+size is: 5 
+1 1 1 2 2 3 
+size is: 6 
+1 1 1 2 2 3 
+useIntList: useIntList.c:28: main: Assertion `IntListOK(myOtherList)' failed.
+
+Program received signal SIGABRT, Aborted.
+__GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:51
+51	../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 17837] will be killed.
+
+Quit anyway? (y or n) y
+london@london:~/COMP2521/lab01$ make
+gcc -Wall -g -Werror   -c -o IntList.o IntList.c
+gcc   useIntList.o IntList.o   -o useIntList
+london@london:~/COMP2521/lab01$ echo 1 2 3 4 | ./useIntList
+size is: 0 
+1 1 
+size is: 2 
+1 1 1 
+size is: 3 
+1 1 1 2 
+size is: 4 
+1 1 1 2 3 
+useIntList: useIntList.c:28: main: Assertion `IntListOK(myOtherList)' failed.
+Aborted (core dumped)
+london@london:~/COMP2521/lab01$ gdb ./useIntList
+GNU gdb (Ubuntu 8.1-0ubuntu3.2) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./useIntList...done.
+(gdb) r
+Starting program: /home/london/COMP2521/lab01/useIntList 
+1 2 3 4
+2
+3
+4
+size is: 0 
+1 1 
+size is: 2 
+1 1 1 
+size is: 3 
+1 1 1 2 
+size is: 4 
+1 1 1 2 3 
+size is: 5 
+1 1 1 2 2 3 
+size is: 6 
+1 1 1 2 2 3 
+size is: 7 
+1 1 1 2 2 3 
+useIntList: useIntList.c:28: main: Assertion `IntListOK(myOtherList)' failed.
+
+Program received signal SIGABRT, Aborted.
+__GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:51
+51	../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) break
+Breakpoint 1 at 0x7ffff7a22f47: file ../sysdeps/unix/sysv/linux/raise.c, line 51.
+(gdb) break IntList.c : 270
+Breakpoint 2 at 0x555555555206: file IntList.c, line 270.
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/london/COMP2521/lab01/useIntList 
+Warning:
+Cannot insert breakpoint 1.
+Cannot access memory at address 0x7ffff7a22f47
+
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 18136] will be killed.
+
+Quit anyway? (y or n) y
+london@london:~/COMP2521/lab01$ gdb ./useIntList
+GNU gdb (Ubuntu 8.1-0ubuntu3.2) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./useIntList...done.
+(gdb) r
+Starting program: /home/london/COMP2521/lab01/useIntList 
+1   
+2
+3
+4
+size is: 0 
+1 1 
+size is: 2 
+1 1 1 
+size is: 3 
+1 1 1 2 
+size is: 4 
+1 1 1 2 3 
+useIntList: useIntList.c:28: main: Assertion `IntListOK(myOtherList)' failed.
+
+Program received signal SIGABRT, Aborted.
+__GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:51
+51	../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) break IntList.c : 270
+Breakpoint 1 at 0x555555555206: file IntList.c, line 270.
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/london/COMP2521/lab01/useIntList 
+1 
+2
+3
+4
+
+Breakpoint 1, IntListOK (L=0x555555757260) at IntList.c:270
+warning: Source file is more recent than executable.
+270		return (count == L->size && p == L->last);
+(gdb) info locals
+p = 0x5555557576f0
+count = 4
+(gdb) print
+The history is empty.
+(gdb) print count
+$1 = 4
+(gdb) print L->size
+$2 = 4
+(gdb) print p
+$3 = (struct IntListNode *) 0x5555557576f0
+(gdb) print L->last
+$4 = (struct IntListNode *) 0x5555557576f0
+(gdb) c
+Continuing.
+size is: 0 
+1 1 
+size is: 2 
+1 1 1 
+size is: 3 
+1 1 1 2 
+size is: 4 
+1 1 1 2 3 
+
+Breakpoint 1, IntListOK (L=0x555555757710) at IntList.c:270
+270		return (count == L->size && p == L->last);
+(gdb) print count
+$5 = 5
+(gdb) print L->size
+$6 = 5
+(gdb) print p
+$7 = (struct IntListNode *) 0x555555757bc0
+(gdb) print L->last
+$8 = (struct IntListNode *) 0x555555757b40
+(gdb) run < debug.txt
+The program being debugged has been started already.
+Start it from the beginning? (y or n) n
+

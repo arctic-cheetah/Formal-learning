@@ -1,0 +1,90 @@
+Input	Has	Initial	Number	AvgTime	AvgTime  (AvgTime in Seconds)
+Size	DupsOrder	of runs	forusel	forsort
+10000	no	random	3	0.234   0.008
+10000	no	sorted	3	0.222	0.005
+10000	no	reverse	3	0.006	0.006
+10000	yes	random	3	0.024	0.009
+10000	yes	sorted	3	0.227	0.006
+10000	yes	reverse	3	0.008	0.006
+
+20000	no	random	3	1.560	0.013
+20000	no	sorted	3	0.902	0.009
+20000	no	reverse	3	0.009	0.009
+20000	yes	random	3	1.494	0.015  
+20000	yes	sorted	3	0.892 	0.010  
+20000	yes	reverse	3	0.010 	0.009  
+
+40000	no	random	3	7.466 	0.029  
+40000	no	sorted	3	3.566 	0.014 
+40000	no	reverse	3	0.014   0.013
+40000	yes	random	3	7.549 	0.038 	  
+40000	yes	sorted	3	3.603 	0.020  
+40000	yes	reverse	3	0.016 	0.016  
+
+80000	no	random	3	34.71	0.064  
+80000	no	sorted	3	14.33 	0.024
+80000	no	reverse	3	0.030 	0.028  
+80000	yes	random	3	34.28 	0.057  
+80000	yes	sorted	3	14.53 	0.026  
+80000	yes	reverse	3	0.034 	0.031
+
+100000	no	random	3	55.35   0.068
+100000	no	sorted	3	22.68   0.031
+100000	no	reverse	3	0.046	0.033
+100000	yes	random	3	55.15	0.072 
+100000	yes	sorted	3	22.46   0.033
+100000	yes	reverse	3	0.037	0.038
+
+...
+////////////////////////////////////////////////////////////
+Acronyms:
+user implemented algorithm (UIA)
+user implemented function (UIF)
+
+Overview:
+The UIA performed worser than the in many cases GNU sort algorithm (a variation of merge sort) because the UIA required iterating through the linked list in a "double while loop fashion". Specifically, the original linked list was was called by the function "IntListOrderedCopy" in O(n) time. However, "IntListInsertInOrder" (the UIF) copies and inserts elements in ascending order from the original linked list in O(n^2) time due to being called by "IntListOrderedCopy". As such, the UIA had performed worser than GNU sort because it had to copy and insert elements in ascending order whilst simulatenously looping through the original linked list.
+
+
+////////Trends and patterns
+
+Type of Input: randomised:
+The UIA performed the worst out of all input sizes and input types relative to GNU sort as it required the greatest amount of comparisons and swaps. This is due to the consideration of all cases in the UIF ("IntListInsertInOrder"). Also, the inclusion of duplicate input had a negligble effect on the duration, because the UIA performed similarly as without duplicated input. Additionally. The UIA worsened as input size increased, as expected by O(n^2) time. 
+
+Type of Input: sorted:
+The UIA performed the second worst out of all input types relative to itself, though, it performed better than with randomised input.
+As input size increased performed better than with randomised input. It can be seen that only comparisons were needed and no swaps were made because all the input was in ascending order. Thus, the UIF performed better when there was sorted input than randomised input, albeit, worser than reversed input.
+
+Type of Input: sorted:
+The UIA performed the best out of all input types, and as input size increased, it competed well with GNU sort. Reasonably, the UIF needed to perform 5 comparisons and 1 swap in the function for every time it was called by "IntListOrderedCopy" as it looped through the original array.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

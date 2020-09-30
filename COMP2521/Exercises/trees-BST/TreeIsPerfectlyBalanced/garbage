@@ -1,0 +1,10 @@
+	if (t->left != NULL && t->right == NULL) {
+		leftCount++;	
+	}
+	else if (t->left == NULL && t->right != NULL) {
+		rightCount++;
+	}
+		if (t->left == NULL && t->right == NULL) {
+		return 1;
+	}
+

@@ -1,0 +1,45 @@
+#! /bin/bash
+
+# start...end...increment
+for i in {10000..20000..10000}
+	do
+		printf "Input value: %d\n" $i
+		printf "randomised\n"
+		seq $i | sort -R > nums
+		/usr/bin/time &>> time.txt ./useIntList < nums > out1
+		/usr/bin/time &>> time.txt sort -n < nums > out2
+		
+		./randList $i > nums
+		/usr/bin/time &>> time.txt ./useIntList < nums > out1
+		/usr/bin/time &>> time.txt sort -n < nums > out2
+		printf "\n"
+
+
+		printf "sorted\n"
+		seq $i | sort -n > nums
+		/usr/bin/time &>> time.txt ./useIntList < nums > out1
+		/usr/bin/time &>> time.txt sort -n < nums > out2
+		
+		./randList $i | sort -n > nums
+		/usr/bin/time &>> time.txt ./useIntList < nums > out1
+		/usr/bin/time &>> time.txt sort -n < nums > out2
+		printf "\n"
+
+
+		printf "reversed\n"
+		seq $i | sort -rn > nums
+		/usr/bin/time &>> time.txt ./useIntList < nums > out1
+		/usr/bin/time &>> time.txt sort -n < nums > out2
+
+		./randList $i | sort -rn > nums
+		/usr/bin/time &>> time.txt ./useIntList < nums > out1
+		/usr/bin/time &>> time.txt sort -n < nums > out2
+		echo "" >> time.txt
+		echo "" >> time.txt
+		printf "\n"
+	done
+
+
+
+
+

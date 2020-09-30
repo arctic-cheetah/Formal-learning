@@ -1,0 +1,33 @@
+//A function that counts the number of nodes up to a given depth of a BS-TREE;
+int treenode_count (Tree t, int *depth) {
+	if (t == NULL) {
+		return 0;
+	}
+	
+	int leftNode = treenode_count (t->left, depth);
+	int rightNode = treenode_count (t->right, depth);
+	
+	return leftNode + rightNode;
+	
+}
+
+//A function that counts the maximum number of nodes of a perfect binary tree
+int numberOfNodes (int depth) {
+	int Count = 1;
+	for (int i = 0; i <= depth; i++) {
+		Count *= 2;
+	}
+	
+	printf("Count is: %d\n", Count - 1);
+	return Count - 1;
+}
+
+
+if (newNode->left != NULL && nodeHeight(root, t->left->value) < depth) {
+		newNode->left = new_node(t->left->value);
+		newNode->left = cp_tree(root, t->left, depth);
+	}
+	if (newNode->right != NULL && nodeHeight(root, t->right->value) < depth) {
+		newNode = new_node(t->right->value);
+		newNode->right = cp_tree(root, t->right, depth);
+	}
