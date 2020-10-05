@@ -2,15 +2,15 @@
 
     .data
 msg1: .asciiz "Enter the first number \n"
-msgOp: .asciiz "Enter an operation 1 => + , 2 => - , 3 => *, 4=> / \n"
+msgOp: .asciiz "Enter an operation + , - , *, / \n"
 userOp: .space 3
 msg2: .asciiz "Enter the second number \n"
 msg3: .asciiz "The result is: \n"
 
-plus: .word 1
-minus: .word 2
-times: .word 3
-divide: .word 4
+plus: .asciiz "+"
+minus: .asciiz "-"
+times: .asciiz "*"
+divide: .asciiz "\ "
 
 
     .text
@@ -33,9 +33,11 @@ main:
     syscall
 
     #Store the operation
-    li $v0, 5
+    li $v0, 8
+    la $a0, userOp
+    li $a1, 3
+    move $t2, $a0
     syscall
-    move $t2, $v0
 
     #Ask for the second number
     li $v0, 4
@@ -58,48 +60,27 @@ main:
 
     #If statements are here...aka branching
     move $a0, $t2
-
-    lw $a1, plus
+    la $a1, plus
     beq $a1, $a0, Add
+    #la $a1, minus
+    #beq $a1, $a0, Subtract
+    #la $a1, times
+    #beq $a1, $a0, Multiply
 
-    lw $a1, minus
-    beq $a1, $a0, Subtract
-
-    lw $a1, times
-    beq $a1, $a0, Multiply
-
-    lw $a1, divide
-    beq $a1, $a0, Divide
     #If there are no valid operations, terminate
     bne $a1, $a0, Exit
 
 
 Add:
     add $t7, $t1, $t0
-    beq $a0, $a0, Exit
 
-Subtract:
-    sub $t7, $t0, $t1
-    beq $a0, $a0, Exit
+#Subtract:
+    #sub $t9, $t1, $t0
+#Multiply:
+    #mul $t9, $t1, $t0
 
-Multiply:
-    mul $t7, $t1, $t0
-    beq $a0, $a0, Exit
-Divide:
-    div $t0, $t1
-    mfhi $t4
-    mflo $t3
-    #display quotient
-    li $v0, 1
-    move $a0, $t3
-    syscall
-    #display remainder
-    li $v0, 1
-    move $a0, $t4
-    syscall
-
-    li $v0, 10
-    syscall
+    #add the two integers
+    #add $t9, $t1, $t0
 
     #display the sum
 

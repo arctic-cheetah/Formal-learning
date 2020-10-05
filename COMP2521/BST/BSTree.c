@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "BSTree.h"
-#include "tree.h"
 
 #define data(tree)  ((tree)->data)
 #define left(tree)  ((tree)->left)

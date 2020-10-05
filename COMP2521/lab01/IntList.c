@@ -118,7 +118,7 @@ void IntListInsertInOrder(IntList L, int v) {
 		L->size +=1;
 		return;
 	}
-	//check if new node is greater than the 1st element
+	//check if new node is smaller than the 1st element
 	if (v <= L->first->data) {
 		ListNode *temp = L->first;
 		L->first = newNode;

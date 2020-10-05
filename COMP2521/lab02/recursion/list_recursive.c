@@ -172,7 +172,7 @@ struct node *deleteR(struct node *list, int value) {
 	return list;
 }
 
-// Insert a Node into an Ordered List: recursive
+// Insert a Node into an Ordered List: recursive---//Flawed
 struct node *insertR(struct node *list, int value) {
 	if (list == NULL) {
 		return create_node(value, NULL);
