@@ -8,9 +8,8 @@
 
 int main () {
 	tree t = generateInvertedIndex("collection.txt");
-	//printInvertedIndex(t);
-	TfIdfList list = calculateTfIdf(t, "computer" , 141); 
-	print_tilList(list);
+	printInvertedIndex(t);
+	TfIdfList list = calculateTfIdf(t, "mars" , 7); 
 }
 ///////////////////////////////////////////////////////////////////
 //Part 1:
@@ -158,6 +157,12 @@ void swap(FileList *a, FileList *b) {
 	*b = temp;
 }
 
+void swap_string(char *a, char *b) {
+	char temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
 //Sort the array O(n^2)--Bubblesort
 void sortArray(FileList *myArray, int length) {
 	
@@ -165,6 +170,15 @@ void sortArray(FileList *myArray, int length) {
 		for (int i = 0; i < length; i++) {
 			if (myArray[i]->tf < myArray[i + 1]->tf) {
 				swap(&myArray[i], &myArray[i + 1]);
+			}
+			//Sort by alphabetical order if tf are the same
+			//by swapping strings
+			while (i < length && myArray[i]->tf == myArray[i + 1]->tf) {
+				if (strcmp(myArray[i]->filename, 
+							myArray[i + 1]->filename) < 0) {
+					swap(&myArray[i], &myArray[i + 1]);;
+				}
+				i++;
 			}
 		}
 		length -=1;
@@ -193,29 +207,12 @@ TfIdfList calculateTfIdf(InvertedIndexBST t, char *searchWord, int D) {
 	//sort the tf values of the array
 	sortArray(tf_array, num_listNode - 1);
 
-	//Create the first TfIdfList node
-	double idf = log10( D / (double) num_listNode );
-	double tfidf = tf_array[0]->tf * idf;
-
-	//This will be the head of the list
-	TfIdfList newList = insert_tilNode(tf_array[0], tfidf);
-
-	//Create tfidflist in descending order 
+	//Sort and create tfidflist in descending order 
 	//by mapping tf_array to linkedList
-	int j = 1;
-	TfIdfList curr2 = newList;
-	while (j < num_listNode) {
-		//Calculate tfidf
-		idf = log10( D /(double)num_listNode );
-		tfidf = tf_array[j]->tf * idf;
-		curr2->next = insert_tilNode(tf_array[j], tfidf);
+	int j = 0;
+	//Calculate tfidf
 
-		//Move the pointer to the new list
-		curr2 = curr2->next;
-		j +=1;
-	}
-
-	return newList;
+	return NULL;
 }
 
 /*

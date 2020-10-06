@@ -9,8 +9,7 @@
 int main () {
 	tree t = generateInvertedIndex("collection.txt");
 	//printInvertedIndex(t);
-	TfIdfList list = calculateTfIdf(t, "computer" , 141); 
-	print_tilList(list);
+	TfIdfList list = calculateTfIdf(t, "mars" , 7); 
 }
 ///////////////////////////////////////////////////////////////////
 //Part 1:
@@ -194,7 +193,7 @@ TfIdfList calculateTfIdf(InvertedIndexBST t, char *searchWord, int D) {
 	sortArray(tf_array, num_listNode - 1);
 
 	//Create the first TfIdfList node
-	double idf = log10( D / (double) num_listNode );
+	double idf = log10( (double)D / num_listNode );
 	double tfidf = tf_array[0]->tf * idf;
 
 	//This will be the head of the list
@@ -206,7 +205,7 @@ TfIdfList calculateTfIdf(InvertedIndexBST t, char *searchWord, int D) {
 	TfIdfList curr2 = newList;
 	while (j < num_listNode) {
 		//Calculate tfidf
-		idf = log10( D /(double)num_listNode );
+		idf = log10( (double)D / num_listNode );
 		tfidf = tf_array[j]->tf * idf;
 		curr2->next = insert_tilNode(tf_array[j], tfidf);
 

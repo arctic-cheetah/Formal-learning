@@ -57,6 +57,28 @@ int numWordFile, int termCount, tree t) {
     //Balance the tree using tree_balance
     return tree_balance(t);
 }
+//Search for a node with the matching word
+//We can assume the word exists
+tree search_tree(tree t, char *word) {
+    
+    //If word doesn't exist, then give a warning
+    if (t == NULL) {
+        printf("Entered invalid word");
+        exit(0);
+        return t;
+    }
+
+    if (strcmp(word, t->word) < 0) {
+        return search_tree(t->left, word);
+    }
+    else if (strcmp(word, t->word) > 0) {
+        return search_tree(t->right, word);
+    }
+    //found key word!
+    return t;
+}
+
+
 //returns the height of the tree O(n), T(1)
 int tree_height(tree t) {
     //Base Case
@@ -196,4 +218,12 @@ void print_list(FileList ListNode) {
         curr = curr->next;
     }
     printf("\n");
+}
+
+//Return the number of ListNodes
+int ListNode_count(FileList ListNode) {
+    if (ListNode == NULL) {
+        return 0;
+    }
+    return ListNode_count(ListNode->next) + 1;
 }

@@ -105,7 +105,7 @@ void sortArray(FileList *myArray, int length);
 //TfIdfNode functions
 TfIdfList create_tilNode(FileList ListNode, double tfidf);
 TfIdfList insert_tilNode(FileList ListNode, double tfidf);
-void print_tilList(TfIdfList ListNode);
+
 
 
 

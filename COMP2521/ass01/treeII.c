@@ -4,15 +4,15 @@
 #include <math.h>
 #include "invertedIndex.h"
 
+#define MAX_LENGTH 100
+
 //Time complexity;
 //n is the number of nodes
 //Create a treeNode from a word
 tree create_treeNode(char *str) {
-    //Need to include the null terminator
-    int wordLen = strlen(str) + 1;
     tree t = malloc( sizeof(struct InvertedIndexNode) );
     //allocate memory for the size of the word
-    t->word = malloc( sizeof(char) * wordLen );
+    t->word = malloc( sizeof(char) * MAX_LENGTH );
     //copy the string
     t->word = strcpy(t->word, str);
     
@@ -145,10 +145,9 @@ tree left_rotation(tree t) {
 
 //Create a linked list node;
 FileList create_listNode(char *fileName, int numWordFile, int termCount) {
-    int fileNameLen = strlen(fileName) + 1;
     FileList newNode = malloc( sizeof(struct FileListNode) );
     //Allocate memory for the file name
-    newNode->filename = malloc(sizeof(char) * fileNameLen);
+    newNode->filename = malloc(sizeof(char) * MAX_LENGTH);
     newNode->filename = strcpy(newNode->filename, fileName);
 
     //Perform a type cast
@@ -221,3 +220,38 @@ int ListNode_count(FileList ListNode) {
     }
     return ListNode_count(ListNode->next) + 1;
 }
+
+
+//TfIdfNode functions
+//A function that returns a new TfIdfList node
+TfIdfList create_tilNode(FileList ListNode, double tfidf) {
+    TfIdfList newNode = malloc(sizeof(struct TfIdfNode));
+    newNode->tfIdfSum = tfidf;
+    //Allocate memory for the string
+    newNode->filename = malloc(sizeof(char) * MAX_LENGTH);
+    //Copy string
+    strcpy(newNode->filename, ListNode->filename);
+    //Make TfIdfList->null
+    newNode->next = NULL;
+    return newNode;
+}
+
+//A function that inserts a TfIdfList node
+TfIdfList insert_tilNode(FileList ListNode, double tfidf) {
+    TfIdfList newNode = create_tilNode(ListNode, tfidf);
+    return newNode;
+}
+
+//Debugging function to print out the TfIdfList
+void print_tilList(TfIdfList ListNode) {
+    TfIdfList curr = ListNode;
+
+    while (curr != NULL) {
+        printf("%lf  %s", curr->tfIdfSum, curr->filename);
+        printf("\n");
+        curr = curr->next;
+    }
+}
+
+
+
