@@ -133,6 +133,7 @@ void BSTreePostfix(BSTree t) {
 
 // Prints the values in the given BSTree in level-order
 // Time complexity: O(n)
+// Degenerate tree
 void BSTreeLevelOrder(BSTree t) {
 	
 	if (t == NULL) {
@@ -141,16 +142,17 @@ void BSTreeLevelOrder(BSTree t) {
 	
 	Queue q = QueueNew();
 	QueueEnqueue(q, t);
-	while (QueueIsEmpty(q) == 0) {
-		BSTree temp = QueueDequeue(q);
+	while (QueueIsEmpty(q) == 0) { //O(n)
+		BSTree temp = QueueDequeue(q); //O(1)
 		printf("%d ", temp->value);
 		if (temp->left != NULL) {
-			QueueEnqueue(q, temp->left);
+			QueueEnqueue(q, temp->left);//O(1)
 		}
 		if (temp->right != NULL) {
-			QueueEnqueue(q, temp->right);
+			QueueEnqueue(q, temp->right);//O(1)
 		}
 	}
+	QueueFree(q); 
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -167,6 +169,7 @@ int BSTreeNumNodes(BSTree t)
 
 // Counts the number of leaves in the given BSTree
 // Time complexity: O(n)
+// Degenerate tree
 int BSTreeNumLeaves(BSTree t) {
 	//Base case
 	if (t == NULL) {

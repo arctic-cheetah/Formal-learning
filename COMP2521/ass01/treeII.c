@@ -57,7 +57,7 @@ tree search_tree(tree t, char *word) {
     
     //If word doesn't exist, then give a warning
     if (t == NULL) {
-        printf("Entered invalid word");
+        printf("Entered invalid word\n");
         exit(0);
         return t;
     }
@@ -253,5 +253,23 @@ void print_tilList(TfIdfList ListNode) {
     }
 }
 
+//Copy a TfIdfList node
+TfIdfList copy_tilNode(TfIdfList ListNode) {
+    TfIdfList newNode = malloc(sizeof (struct TfIdfNode) );
+    newNode->tfIdfSum = ListNode->tfIdfSum;
+    newNode->filename = malloc(sizeof(char) * MAX_LENGTH);
+    strcpy(newNode->filename, ListNode->filename);
+    newNode->next = NULL;
 
+    return newNode;
+}
+
+//A function that returns the number of nodes in tfIdf
+//O(n)
+int tilNode_count(TfIdfList ListNode) {
+    if (ListNode == NULL) {
+        return 0;
+    }
+    return tilNode_count(ListNode->next) + 1;
+}
 
