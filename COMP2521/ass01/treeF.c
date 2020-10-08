@@ -4,15 +4,15 @@
 #include <math.h>
 #include "invertedIndex.h"
 
+#define MAX_LENGTH 100
+
 //Time complexity;
 //n is the number of nodes
 //Create a treeNode from a word
 tree create_treeNode(char *str) {
-    //Need to include the null terminator
-    int wordLen = strlen(str) + 1;
     tree t = malloc( sizeof(struct InvertedIndexNode) );
     //allocate memory for the size of the word
-    t->word = malloc( sizeof(char) * wordLen );
+    t->word = malloc( sizeof(char) * MAX_LENGTH );
     //copy the string
     t->word = strcpy(t->word, str);
     
@@ -57,7 +57,7 @@ tree search_tree(tree t, char *word) {
     
     //If word doesn't exist, then give a warning
     if (t == NULL) {
-        printf("Entered invalid word\n Program will exit");
+        printf("Entered invalid word\n");
         exit(0);
         return t;
     }
@@ -145,10 +145,9 @@ tree left_rotation(tree t) {
 
 //Create a linked list node;
 FileList create_listNode(char *fileName, int numWordFile, int termCount) {
-    int fileNameLen = strlen(fileName) + 1;
     FileList newNode = malloc( sizeof(struct FileListNode) );
     //Allocate memory for the file name
-    newNode->filename = malloc(sizeof(char) * fileNameLen);
+    newNode->filename = malloc(sizeof(char) * MAX_LENGTH);
     newNode->filename = strcpy(newNode->filename, fileName);
 
     //Perform a type cast
@@ -201,23 +200,98 @@ FileList insert_listNode(FileList ListNode, char *fileName,
 //Print out the index, when tree is complete. Index cannot be NULL. 
 //This was covered by the cases above
 void print_list(FileList ListNode) {
-    //Print the filename
-	//Loop through each linked list
-	//Print the tf (....)
 
     FileList curr = ListNode;
-
+    //Loop through each linked list
     while (curr != NULL) {
+        //Print the tf (....) filename
         printf("%s (%lf) ", curr->filename, curr->tf);
         curr = curr->next;
     }
     printf("\n");
 }
 
-//Return the number of FileList nodes
+//Return the number of ListNodes
 int ListNode_count(FileList ListNode) {
     if (ListNode == NULL) {
         return 0;
     }
     return ListNode_count(ListNode->next) + 1;
+}
+
+
+///////////////////////////////////////
+//TfIdfNode functions
+
+//A function that returns a new TfIdfList node
+TfIdfList create_tilNode(FileList ListNode, double tfidf) {
+    TfIdfList newNode = malloc(sizeof(struct TfIdfNode));
+    newNode->tfIdfSum = tfidf;
+    //Allocate memory for the string
+    newNode->filename = malloc(sizeof(char) * MAX_LENGTH);
+    //Copy string
+    strcpy(newNode->filename, ListNode->filename);
+    //Make TfIdfList->null
+    newNode->next = NULL;
+    return newNode;
+}
+
+//A function that inserts a TfIdfList node
+TfIdfList insert_tilNode(FileList ListNode, double tfidf) {
+    TfIdfList newNode = create_tilNode(ListNode, tfidf);
+    return newNode;
+}
+
+//Debugging function to print out the TfIdfList
+void print_tilList(TfIdfList ListNode) {
+    TfIdfList curr = ListNode;
+
+    while (curr != NULL) {
+        printf("%lf  %s", curr->tfIdfSum, curr->filename);
+        printf("\n");
+        curr = curr->next;
+    }
+}
+
+//Copy a TfIdfList node
+TfIdfList copy_tilNode(TfIdfList ListNode) {
+    //Allocate memory for a node
+    TfIdfList newNode = malloc(sizeof (struct TfIdfNode) );
+    //copy the tfidfsum
+    newNode->tfIdfSum = ListNode->tfIdfSum;
+    //allocate memory for the string
+    newNode->filename = malloc(sizeof(char) * MAX_LENGTH);
+    //copy the string to the new node
+    strcpy(newNode->filename, ListNode->filename);
+    newNode->next = NULL;
+
+    return newNode;
+}
+
+//A function that returns the number of nodes in tfIdf
+//O(n)
+int tilNode_count(TfIdfList ListNode) {
+    if (ListNode == NULL) {
+        return 0;
+    }
+    return tilNode_count(ListNode->next) + 1;
+}
+
+//TODO
+//Create a function that frees memory for the tilNode
+TfIdfList rm_tilNode(TfIdfList ListNode) {
+    //Base case
+    if (ListNode->next == NULL) {
+        free(ListNode->filename);
+        free(ListNode);
+        return NULL;
+    }
+    
+    if (ListNode->next != NULL) {
+        ListNode->next = rm_tilNode(ListNode->next);
+    }
+    free(ListNode->filename);
+    free(ListNode);
+
+    return NULL;
 }

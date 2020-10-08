@@ -20,7 +20,6 @@
 
 /** Util function below ...
 */
-/*
 void printTfIdfList(char *filename, TfIdfList list){
 	
 	FILE *fp = fopen(filename, "w");
@@ -36,7 +35,7 @@ void printTfIdfList(char *filename, TfIdfList list){
 	}
 	fclose(fp);
 }
-*/
+
 
 void checkNormalisedString(char *origString, char *answerString){
 
@@ -77,7 +76,54 @@ int main (int argc, char *argv[]) {
 	*/
 	testNormalise(); 
 	
+	// ---------------------------------------------------------
 	
+	InvertedIndexBST invertedTree =  generateInvertedIndex("collection.txt");
+
+	/** Your output in "invertedIndex.txt" should be 
+	    same as the expected answer in "invertedIndex_exp.txt"
+	*/
+        printInvertedIndex(invertedTree); 
+
+
+	// =========   Part-2 Testing =========  
+
+
+	TfIdfList list = calculateTfIdf(invertedTree, "mars" , 7); 
+
+	/** Your output in "mars_TfIdfList.txt" should be 
+	    same as the expected answer in "mars_TfIdfList_exp.txt"
+	*/
+	printTfIdfList("mars_TfIdfList.txt" , list);
+
+
+
+	TfIdfList list_sun = calculateTfIdf(invertedTree, "sun" , 7); 
+
+	/** Your output in "sun_TfIdfList.txt" should be 
+	    same as the expected answer in "sun_TfIdfList_exp.txt"
+	*/
+	printTfIdfList("sun_TfIdfList.txt" , list_sun);
+
+
+	TfIdfList list_moon = calculateTfIdf(invertedTree, "moon" , 7); 
+	printTfIdfList("moon_TfIdfList.txt" , list_moon );
+		
+	// ---------------------------------------------------------
+
+
+	/**  -----  The following will be available over the weekend -----
+	*/
+
+	char *words[] = { "nasa", "mars", "moon", NULL }; 
+	TfIdfList listM = retrieve(invertedTree, words , 7);
+
+	/** Your output in "nasa_mars_moon.txt" should be 
+	    same as the expected answer in "nasa_mars_moon.txt_exp.txt"
+	*/
+	printTfIdfList("nasa_mars_moon.txt" , listM);
+
+
 
 	/**  I am not providing a free function here, because that will expose some logic 
 	     required for the assignment!
