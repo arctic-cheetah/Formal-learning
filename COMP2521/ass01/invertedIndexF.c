@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include "invertedIndex.h"
+#include "myHeader.h"
 
 #define MAX_LENGTH 100
 
