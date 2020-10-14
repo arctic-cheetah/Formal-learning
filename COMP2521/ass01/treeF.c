@@ -163,7 +163,8 @@ FileList create_listNode(char *fileName, int numWordFile, int termCount) {
 FileList insert_listNode(FileList ListNode, char *fileName, 
                          int numWordFile, int termCount) 
 {
-    FileList newNode = create_listNode(fileName, numWordFile, termCount);
+    FileList newNode = create_listNode(fileName, 
+    								   numWordFile, termCount);
     //Consider if List is empty
     if (ListNode == NULL) {
         return newNode;
