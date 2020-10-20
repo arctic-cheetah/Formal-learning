@@ -8,23 +8,33 @@ int visited[MAX_NODES];  // array to store visiting order
                          // indexed by vertex 0..nV-1
 
 bool dfsPathCheck(Graph g, int nV, Vertex v, Vertex dest) {
-   Vertex w;
-   for (w = 0; w < nV; w++)
-      if (adjacent(g, v, w) && visited[w] == -1) {
-         visited[w] = v;
-         if (w == dest)
-	    return true;
-         else if (dfsPathCheck(g, nV, w, dest))
-            return true;
-      }
-   return false;
+	//Mark the src as visited
+	//Loop through all the adjacent vertices
+	int i = 0;
+	while (i < nV) {
+		if (adjacent(g, i, v) && visited[i] == -1) {
+			visited[i] = v;
+			if (i == dest) {
+				return true;
+			}
+			else if (dfsPathCheck(g, nV, i, dest)) {
+				return true;
+			}
+		}
+		
+		i +=1;
+	}
+	return false;
 }
 
 bool findPathDFS(Graph g, int nV, Vertex src, Vertex dest) {
-   Vertex v;
-   for (v = 0; v < nV; v++)
-      visited[v] = -1;
-   visited[src] = src;
+	
+	for (int i = 0; i < nV; i+=1) {
+		visited[i] = -1;
+	}
+   
+	visited[src] = src;
+	   
    return dfsPathCheck(g, nV, src, dest);
 }
 

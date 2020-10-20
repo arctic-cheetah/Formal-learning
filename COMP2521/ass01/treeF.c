@@ -179,7 +179,7 @@ FileList insert_listNode(FileList ListNode, char *fileName,
 
     while (curr != NULL && strcmp(fileName, curr->filename) >= 0) {
         //Don't add identical filenames
-        if (strcmp(fileName, curr->filename) == 0) {
+        if (!strcmp(fileName, curr->filename)) {
             free(newNode);
             return ListNode;
         }
@@ -188,7 +188,7 @@ FileList insert_listNode(FileList ListNode, char *fileName,
         curr = curr->next;
     }
     //Do not add identical filenames
-    if (strcmp(fileName, prev->filename) == 0) {
+    if (!strcmp(fileName, prev->filename)) {
         free(newNode);
         return ListNode;
     }

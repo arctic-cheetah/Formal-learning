@@ -4,23 +4,23 @@
 #include <stdbool.h>
 
 #include "Graph.h"
-//My utility function
 void DFS(Graph g, int src, int *track) {
 	int vertices = GraphNumVertices(g); //O(1)
-	track[src] = 1;
+	//An array that tracks each node;
 	printf("%d ", src);
+	track[src] = 1;
 	int i = 0;
 	while (i < vertices) {
-		if (!track[i] && GraphIsAdjacent(g, src, i)) {
+		//Check if recursion is needed
+		if (GraphIsAdjacent(g, src, i) && !track[i]) {
 			DFS(g, i, track);
 		}
 		i +=1;
 	}
 }
 
-
 void depthFirstSearch(Graph g, int src) {
-	int vertices = GraphNumVertices(g);
+	int nV = GraphNumVertices(g);
 	int *track = malloc(sizeof(int) * vertices);
 
 	//set track to zero
