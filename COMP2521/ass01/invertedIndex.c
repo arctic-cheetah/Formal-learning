@@ -7,18 +7,6 @@
 
 #define MAX_LENGTH 100
 
-//REMOVE MAIN FUNCTION AFTER DEBUGGING
-int main () {
-	tree t = generateInvertedIndex("collection.txt");
-	printInvertedIndex(t);
-	TfIdfList list = calculateTfIdf(t, "mars" , 7);
-	printf("\n\n");
-	print_tilList(list);
-	char *str[] = {"nasa", "mars", "moon", NULL};
-	printf("\n\n");
-	TfIdfList myL = retrieve(t, str , 7);
-	print_tilList(myL);
-}
 ///////////////////////////////////////////////////////////////////
 //Part 1:
 //Helper functions for normaliseWord

@@ -3,9 +3,6 @@
 //By z5312813
 
 
-// NEED TO CONSIDER HALTING CASES
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -54,7 +51,7 @@ int execute_syscall_NP(int call, int *reg);
 int main(int argc, char *argv[]) {
 	//trace_mode is 1 if -r is absent
 	// 0 if present
-    int trace_mode; 
+    int trace_mode;
     char *filename = process_arguments(argc, argv, &trace_mode);
 
     int n_instructions;
@@ -83,7 +80,7 @@ void execute_instructions(int n_instructions,
     int prevPc = 0;
     //Assign all 32 registers to 0
     int reg[NUMREG] = {0};
-    
+
     char instruct[MAX_LEN];
 
     while (pc < n_instructions) {
@@ -94,13 +91,13 @@ void execute_instructions(int n_instructions,
     	}
     	if (trace_mode) {
             printf("%d: 0x%08X ", pc, instructions[pc]);
-            
+
 			//Obtain opCode
 			uint32_t opCode = instructions[pc] >> OPCODE;
-			
+
 			//extract the funct section
 			uint32_t funct = function(instructions[pc]);
-				
+
 			strcpy(instruct, instructCode(opCode, funct));
 			//print out the instruction
 			if (!strcmp(instruct, "addi")) {
@@ -109,7 +106,7 @@ void execute_instructions(int n_instructions,
 			else {
 				printf("%s  ", instruct);
 			}
-			
+
 			print_instruct(instruct, instructions[pc]);
 			printf("\n");
 			//Check for bad instructions
@@ -120,7 +117,7 @@ void execute_instructions(int n_instructions,
 			if (!execute_op_code(instruct, instructions[pc], reg)) {
 				break;
 			}
-			
+
 			//Check for branching
 			//Terminate program for bad branches
 			uint32_t Sreg = src_reg(instructions[pc]);
@@ -135,7 +132,7 @@ void execute_instructions(int n_instructions,
 				}
 				else {
 					printf(">>> branch not taken\n");
-				} 
+				}
 			}
 			else if (!strcmp(instruct, "bne")) {
 				if (reg[Sreg] != reg[Treg]) {
@@ -146,26 +143,26 @@ void execute_instructions(int n_instructions,
 				}
 				else {
 					printf(">>> branch not taken\n");
-				} 
+				}
 			}
-			
+
 
         }
         //Consider if trace_mode is off
         else {
-        	
+
     		if (instructions[pc] <= 0) {
     			printf("invalid instruction code\n");
     			break;
     		}
         	//Obtain opCode
 			uint32_t opCode = instructions[pc] >> OPCODE;
-			
+
 			//extract the funct section
 			uint32_t funct = function(instructions[pc]);
-				
+
 			strcpy(instruct, instructCode(opCode, funct));
-			
+
 			if (!execute_op_code_NP(instruct, instructions[pc], reg)) {
 				break;
 			}
@@ -185,7 +182,7 @@ void execute_instructions(int n_instructions,
 					continue;
 				}
 			}
-        	
+
         }
         pc++;
     }
@@ -238,9 +235,9 @@ int16_t get_imm(int instruction) {
 }
 
 //A function that returns the instruction as a string
-//CHECK FOR BUGS
-
 char *instructCode(int opCode, int funct) {
+	//Match the opCode and funct bit pattern
+	//To their corresponding instructions in decimal
 	if (opCode == 0) {
 		if (funct == 32) {
 			return "add";
@@ -283,9 +280,9 @@ void print_instruct(char *instruct, int instruction) {
 	uint32_t Treg = temp_reg(instruction);
 	uint32_t Dreg = dest_reg(instruction);
 	int16_t imm = get_imm(instruction);
-	
+
 	//Need to implement branch
-	
+
 	if (!strcmp(instruct, "add")) {
 		printf("$%d, ", Dreg);
 		printf("$%d, ", Sreg);
@@ -332,17 +329,18 @@ void print_instruct(char *instruct, int instruction) {
 	}
 }
 
-//A function that executes the instructions, 
+//A function that executes the instructions,
 //prints and stores any value into the registers
-//Returns zero if syscall exit(10) is executed
+//Returns zero if exit(10) or a bad syscall is executed
 int execute_op_code(char *instruct, int instruction, int *reg) {
 	uint32_t Sreg = src_reg(instruction);
 	uint32_t Treg = temp_reg(instruction);
 	uint32_t Dreg = dest_reg(instruction);
 	int16_t imm = get_imm(instruction);
-	
+
 	int good = 1;
 	
+	//Get the correct instructions
 	if (!strcmp(instruct, "add")) {
 		reg[Dreg] = reg[Sreg] + reg[Treg];
 		printf(">>> $%d = %d\n", Dreg, reg[Dreg]);
@@ -364,11 +362,13 @@ int execute_op_code(char *instruct, int instruction, int *reg) {
 		printf(">>> $%d = %d\n", Treg, reg[Treg]);
 	}
 	else if (!strcmp(instruct, "ori")) {
-		reg[Treg] = reg[Sreg] | imm;
+        uint16_t imm2 = (uint16_t)imm;
+		reg[Treg] = reg[Sreg] | imm2;
 		printf(">>> $%d = %d\n", Treg, reg[Treg]);
 	}
 	else if (!strcmp(instruct, "lui")) {
-		reg[Treg] = imm << 16;
+        uint32_t imm2 = (uint16_t)imm;
+		reg[Treg] = imm2 << 16;
 		printf(">>> $%d = %d\n", Treg, reg[Treg]);
 	}
 	else if (!strcmp(instruct, "syscall")) {
@@ -377,21 +377,23 @@ int execute_op_code(char *instruct, int instruction, int *reg) {
 	}
 	//$0 must always be zero
 	reg[0] = 0;
-	
+
 	return good;
 }
 
-//A function that does not print and only executes the instructions 
+//NP = no print
+//A function that does not print and only executes the instructions
 //and stores any value into the registers
-//Returns zero if syscall exit(10) is executed
+//Returns zero if exit(10) or a bad syscall is executed
 int execute_op_code_NP(char *instruct, int instruction, int *reg) {
 	uint32_t Sreg = src_reg(instruction);
 	uint32_t Treg = temp_reg(instruction);
 	uint32_t Dreg = dest_reg(instruction);
 	int16_t imm = get_imm(instruction);
-	
+
 	int good = 1;
-	
+
+	//Match the correct instruction
 	if (!strcmp(instruct, "add")) {
 		reg[Dreg] = reg[Sreg] + reg[Treg];
 	}
@@ -412,10 +414,12 @@ int execute_op_code_NP(char *instruct, int instruction, int *reg) {
 		reg[Treg] = reg[Sreg] + imm;
 	}
 	else if (!strcmp(instruct, "ori")) {
-		reg[Treg] = reg[Sreg] | imm;
+        uint16_t imm2 = (uint16_t)imm;
+		reg[Treg] = reg[Sreg] | imm2;
 	}
 	else if (!strcmp(instruct, "lui")) {
-		reg[Treg] = imm << 16;
+        uint32_t imm2 = (uint16_t)imm;
+		reg[Treg] = imm2 << 16;
 	}
 	else if (!strcmp(instruct, "syscall")) {
 		//Check the syscall
@@ -428,7 +432,7 @@ int execute_op_code_NP(char *instruct, int instruction, int *reg) {
 	}
 	//$0 must always be zero
 	reg[0] = 0;
-	
+
 	return good;
 }
 
@@ -441,7 +445,7 @@ int execute_syscall(int call, int *reg) {
 	}
 	else if (call == 11) {
 		printf("<<< %c\n", reg[4]);
-	}	
+	}
 	else if (call == 10) {
 		good = 0;
 	}
@@ -461,7 +465,7 @@ int execute_syscall_NP(int call, int *reg) {
 	}
 	else if (call == 11) {
 		printf("%c", reg[4]);
-	}	
+	}
 	else if (call == 10) {
 		good = 0;
 	}

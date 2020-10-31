@@ -4,79 +4,49 @@
 
 #include "Graph.h"
 
-#define MAX 1023
-
-//Find the number of reachable nodes via Dijkstra's algorithm
-
-//A helper function that returns the next node in Dijkstra's algorithm
-int getNextNode(int *HasVisited, int *vSet, int numVertex){
-	
-	int currNode = 0;
-	int smallDist = MAX;
-	
-	for (int i = 0; i < numVertex; i +=1) {
-		if (vSet[i] <= smallDist && !HasVisited[i]) {
-			smallDist = vSet[i];
-			currNode = i;
-		}
-	}
-	return currNode;
-}
+//Find the number of reachable nodes via DFS algorithm
 
 void print_array (int *array, int length) {
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < length; i +=1) {
 		printf("%d ", array[i]);
 	}
 	printf("\n");
 }
 
-int numReachable(Graph g, int src) {
-	//create a vertex set
-	int numVertex = GraphNumVertices(g);
-	//the vertex set that holds the distance from the source
-	int *vSet = calloc(numVertex, sizeof(Vertex));
-	//The set that tracks the explored vertices
-	int *HasVisited = calloc(numVertex, sizeof(Vertex));
-	
-	for (int i = 0; i < numVertex; i +=1) {
-		vSet[i] = MAX;
-	}	
-	
-	vSet[src] = 0;
-	
+
+void DFS (Graph g, Vertex v, int *hasVisited) {
+	int nV = GraphNumVertices(g); 
 	int i = 0;
-	while (i < numVertex) {
-		
-		int curr = getNextNode(HasVisited, vSet, numVertex);
-		HasVisited[curr] = 1;
-		
-		//j is the neighbour
-		int j = 0;
-		while (j < numVertex) {
-			int newDist = vSet[curr] + GraphIsAdjacent(g, curr, j);
-			
-			if (newDist < vSet[j] && !HasVisited[j] 
-				&& GraphIsAdjacent(g, curr, j)) {
-				
-				vSet[j] = newDist;
-			}
-			
-			j +=1;
+	//mark the current node as visited
+	hasVisited[v] = 1;
+	while (i < nV) {
+		//Continue searching only if the node is adjacent and hasn't been
+		//visited
+		if (!hasVisited[i] && GraphIsAdjacent(g, v, i)) {
+			DFS(g, i, hasVisited);
 		}
 		i +=1;
 	}
 	
-	i = 0;
+}
+
+
+int numReachable(Graph g, int src) {
+	
+	int nV = GraphNumVertices(g);
+	int *hasVisited = calloc(nV , sizeof(Vertex));
+	DFS(g, src, hasVisited);
+	int i = 0;
 	int reachable = 0;
-	while (i < numVertex) {
-		if (vSet[i] != MAX) {
+	while (i < nV) {
+		if (hasVisited[i]) {
 			reachable +=1;
 		}
-		i +=1;
+		i+=1;
 	}
-	free(vSet);
-	free(HasVisited);
 	
+	//print_array(hasVisited, nV);
+	free(hasVisited);
 	return reachable;
 }
 

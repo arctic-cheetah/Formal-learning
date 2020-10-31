@@ -1,0 +1,189 @@
+The words in nasa.txt are: 
+experiments
+nasa
+eu
+japan
+robot
+planet
+volcano
+moon
+weather
+mars
+jupiter
+moon
+planets
+The number of words is: 13
+
+The words in news1.txt are: 
+mars
+moon
+weather
+robotics
+landing
+red
+planet
+volcano
+moon
+weather
+sun
+mars
+man
+promise
+The number of words is: 14
+
+The words in file11.txt are: 
+mars
+has
+long
+been
+the
+subject
+of
+human
+interest
+early
+telescopic
+observations
+revealed
+color
+changes
+on
+the
+surface
+that
+were
+attributed
+to
+seasonal
+vegetation
+and
+apparent
+linear
+features
+were
+ascribed
+to
+intelligent
+design
+The number of words is: 33
+
+The words in mixed.txt are: 
+sun
+jupitor
+sun
+pluto
+moon
+sun
+small
+circle
+high
+winds
+circle
+mars
+moons
+waves
+volcano
+sun
+light
+rays
+The number of words is: 18
+
+The words in planets.txt are: 
+mars
+sun
+pluto
+moon
+circle
+seasonal
+winds
+circle
+mars
+The number of words is: 9
+
+The words in file21.txt are: 
+mars
+revealed
+color
+changes
+surface
+attributed
+to
+seasonal
+vegetation
+linear
+features
+were
+ascribed
+to
+intelligent
+design
+The number of words is: 16
+
+The words in info31.txt are: 
+sun
+volcano
+moon
+weather
+cycles
+light
+rays
+The number of words is: 7
+
+and file11.txt (0.030303)
+apparent file11.txt (0.030303)
+ascribed file11.txt (0.030303) 
+attributed file11.txt (0.030303) 
+been file11.txt (0.030303)
+changes file11.txt (0.030303) 
+circle mixed.txt (0.111111) planets.txt (0.222222) 
+color file11.txt (0.030303) 
+cycles info31.txt (0.142857)
+design file11.txt (0.000000) 
+early file11.txt (0.000000)
+eu nasa.txt (0.000000)
+experiments nasa.txt (0.076923)
+features file11.txt (0.030303) 
+has file11.txt (0.030303)
+high mixed.txt (0.055556)
+human file11.txt (0.030303)
+intelligent file11.txt (0.030303) 
+interest file11.txt (0.000000)
+japan nasa.txt (0.000000)
+jupiter nasa.txt (0.076923)
+jupitor mixed.txt (0.000000)
+landing news1.txt (0.071429)
+light mixed.txt (0.055556)
+linear file11.txt (0.030303) 
+long file11.txt (0.030303)
+man news1.txt (0.071429)
+mars nasa.txt (0.076923) news1.txt (0.071429) news1.txt (0.071429) planets.txt (0.000000) 
+moon nasa.txt (0.153846) news1.txt (0.142857) news1.txt (0.142857) 
+moons mixed.txt (0.055556)
+nasa nasa.txt (0.000000)
+observations file11.txt (0.030303)
+of file11.txt (0.030303)
+on file11.txt (0.030303)
+planet nasa.txt (0.076923) 
+planets nasa.txt (0.076923)
+pluto mixed.txt (0.000000) 
+promise news1.txt (0.071429)
+rays mixed.txt (0.055556)
+red news1.txt (0.071429)
+revealed file11.txt (0.030303) 
+robot nasa.txt (0.076923)
+robotics news1.txt (0.071429)
+seasonal file11.txt (0.030303) file21.txt (0.062500) 
+small mixed.txt (0.055556)
+subject file11.txt (0.030303)
+sun news1.txt (0.071429) 
+surface file11.txt (0.030303) 
+telescopic file11.txt (0.030303)
+that file11.txt (0.030303)
+the file11.txt (0.060606)
+to file11.txt (0.060606) file21.txt (0.125000) 
+vegetation file11.txt (0.030303) 
+volcano nasa.txt (0.076923) 
+waves mixed.txt (0.055556)
+weather nasa.txt (0.076923) news1.txt (0.142857) 
+were file11.txt (0.060606) 
+winds mixed.txt (0.055556) 

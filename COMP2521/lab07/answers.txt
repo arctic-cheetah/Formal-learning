@@ -1,0 +1,53 @@
+
+NOTE:
+- Your time complexities should be expressed in big-O notation and be in
+  terms of n, where n is the number of people who  have  been  added  to
+  Friendbook.
+
+===============
+  FbIsFriend
+===============
+
+- Worst case time complexity: O(log(n))
+
+- Explanation: The function "nameToId" is implemented using an AVL_tree with a guaranteed worst case height of O(logn). FbIsFriend calls "nameToId" twice, which has a complexity of 2*logn, which means O(2log(n)) = O(log(n))
+
+===============
+FbMutualFriends
+===============
+
+- Worst case time complexity: O(n^2)
+
+- Explanation:  The presence of the 2 nested loops of length (n), along with the fact that we have to index in the array to match mutual friends means the complexity is O(n^2)
+
+===============
+ FbFriendRecs1
+===============
+
+- Worst case time complexity: O(n^2)
+
+- Explanation: The possible number of mutual friends is between 0 to n-2. This means that outer loop in line 254, will execute at worst n-2 times. Yet, because we need to print the number of mutual friends by decrementing 1 from maxMutual in every instance that i == n means we are effectively conducting:
+
+(n-2)*n operations.
+
+We can ignore that between line 231 and 244, there is a loop which has n operations, with a strcmp function which will have min(l, m) operations. These terms are insignificant in comparison to the loop in line 254 - 272.
+
+===============
+ FbFriendRecs2
+===============
+
+- Worst case time complexity: O(n(n-1)) = O(n^2)
+
+- Explanation:  In the worst case scenario, we will queue (n-1) people in the first loop, noting that we must exclude the starting person. 
+
+It should be noted that variable "nP" could be equal to "n" in the worst scenario, and implies that each vertex(friend) from currNode must be checked with n operations, and at most (n-1) times. Ergo, O(n*(n-1)) = O(n^2)
+
+
+
+
+
+
+
+
+
+
