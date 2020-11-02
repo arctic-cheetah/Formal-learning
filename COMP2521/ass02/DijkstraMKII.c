@@ -1,14 +1,15 @@
-//Used adjacency matrix algorithm
-//needs reworking
+//Used priority queue to traverse the graph
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "Graph.h"
 #include "Dijkstra.h"
+#include "PQ.h"
 
-#define INF 9999
+#define INF 0x7FFFFFFF
 
+///////////////////////////////////////////////////////////////////
 //Helper functions:
 int smallDist (Graph g, int *hasVisited, int *dist) {
 	int nV = GraphNumVertices(g);
@@ -23,13 +24,6 @@ int smallDist (Graph g, int *hasVisited, int *dist) {
 	return curr;
 }
 
-//Print an array
-void print_array(int *array, int length) {
-	for (int i = 0; i < length && array[i] >= 0; i +=1) {
-		printf("%d ", array[i]);
-	}
-	printf("\n");
-} 
 
 
 //A function that creates a new PredNode
@@ -43,7 +37,7 @@ PredNode *new_node (int newNode) {
 //Allocate memory for an array of  predecessor  lists
 PredNode **newPred (Vertex src, int nV) {
 	PredNode **pred = malloc(sizeof(PredNode) * nV);
-	//Set all nodes to NULL
+
 	for (int i = 0; i < nV; i +=1) {
 		pred[i] = NULL;
 	}
@@ -84,7 +78,7 @@ PredNode *freeList (PredNode *headList) {
 	while (curr != NULL) {
 		prev = curr;
 		curr = curr->next;
-		prev = freeNode(prev);
+        prev = freeNode(prev);
 	}
 	free(prev);
 	return headList;
@@ -98,19 +92,22 @@ int distance (AdjList node, int next) {
 	}
 	AdjList curr = node;
 
+    //Get to the end of the list
 	while (curr != NULL && curr->v != next) {
 		curr = curr->next;
 	}
-	//Debugging
+
 	if (curr == NULL) {
 		return 0;
 	}
 
 	return curr->weight;
 }
+//////////////////////////////////////////////////////////////////////
+///////////
 
 ShortestPaths dijkstra(Graph g, Vertex src) {
-
+    
 	//Allocate memory for fields in ShortestPaths
 	int nV = GraphNumVertices(g);
 	int *hasVisited = calloc(nV, sizeof(Vertex));
@@ -136,8 +133,21 @@ ShortestPaths dijkstra(Graph g, Vertex src) {
 		int curr = smallDist(g, hasVisited, dist);
 		//Remove the curr node from the unexplored set
 		hasVisited[curr] = 1;
-		int j = 0;
-		while (j < nV) {
+		
+		//Use a priority queue,
+
+		//Obtain all outgoing edges from curr
+		PQ pq = PQNew();
+		AdjList head = GraphOutIncident(g, curr);
+
+		AdjList c1 = head;
+		while (c1 != NULL) {
+			PQInsert(pq, c1->v, c1->weight);
+			c1 = c1->next;
+		}
+
+		while (!PQIsEmpty(pq)) {
+			int j = PQDequeue(pq);
 			int currToJ = distance(GraphOutIncident(g, curr), j);
 			int newDist = currToJ + dist[curr]; 
 
@@ -145,6 +155,7 @@ ShortestPaths dijkstra(Graph g, Vertex src) {
 			//Consider multiple
 			//predecessor nodes in the linked list
 			if (!hasVisited[j] && currToJ) {
+
 
 				if (newDist < dist[j]) {
 					dist[j] = newDist;
@@ -156,9 +167,10 @@ ShortestPaths dijkstra(Graph g, Vertex src) {
 					if (pred[j] == NULL) {
 						pred[j] = insertNode(pred[j], curr);
 					}
-					//Or a pred list with nodes
-					//then FREE the current list
-					//and APPEND the newNode
+					//There exists pred list with nodes 
+                    //with a longer distance
+					//FREE the current list
+					//APPEND the newNode
 					else if (pred[j] != NULL) {
 						pred[j] = freeList(pred[j]);
 						pred[j] = insertNode(pred[j], curr);
@@ -172,25 +184,28 @@ ShortestPaths dijkstra(Graph g, Vertex src) {
 					pred[j] = insertNode(pred[j], curr);
 				}
 			}
-			
-			j +=1;
 		}
+		PQFree(pq);
 		i +=1;
 	}
-	
-	//Set the distance of any unreachable vertices to 0
+
+    //Set the distance of any unreachable vertices to 0
 	for (int k = 0; k < nV; k +=1) {
 		if (dist[k] == INF) {
 			dist[k] = 0;
 		}
 	}
 
+	
 	//free(dist);
 	//free(pred);
     free(hasVisited);
 
     return sp;
 }
+
+
+
 
 
 

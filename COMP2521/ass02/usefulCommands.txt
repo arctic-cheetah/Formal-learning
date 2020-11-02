@@ -1,0 +1,263 @@
+    1  dcc Dijkstra.c Graph.c /Ass2_Testing/testDijkstra.c
+    2  dcc Dijkstra.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test
+    3  ./test Ass2_Testing/graphs/1.in
+    4  ./test Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+    5  dcc Dijkstra.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test
+    6  clear
+    7  dcc Dijkstra.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test
+    8  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test
+    9  ./test Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+   10  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test
+   11  ./test Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+   12  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test
+   13  ./test Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+   14  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test
+   15  ./test Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1II.out
+   16  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test
+   17  ./test Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+   18  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   19  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   20  ./test Ass2_Testing/graphs/2.in > Ass2_Testing/dijkstraTests/2.out
+   21  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   22  ./test Ass2_Testing/graphs/2.in > Ass2_Testing/dijkstraTests/2.out
+   23  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   24  ./test1 Ass2_Testing/graphs/2.in > Ass2_Testing/dijkstraTests/2.out
+   25  ./test2 Ass2_Testing/graphs/2.in > Ass2_Testing/dijkstraTests/2.out
+   26  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   27  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   28  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   29  ./test2 Ass2_Testing/graphs/2.in > Ass2_Testing/dijkstraTests/2.out
+   30  ./test2 Ass2_Testing/graphs/2.in > Ass2_Testing/dijkstraTests/2II.out
+   31  ./test1 Ass2_Testing/graphs/2.in > Ass2_Testing/dijkstraTests/2.out
+   32  ./test1 Ass2_Testing/graphs/3.in > Ass2_Testing/dijkstraTests/3.out
+   33  ./test1 Ass2_Testing/graphs/4.in > Ass2_Testing/dijkstraTests/4.out
+   34  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   35  ./test1 Ass2_Testing/graphs/4.in > Ass2_Testing/dijkstraTests/4.out
+   36  ./test1 Ass2_Testing/graphs/5.in > Ass2_Testing/dijkstraTests/5.out
+   37  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   38  ./test1 Ass2_Testing/graphs/5.in > Ass2_Testing/dijkstraTests/5.out
+   39  ./test1 Ass2_Testing/graphs/6.in > Ass2_Testing/dijkstraTests/6.out
+   40  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   41  ./test2 Ass2_Testing/graphs/3.in > Ass2_Testing/dijkstraTests/3.out
+   42  ./test2 Ass2_Testing/graphs/3.in > Ass2_Testing/dijkstraTests/3II.out
+   43  ./test1 Ass2_Testing/graphs/3.in > Ass2_Testing/dijkstraTests/3.out
+   44  ./test2 Ass2_Testing/graphs/4.in > Ass2_Testing/dijkstraTests/4II.out
+   45  ./test2 Ass2_Testing/graphs/5.in > Ass2_Testing/dijkstraTests/5II.out
+   46  ./test2 Ass2_Testing/graphs/6.in > Ass2_Testing/dijkstraTests/6II.out
+   47  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   48  valgrind ./test1 Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+   49  valgrind --leak-check=full ./test1 Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+   50  dcc Dijkstra.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test1
+   51  valgrind --leak-check=full ./test1 Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+   52  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   53  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1II.out
+   54  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   55  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1II.out
+   56  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   57  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1II.out
+   58  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   59  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1II.out
+   60  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   61  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/1.in 
+   62  ./test2 Ass2_Testing/graphs/1.in 
+   63  valgrind ./test2 Ass2_Testing/graphs/1.in 
+   64  valgrind ./test2 Ass2_Testing/graphs/2.in 
+   65  valgrind ./test2 Ass2_Testing/graphs/3.in 
+   66  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/2.in 
+   67  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/3.in 
+   68  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/4.in 
+   69  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/5.in 
+   70  valgrind --leak-check=full -v ./test2 Ass2_Testing/graphs/5.in 
+   71  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   72  valgrind ./test2 Ass2_Testing/graphs/1.in 
+   73  ./test2 Ass2_Testing/graphs/1.in 
+   74  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   75  ./test2 Ass2_Testing/graphs/1.in 
+   76  valgrind ./test2 Ass2_Testing/graphs/1.in 
+   77  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   78  valgrind ./test2 Ass2_Testing/graphs/1.in 
+   79  ./test2 Ass2_Testing/graphs/1.in 
+   80  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/1.in 
+   81  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   82  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/1.in 
+   83  ./test2 Ass2_Testing/graphs/1.in 
+   84  valgrind --leak-check=full ./test2 
+   85  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   86  valgrind --leak-check=full ./test2 Ass2_Testing/graphs/1.in 
+   87  ./test2 Ass2_Testing/graphs/1.in 
+   88  valgrind ./test2 Ass2_Testing/graphs/1.in 
+   89  dcc DijkstraMKII.c PQ.c Graph.c -o test2
+   90  valgrind ./test2
+   91  dcc DijkstraMKII.c PQ.c Graph.c -o test2
+   92  valgrind ./test2
+   93  valgrind --leak-check=full ./test2
+   94  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   95  scp DijkstraMKII.c z5312813@cse.unsw.edu.au:~/COMP2521/ass02
+   96  ls
+   97  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+   98  scp test2 z5312813@cse.unsw.edu.au:~/COMP2521/ass02
+   99  ./test2 Ass2_Testing/graphs/7.in 
+  100  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+  101  ./test2 Ass2_Testing/graphs/7.in 
+  102  history
+  103  history > usefulCommands.txt
+  104  ./test2 Ass2_Testing/graphs/7.in > Ass2_Testing/dijkstraTests/7.out
+  105  ./test2 Ass2_Testing/graphs/8.in > Ass2_Testing/dijkstraTests/8.out
+  106  ./test2 Ass2_Testing/graphs/7.in 
+  107  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+  108  ./test2 Ass2_Testing/graphs/7.in 
+  109  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/testDijkstra.c Ass2_Testing/GraphRead.c -o test2
+  110  ./test2 Ass2_Testing/graphs/7.in 
+  111  clear
+  112  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  113  dcc DijkstraMKII.c CentralityMeasures.c readGraph.c  PQ.c Graph.c Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  114  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  115  ls
+  116* ./test2 Ass2_Testing/graphs/1.in 
+  117  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  118  ls
+  119  ./testCentralityMeasures Ass2_Testing/graphs/1.in c > Ass2_Testing/centralityMeasuresTests/1b.out
+  120  ./testCentralityMeasures Ass2_Testing/graphs/1.in c > Ass2_Testing/centralityMeasuresTests/1c.out
+  121  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  122  ./testCentralityMeasures Ass2_Testing/graphs/1.in c > Ass2_Testing/centralityMeasuresTests/1c.out
+  123  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  124  ./testCentralityMeasures Ass2_Testing/graphs/1.in c > Ass2_Testing/centralityMeasuresTests/1c.out
+  125  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  126  ./testCentralityMeasures Ass2_Testing/graphs/1.in c > Ass2_Testing/centralityMeasuresTests/1c.out
+  127  ./testCentralityMeasures Ass2_Testing/graphs/2.in c > Ass2_Testing/centralityMeasuresTests/2c.out
+  128  ./testCentralityMeasures Ass2_Testing/graphs/3.in c > Ass2_Testing/centralityMeasuresTests/3c.out
+  129  ./testCentralityMeasures Ass2_Testing/graphs/4.in c > Ass2_Testing/centralityMeasuresTests/4c.out
+  130  ./testCentralityMeasures Ass2_Testing/graphs/5.in c > Ass2_Testing/centralityMeasuresTests/5c.out
+  131  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  132  ./testCentralityMeasures Ass2_Testing/graphs/5.in c > Ass2_Testing/centralityMeasuresTests/5c.out
+  133  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  134  ./testCentralityMeasures Ass2_Testing/graphs/4.in c > Ass2_Testing/centralityMeasuresTests/4c.out
+  135  ./testCentralityMeasures Ass2_Testing/graphs/5.in c > Ass2_Testing/centralityMeasuresTests/5c.out
+  136  ./testCentralityMeasures Ass2_Testing/graphs/6.in c > Ass2_Testing/centralityMeasuresTests/6c.out
+  137  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  138  ./testCentralityMeasures Ass2_Testing/graphs/4.in c > Ass2_Testing/centralityMeasuresTests/4c.out
+  139  ./testCentralityMeasures Ass2_Testing/graphs/5.in c > Ass2_Testing/centralityMeasuresTests/5c.out
+  140  ./testCentralityMeasures Ass2_Testing/graphs/6.in c > Ass2_Testing/centralityMeasuresTests/6c.out
+  141  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  142  ./testCentralityMeasures Ass2_Testing/graphs/4.in c > Ass2_Testing/centralityMeasuresTests/4c.out
+  143  ./testCentralityMeasures Ass2_Testing/graphs/5.in c > Ass2_Testing/centralityMeasuresTests/5c.out
+  144  ./testCentralityMeasures Ass2_Testing/graphs/6.in c > Ass2_Testing/centralityMeasuresTests/6c.out
+  145  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  146  ./testCentralityMeasures Ass2_Testing/graphs/4.in c > Ass2_Testing/centralityMeasuresTests/4c.out
+  147  ./testCentralityMeasures Ass2_Testing/graphs/5.in c > Ass2_Testing/centralityMeasuresTests/5c.out
+  148  ./testCentralityMeasures Ass2_Testing/graphs/6.in c > Ass2_Testing/centralityMeasuresTests/6c.out
+  149  ./testCentralityMeasures Ass2_Testing/graphs/3.in c > Ass2_Testing/centralityMeasuresTests/3c.out
+  150  ./testCentralityMeasures Ass2_Testing/graphs/2.in c > Ass2_Testing/centralityMeasuresTests/2c.out
+  151  ./testCentralityMeasures Ass2_Testing/graphs/1.in c > Ass2_Testing/centralityMeasuresTests/1c.out
+  152  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  153  clear
+  154  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  155  ./testCentralityMeasures Ass2_Testing/graphs/1.in b > Ass2_Testing/centralityMeasuresTests/1b.out
+  156  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  157  ./testCentralityMeasures Ass2_Testing/graphs/1.in b > Ass2_Testing/centralityMeasuresTests/1b.out
+  158  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  159  ./testCentralityMeasures Ass2_Testing/graphs/1.in b > Ass2_Testing/centralityMeasuresTests/1b.out
+  160  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  161  ./testCentralityMeasures Ass2_Testing/graphs/1.in b > Ass2_Testing/centralityMeasuresTests/1b.out
+  162  dcc DijkstraMKII.c testDijkstra.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  163  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testDijkstra.c -o testCentralityMeasures
+  164  dcc DijkstraMKII.c PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testDijkstra.c -o test
+  165  ./test Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+  166  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  167  ./test Ass2_Testing/graphs/1.in > Ass2_Testing/dijkstraTests/1.out
+  168  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  169* ./testCentralityMeasures Ass2_Testing/graphs/1.in c
+  170  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  171  ./testCentralityMeasures Ass2_Testing/graphs/1.in b > Ass2_Testing/centralityMeasuresTests/1b.out
+  172  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  173  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  174  ./testCentralityMeasures Ass2_Testing/graphs/1.in b > Ass2_Testing/centralityMeasuresTests/1b.out
+  175  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  176  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  177  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  178  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  179  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  180  ./testCentralityMeasures Ass2_Testing/graphs/1.in b > Ass2_Testing/centralityMeasuresTests/1b.out
+  181  ./testCentralityMeasures Ass2_Testing/graphs/3.in b > Ass2_Testing/centralityMeasuresTests/3b.out
+  182  ./testCentralityMeasures Ass2_Testing/graphs/4.in b > Ass2_Testing/centralityMeasuresTests/4b.out
+  183  ./testCentralityMeasures Ass2_Testing/graphs/5.in b > Ass2_Testing/centralityMeasuresTests/5b.out
+  184  diff Ass2_Testing/graphs/5.in b Ass2_Testing/centralityMeasuresTests/5b.out
+  185  diff Ass2_Testing/graphs/5.in Ass2_Testing/centralityMeasuresTests/5b.out
+  186  diff Ass2_Testing/centralityMeasuresTests/5b.out Ass2_Testing/centralityMeasuresTests/5b.exp
+  187  scp CentralityMeasures.c z5312813@cse.unsw.edu.au:~/COMP2521/ass02
+  188  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  189  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  190  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  191  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  192  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  193  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  194  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  195  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  196  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  197  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  198  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bII.out
+  199  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  200  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bII.out
+  201  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  202  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bII.out
+  203  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  204  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bII.out
+  205  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  206  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bII.out
+  207  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  208  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bII.out
+  209  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  210  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bIII.out
+  211  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  212  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bIII.out
+  213  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  214  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2bIII.out
+  215  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  216  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  217  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  218  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  219  dcc DijkstraMKII.c CentralityMeasures.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  220  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  221  dcc DijkstraMKII.c CentralityMeasuresII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  222  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  223  dcc DijkstraMKII.c CentralityMeasuresII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  224  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  225  dcc DijkstraMKII.c CentralityMeasuresII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  226  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  227  dcc DijkstraMKII.c CentralityMeasuresII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  228  ./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+  229  ./testCentralityMeasures Ass2_Testing/graphs/5.in b > Ass2_Testing/centralityMeasuresTests/5b.out
+  230  ./testCentralityMeasures Ass2_Testing/graphs/6.in b > Ass2_Testing/centralityMeasuresTests/6b.out
+  231  dcc DijkstraMKII.c CentralityMeasuresII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  232  ./testCentralityMeasures Ass2_Testing/graphs/5.in b > Ass2_Testing/centralityMeasuresTests/5b.out
+  233  ./testCentralityMeasures Ass2_Testing/graphs/6.in b > Ass2_Testing/centralityMeasuresTests/6b.out
+  234  dcc DijkstraMKII.c CentralityMeasuresII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  235  ./testCentralityMeasures Ass2_Testing/graphs/1.in b n > Ass2_Testing/centralityMeasuresTests/1bn.out
+  236  ./testCentralityMeasures Ass2_Testing/graphs/2.in b n > Ass2_Testing/centralityMeasuresTests/2bn.out
+  237  ./testCentralityMeasures Ass2_Testing/graphs/3.in b n > Ass2_Testing/centralityMeasuresTests/3bn.out
+  238  ./testCentralityMeasures Ass2_Testing/graphs/4.in b n > Ass2_Testing/centralityMeasuresTests/4bn.out
+  239  ./testCentralityMeasures Ass2_Testing/graphs/5.in b n > Ass2_Testing/centralityMeasuresTests/5bn.out
+  240  ./testCentralityMeasures Ass2_Testing/graphs/6.in b n > Ass2_Testing/centralityMeasuresTests/6bn.out
+  241  dcc DijkstraMKII.c CentralityMeasuresIII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  242  ./testCentralityMeasures Ass2_Testing/graphs/1.in b n > Ass2_Testing/centralityMeasuresTests/1bn.out
+  243  ./testCentralityMeasures Ass2_Testing/graphs/2.in b n > Ass2_Testing/centralityMeasuresTests/2bn.out
+  244  ./testCentralityMeasures Ass2_Testing/graphs/3.in b n > Ass2_Testing/centralityMeasuresTests/3bn.out
+  245  ./testCentralityMeasures Ass2_Testing/graphs/4.in b n > Ass2_Testing/centralityMeasuresTests/4bn.out
+  246  ./testCentralityMeasures Ass2_Testing/graphs/5.in b n > Ass2_Testing/centralityMeasuresTests/5bn.out
+  247  ./testCentralityMeasures Ass2_Testing/graphs/6.in b n > Ass2_Testing/centralityMeasuresTests/6bn.out
+  248  dcc DijkstraMKII.c CentralityMeasuresIII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  249  ./testCentralityMeasures Ass2_Testing/graphs/1.in b n > Ass2_Testing/centralityMeasuresTests/1bn.out
+  250  ./testCentralityMeasures Ass2_Testing/graphs/2.in b n > Ass2_Testing/centralityMeasuresTests/2bn.out
+  251  ./testCentralityMeasures Ass2_Testing/graphs/3.in b n > Ass2_Testing/centralityMeasuresTests/3bn.out
+  252  ./testCentralityMeasures Ass2_Testing/graphs/4.in b n > Ass2_Testing/centralityMeasuresTests/4bn.out
+  253  ./testCentralityMeasures Ass2_Testing/graphs/5.in b n > Ass2_Testing/centralityMeasuresTests/5bn.out
+  254  ./testCentralityMeasures Ass2_Testing/graphs/6.in b n > Ass2_Testing/centralityMeasuresTests/6bn.out
+  255  dcc DijkstraMKII.c CentralityMeasuresIII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  256  ./testCentralityMeasures Ass2_Testing/graphs/1.in b n > Ass2_Testing/centralityMeasuresTests/1bn.out
+  257  dcc DijkstraMKII.c CentralityMeasuresIII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  258  ./testCentralityMeasures Ass2_Testing/graphs/1.in b n > Ass2_Testing/centralityMeasuresTests/1bn.out
+  259  dcc DijkstraMKII.c CentralityMeasuresIII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  260  ./testCentralityMeasures Ass2_Testing/graphs/1.in b n > Ass2_Testing/centralityMeasuresTests/1bn.out
+  261  dcc DijkstraMKII.c CentralityMeasuresIII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+  262  ./testCentralityMeasures Ass2_Testing/graphs/1.in bn > Ass2_Testing/centralityMeasuresTests/1bn.out
+  263  history > usefulCommands.txt

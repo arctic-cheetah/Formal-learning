@@ -30,7 +30,7 @@ FbMutualFriends
 
 (n-2)*n operations.
 
-We can ignore that between line 231 and 244, there is a loop which has n operations, with a strcmp function which will have min(l, m) operations. These terms are insignificant in comparison to the loop in line 254 - 272.
+Between line 231 and 244, there is a loop which has n operations, with a strcmp function which will have min(l, m) = k operations. These terms are O(nk). For the sake of practicality we assume the name lengths are always less than 100 characters and does not grow with size n. (Real life people shouldn't have name lengths over 100). Doing so, the complexixty of FbFreindRecs1 remains O(n^2).
 
 ===============
  FbFriendRecs2

@@ -9,13 +9,13 @@
 #include "PQ.h"
 #include "Graph.h"
 
-int item = 0;
-int DQ = 0;
+#define LOWPRIORITY 0x7FFFFFFF
 
 /////////////////////////////////////////////////////////////////////////
 ///Helper functions
+
 //A function that returns the number of nodes reachable from v in a graph
-//Excluding the current vertex
+//Excluding the current vertex (n)
 int reachableNodes (ShortestPaths sp, int v) {
     int i = 0;
     int reachable = 0;
@@ -42,9 +42,20 @@ int sumOfAllDist (ShortestPaths sp, int v) {
     return sum;
 }
 
-//A function that returns the sum of all the shortest paths
-//from s to t by using the predecessor list
-int numShortPath (PredNode *head) {
+//A function which enqueues predecessor vertices
+int addPredNode (ShortestPaths sp, PQ pq, int v) {
+    PredNode *curr = sp.pred[v];
+    int i = 0;
+    while (curr != NULL) {
+        PQInsert(pq, curr->v, LOWPRIORITY);
+        curr = curr->next;
+        i +=1;
+    }
+    return i;
+}
+
+//A function that returns the number of predecessors to a node
+int numPred (PredNode *head) {
     PredNode *curr = head;
     int sum = 0;
     while (curr != NULL) {
@@ -66,6 +77,31 @@ int isPred (PredNode *head, int v) {
     }
     return 0;
 }
+
+
+//A function that returns the sum of all the shortest paths
+//By backtracking from t to s
+int numShortPathST (ShortestPaths sp, int s, int t) {
+    int count = 1;
+    PQ pq = PQNew();
+    addPredNode(sp, pq, t);
+    int vPrev = t;
+    while (!PQIsEmpty(pq)) {
+        int v = PQDequeue(pq);
+        //Add the number of possible paths by checking the predecessor node
+        int backTrack = numPred(sp.pred[vPrev]) - 1;
+        if (backTrack > 0) {
+            count +=backTrack;
+        }
+        vPrev = v;
+        addPredNode(sp, pq, v);
+        
+    }
+    PQFree(pq);
+    return count;
+}
+
+
 
 /////////////////////////////////////////////////////////////////////////
 /**
@@ -126,37 +162,63 @@ NodeValues betweennessCentrality(Graph g) {
         //Loop through the pred list,
         int t = 0;
         while (t < nvs.numNodes) {
-            //Ensure node t is not isolated;
+            //Ensure node t is not isolated and is not the source
             if (sp.dist[t] && t != s) {
                 //FETCH number of shortest paths for each target node,
-                int numSP = numShortPath(sp.pred[t]);
+                //int numSP = numShortPath(sp.pred[t]);
 
                 PQ pq = PQNew();
-                AdjList head = GraphInIncident(g, t);
-
-                //Add all the valid vertices, in accordance to weight
-                AdjList c1 = head;
-                while (c1 != NULL) {
-                    PQInsert(pq, c1->v, c1->weight);
-                    c1 = c1->next;
-                }
+                addPredNode(sp, pq, t);
                 //OBTAIN the number of paths that pass through v
                 //from node s to t 
-                //Return the number of paths that pass via v
-                //Check that v is connected to s and t
-                //Check that v is a predecessor of t
-                //Check that v is not s nor t
+                //By starting from t and returning to s.
+                //printf("source %d, target %d\n\n", s, t);
+                //Use BFS to backtrack through to s
+                //and add edges on the shortest path
+                //We may be missing edges
+                int numSP = numShortPathST(sp, s, t);
+                int vPrev = t;
                 while (!PQIsEmpty(pq)) {
-                    int v = PQDequeue(pq);
-
-                    if (v != t && v != s && isPred(sp.pred[t], v)) {
-                        int numPaths = numShortPath(sp.pred[v]);
-                        //calculate centrality
-                        nvs.values[v] += 1.0 * numPaths / numSP;
-                        //printf("v %d: %lf\n", v, 1.0 * numPaths / numSP);
-                        item +=1;
+                    if (s == 45 || s == 44) {
+                        //printf("source %d, target %d\n", s, t);
                     }
-                    DQ +=1;
+                    //There may be possible predecessors, remove them
+                    int numOfPred = numPred(sp.pred[vPrev]);
+                    while (numOfPred > 0) {
+                        int v = PQDequeue(pq);
+                        //Check that v is connected to s and t on SP
+                        //Check that v is a predecessor of vPrev
+                        //Check that v is not s nor t
+                        if (v != t && v != s && (s == 45 || s == 44) && v == 28 ) {
+                            //PQShow(pq);
+                            //printf("Target %d\n\n", t);
+                            int numPaths = numShortPathST(sp, s, v);
+                            //calculate centrality
+                            nvs.values[v] += 1.0 * numPaths / numSP;
+                            printf("source %d, target %d\n", s, t);
+                            printf("v %d: %lf\n\n", v, 1.0 * numPaths / numSP);
+                            //printf("vPrev %d, curr %d\n\n", vPrev, v);
+                            //Need to check adjacent vertices on the 
+                            //Shortest path from s to t
+                            if (numOfPred < 2) {
+                                addPredNode(sp, pq, v);
+                                vPrev = v;
+                            }
+                        }
+                        else if (v != s && v != t) {
+                            int numPaths = numShortPathST(sp, s, v);
+                            //calculate centrality
+                            nvs.values[v] += 1.0 * numPaths / numSP;
+                            //Need to check adjacent vertices on the 
+                            //Shortest path from s to t
+                            if (numOfPred < 2) {
+                                addPredNode(sp, pq, v);
+                                vPrev = v;
+                            }
+                        }
+                        numOfPred -=1;
+                    }
+
                 }
                 PQFree(pq);
             }
@@ -165,13 +227,20 @@ NodeValues betweennessCentrality(Graph g) {
         freeShortestPaths(sp);
         s +=1;
     }
-    printf("Items: %d\n", item);
-    printf("DQ: %d\n", DQ);
 	return nvs;
 }
 
 NodeValues betweennessCentralityNormalised(Graph g) {
-	NodeValues nvs = {0};
+	NodeValues nvs = betweennessCentrality(g);
+    int v = 0;
+    while (v < nvs.numNodes) {
+        ShortestPaths sp = dijkstra(g, v);
+        int n = nvs.numNodes;
+        nvs.values[v] *= 1.0/(n - 1) * 1.0/(n - 2);
+        freeShortestPaths(sp);
+        v +=1;
+    }
+
 	return nvs;
 }
 

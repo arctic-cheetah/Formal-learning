@@ -1,0 +1,90 @@
+Node 0
+  Distance
+    0 : X
+    1 : 13
+    2 : 9
+    3 : 7
+    4 : 18
+    5 : 12
+  Preds
+    0 : NULL
+    1 : [2]->NULL
+    2 : [0]->NULL
+    3 : [0]->NULL
+    4 : [1]->NULL
+    5 : [2]->NULL
+Node 1
+  Distance
+    0 : 0
+    1 : X
+    2 : 0
+    3 : 0
+    4 : 5
+    5 : 0
+  Preds
+    0 : NULL
+    1 : NULL
+    2 : NULL
+    3 : NULL
+    4 : [1]->NULL
+    5 : NULL
+Node 2
+  Distance
+    0 : 0
+    1 : 4
+    2 : X
+    3 : 0
+    4 : 9
+    5 : 3
+  Preds
+    0 : NULL
+    1 : [2]->NULL
+    2 : NULL
+    3 : NULL
+    4 : [1]->NULL
+    5 : [2]->NULL
+Node 3
+  Distance
+    0 : 0
+    1 : 14
+    2 : 10
+    3 : X
+    4 : 19
+    5 : 13
+  Preds
+    0 : NULL
+    1 : [2]->NULL
+    2 : [3]->NULL
+    3 : NULL
+    4 : [1]->NULL
+    5 : [2]->NULL
+Node 4
+  Distance
+    0 : 0
+    1 : 0
+    2 : 0
+    3 : 0
+    4 : X
+    5 : 0
+  Preds
+    0 : NULL
+    1 : NULL
+    2 : NULL
+    3 : NULL
+    4 : NULL
+    5 : NULL
+Node 5
+  Distance
+    0 : 0
+    1 : 0
+    2 : 0
+    3 : 0
+    4 : 8
+    5 : X
+  Preds
+    0 : NULL
+    1 : NULL
+    2 : NULL
+    3 : NULL
+    4 : [5]->NULL
+    5 : NULL

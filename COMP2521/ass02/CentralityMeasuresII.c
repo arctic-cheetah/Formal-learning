@@ -9,6 +9,8 @@
 #include "PQ.h"
 #include "Graph.h"
 
+#define LOWPRIORITY 99999
+
 int item = 0;
 int DQ = 0;
 
@@ -65,6 +67,16 @@ int isPred (PredNode *head, int v) {
         curr = curr->next;
     }
     return 0;
+}
+
+//A function which enqueues predecessor vertices
+PQ addPredNode (ShortestPaths sp, PQ pq, int v) {
+    PredNode *curr = sp.pred[v];
+    while (curr != NULL) {
+        PQInsert(pq, curr->v, LOWPRIORITY);
+        curr = curr->next;
+    }
+    return pq;
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -140,21 +152,30 @@ NodeValues betweennessCentrality(Graph g) {
                     PQInsert(pq, c1->v, c1->weight);
                     c1 = c1->next;
                 }
+                //PQShow(pq);
+                //printf("Target %d\n\n", t);
+                //printf("source %d, target %d\n\n", s, t);
+
                 //OBTAIN the number of paths that pass through v
                 //from node s to t 
-                //Return the number of paths that pass via v
+                //By starting from t and returning to s.
+
                 //Check that v is connected to s and t
                 //Check that v is a predecessor of t
                 //Check that v is not s nor t
+                int vPrev = t;
                 while (!PQIsEmpty(pq)) {
                     int v = PQDequeue(pq);
+                    //Destination reached
 
-                    if (v != t && v != s && isPred(sp.pred[t], v)) {
+                    if (v != t && v != s && isPred(sp.pred[vPrev], v)) {
                         int numPaths = numShortPath(sp.pred[v]);
                         //calculate centrality
                         nvs.values[v] += 1.0 * numPaths / numSP;
                         //printf("v %d: %lf\n", v, 1.0 * numPaths / numSP);
                         item +=1;
+                        pq = addPredNode(sp, pq, v);
+                        vPrev = v;
                     }
                     DQ +=1;
                 }

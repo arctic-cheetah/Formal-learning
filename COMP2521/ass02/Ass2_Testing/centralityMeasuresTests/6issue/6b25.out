@@ -1,0 +1,1301 @@
+numShortPathVia 2
+numShortPathST 1
+number of paths 2
+v 55: 1.000000
+v 55: 2.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 1.000000
+
+numShortPathVia 4
+numShortPathST 1
+number of paths 2
+v 55: 2.000000
+v 55: 4.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3.000000
+
+numShortPathVia 5
+numShortPathST 1
+number of paths 1
+v 55: 5.000000
+v 55: 5.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 8.000000
+
+numShortPathVia 7
+numShortPathST 1
+number of paths 2
+v 55: 3.500000
+v 55: 7.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 11.500000
+
+numShortPathVia 9
+numShortPathST 1
+number of paths 2
+v 55: 4.500000
+v 55: 9.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 16.000000
+
+numShortPathVia 11
+numShortPathST 1
+number of paths 2
+v 55: 5.500000
+v 55: 11.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 21.500000
+
+numShortPathVia 13
+numShortPathST 1
+number of paths 2
+v 55: 6.500000
+v 55: 13.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 28.000000
+
+numShortPathVia 15
+numShortPathST 1
+number of paths 2
+v 55: 7.500000
+v 55: 15.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 35.500000
+
+numShortPathVia 17
+numShortPathST 1
+number of paths 2
+v 55: 8.500000
+v 55: 17.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 44.000000
+
+numShortPathVia 19
+numShortPathST 1
+number of paths 2
+v 55: 9.500000
+v 55: 19.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 53.500000
+
+numShortPathVia 21
+numShortPathST 1
+number of paths 2
+v 55: 10.500000
+v 55: 21.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 64.000000
+
+numShortPathVia 23
+numShortPathST 1
+number of paths 2
+v 55: 11.500000
+v 55: 23.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 75.500000
+
+numShortPathVia 25
+numShortPathST 1
+number of paths 2
+v 55: 12.500000
+v 55: 25.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 88.000000
+
+numShortPathVia 27
+numShortPathST 1
+number of paths 2
+v 55: 13.500000
+v 55: 27.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 101.500000
+
+numShortPathVia 29
+numShortPathST 1
+number of paths 2
+v 55: 14.500000
+v 55: 29.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 116.000000
+
+numShortPathVia 31
+numShortPathST 1
+number of paths 2
+v 55: 15.500000
+v 55: 31.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 131.500000
+
+numShortPathVia 33
+numShortPathST 1
+number of paths 2
+v 55: 16.500000
+v 55: 33.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 148.000000
+
+numShortPathVia 35
+numShortPathST 1
+number of paths 2
+v 55: 17.500000
+v 55: 35.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 165.500000
+
+numShortPathVia 37
+numShortPathST 1
+number of paths 2
+v 55: 18.500000
+v 55: 37.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 184.000000
+
+numShortPathVia 39
+numShortPathST 1
+number of paths 2
+v 55: 19.500000
+v 55: 39.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 203.500000
+
+numShortPathVia 40
+numShortPathST 1
+number of paths 1
+v 55: 40.000000
+v 55: 40.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 243.500000
+
+numShortPathVia 41
+numShortPathST 1
+number of paths 1
+v 55: 41.000000
+v 55: 41.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 284.500000
+
+numShortPathVia 42
+numShortPathST 1
+number of paths 1
+v 55: 42.000000
+v 55: 42.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 326.500000
+
+numShortPathVia 43
+numShortPathST 1
+number of paths 1
+v 55: 43.000000
+v 55: 43.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 369.500000
+
+numShortPathVia 44
+numShortPathST 1
+number of paths 1
+v 55: 44.000000
+v 55: 44.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 413.500000
+
+numShortPathVia 45
+numShortPathST 1
+number of paths 1
+v 55: 45.000000
+v 55: 45.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 458.500000
+
+numShortPathVia 46
+numShortPathST 1
+number of paths 1
+v 55: 46.000000
+v 55: 46.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 504.500000
+
+numShortPathVia 47
+numShortPathST 1
+number of paths 1
+v 55: 47.000000
+v 55: 47.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 551.500000
+
+numShortPathVia 48
+numShortPathST 1
+number of paths 1
+v 55: 48.000000
+v 55: 48.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 599.500000
+
+numShortPathVia 49
+numShortPathST 1
+number of paths 1
+v 55: 49.000000
+v 55: 49.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 648.500000
+
+numShortPathVia 50
+numShortPathST 1
+number of paths 2
+v 55: 25.000000
+v 55: 50.000000
+v 55: 0.500000
+v 55: 0.500000
+v 55: 673.500000
+
+numShortPathVia 51
+numShortPathST 1
+number of paths 1
+v 55: 51.000000
+v 55: 51.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 724.500000
+
+numShortPathVia 52
+numShortPathST 1
+number of paths 1
+v 55: 52.000000
+v 55: 52.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 776.500000
+
+numShortPathVia 53
+numShortPathST 1
+number of paths 1
+v 55: 53.000000
+v 55: 53.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 829.500000
+
+numShortPathVia 54
+numShortPathST 1
+number of paths 1
+v 55: 54.000000
+v 55: 54.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 883.500000
+
+numShortPathVia 55
+numShortPathST 1
+number of paths 1
+v 55: 55.000000
+v 55: 55.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 938.500000
+
+numShortPathVia 56
+numShortPathST 1
+number of paths 2
+v 55: 28.000000
+v 55: 56.000000
+v 55: 0.500000
+v 55: 0.500000
+v 55: 966.500000
+
+numShortPathVia 57
+numShortPathST 1
+number of paths 1
+v 55: 57.000000
+v 55: 57.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1023.500000
+
+numShortPathVia 58
+numShortPathST 1
+number of paths 1
+v 55: 58.000000
+v 55: 58.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1081.500000
+
+numShortPathVia 59
+numShortPathST 1
+number of paths 1
+v 55: 59.000000
+v 55: 59.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1140.500000
+
+numShortPathVia 60
+numShortPathST 1
+number of paths 1
+v 55: 60.000000
+v 55: 60.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1200.500000
+
+numShortPathVia 61
+numShortPathST 1
+number of paths 1
+v 55: 61.000000
+v 55: 61.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1261.500000
+
+numShortPathVia 62
+numShortPathST 1
+number of paths 2
+v 55: 31.000000
+v 55: 62.000000
+v 55: 0.500000
+v 55: 0.500000
+v 55: 1292.500000
+
+numShortPathVia 63
+numShortPathST 1
+number of paths 1
+v 55: 63.000000
+v 55: 63.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1355.500000
+
+numShortPathVia 64
+numShortPathST 1
+number of paths 1
+v 55: 64.000000
+v 55: 64.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1419.500000
+
+numShortPathVia 65
+numShortPathST 1
+number of paths 1
+v 55: 65.000000
+v 55: 65.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1484.500000
+
+numShortPathVia 66
+numShortPathST 1
+number of paths 1
+v 55: 66.000000
+v 55: 66.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1550.500000
+
+numShortPathVia 67
+numShortPathST 1
+number of paths 1
+v 55: 67.000000
+v 55: 67.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1617.500000
+
+numShortPathVia 68
+numShortPathST 1
+number of paths 1
+v 55: 68.000000
+v 55: 68.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1685.500000
+
+numShortPathVia 69
+numShortPathST 1
+number of paths 1
+v 55: 69.000000
+v 55: 69.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1754.500000
+
+numShortPathVia 70
+numShortPathST 1
+number of paths 1
+v 55: 70.000000
+v 55: 70.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1824.500000
+
+numShortPathVia 72
+numShortPathST 1
+number of paths 4
+v 55: 18.000000
+v 55: 72.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 1842.500000
+
+numShortPathVia 73
+numShortPathST 1
+number of paths 1
+v 55: 73.000000
+v 55: 73.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 1915.500000
+
+numShortPathVia 75
+numShortPathST 1
+number of paths 4
+v 55: 18.750000
+v 55: 75.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 1934.250000
+
+numShortPathVia 77
+numShortPathST 1
+number of paths 4
+v 55: 19.250000
+v 55: 77.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 1953.500000
+
+numShortPathVia 79
+numShortPathST 1
+number of paths 4
+v 55: 19.750000
+v 55: 79.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 1973.250000
+
+numShortPathVia 81
+numShortPathST 1
+number of paths 4
+v 55: 20.250000
+v 55: 81.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 1993.500000
+
+numShortPathVia 83
+numShortPathST 1
+number of paths 4
+v 55: 20.750000
+v 55: 83.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 2014.250000
+
+numShortPathVia 85
+numShortPathST 1
+number of paths 4
+v 55: 21.250000
+v 55: 85.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 2035.500000
+
+numShortPathVia 87
+numShortPathST 1
+number of paths 4
+v 55: 21.750000
+v 55: 87.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 2057.250000
+
+numShortPathVia 89
+numShortPathST 1
+number of paths 4
+v 55: 22.250000
+v 55: 89.000000
+v 55: 0.500000
+v 55: 0.250000
+v 55: 2079.500000
+
+numShortPathVia 90
+numShortPathST 1
+number of paths 1
+v 55: 90.000000
+v 55: 90.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2169.500000
+
+numShortPathVia 91
+numShortPathST 1
+number of paths 1
+v 55: 91.000000
+v 55: 91.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2260.500000
+
+numShortPathVia 92
+numShortPathST 1
+number of paths 1
+v 55: 92.000000
+v 55: 92.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2352.500000
+
+numShortPathVia 93
+numShortPathST 1
+number of paths 1
+v 55: 93.000000
+v 55: 93.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2445.500000
+
+numShortPathVia 94
+numShortPathST 1
+number of paths 1
+v 55: 94.000000
+v 55: 94.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2539.500000
+
+numShortPathVia 95
+numShortPathST 1
+number of paths 1
+v 55: 95.000000
+v 55: 95.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2634.500000
+
+numShortPathVia 96
+numShortPathST 1
+number of paths 2
+v 55: 48.000000
+v 55: 96.000000
+v 55: 0.500000
+v 55: 0.500000
+v 55: 2682.500000
+
+numShortPathVia 97
+numShortPathST 1
+number of paths 1
+v 55: 97.000000
+v 55: 97.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2779.500000
+
+numShortPathVia 98
+numShortPathST 1
+number of paths 1
+v 55: 98.000000
+v 55: 98.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2877.500000
+
+numShortPathVia 99
+numShortPathST 1
+number of paths 1
+v 55: 99.000000
+v 55: 99.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 2976.500000
+
+numShortPathVia 100
+numShortPathST 1
+number of paths 1
+v 55: 100.000000
+v 55: 100.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 3076.500000
+
+numShortPathVia 102
+numShortPathST 1
+number of paths 2
+v 55: 51.000000
+v 55: 102.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3127.500000
+
+numShortPathVia 104
+numShortPathST 1
+number of paths 2
+v 55: 52.000000
+v 55: 104.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3179.500000
+
+numShortPathVia 105
+numShortPathST 1
+number of paths 1
+v 55: 105.000000
+v 55: 105.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 3284.500000
+
+numShortPathVia 107
+numShortPathST 1
+number of paths 2
+v 55: 53.500000
+v 55: 107.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3338.000000
+
+numShortPathVia 109
+numShortPathST 1
+number of paths 2
+v 55: 54.500000
+v 55: 109.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3392.500000
+
+numShortPathVia 111
+numShortPathST 1
+number of paths 2
+v 55: 55.500000
+v 55: 111.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3448.000000
+
+numShortPathVia 113
+numShortPathST 1
+number of paths 2
+v 55: 56.500000
+v 55: 113.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3504.500000
+
+numShortPathVia 115
+numShortPathST 1
+number of paths 2
+v 55: 57.500000
+v 55: 115.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3562.000000
+
+numShortPathVia 117
+numShortPathST 1
+number of paths 2
+v 55: 58.500000
+v 55: 117.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3620.500000
+
+numShortPathVia 119
+numShortPathST 1
+number of paths 2
+v 55: 59.500000
+v 55: 119.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3680.000000
+
+numShortPathVia 121
+numShortPathST 1
+number of paths 2
+v 55: 60.500000
+v 55: 121.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3740.500000
+
+numShortPathVia 123
+numShortPathST 1
+number of paths 2
+v 55: 61.500000
+v 55: 123.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3802.000000
+
+numShortPathVia 125
+numShortPathST 1
+number of paths 2
+v 55: 62.500000
+v 55: 125.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3864.500000
+
+numShortPathVia 127
+numShortPathST 1
+number of paths 2
+v 55: 63.500000
+v 55: 127.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3928.000000
+
+numShortPathVia 129
+numShortPathST 1
+number of paths 2
+v 55: 64.500000
+v 55: 129.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 3992.500000
+
+numShortPathVia 131
+numShortPathST 1
+number of paths 2
+v 55: 65.500000
+v 55: 131.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 4058.000000
+
+numShortPathVia 133
+numShortPathST 1
+number of paths 2
+v 55: 66.500000
+v 55: 133.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 4124.500000
+
+numShortPathVia 135
+numShortPathST 1
+number of paths 2
+v 55: 67.500000
+v 55: 135.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 4192.000000
+
+numShortPathVia 137
+numShortPathST 1
+number of paths 2
+v 55: 68.500000
+v 55: 137.000000
+v 55: 1.000000
+v 55: 0.500000
+v 55: 4260.500000
+
+numShortPathVia 138
+numShortPathST 1
+number of paths 1
+v 55: 138.000000
+v 55: 138.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 4398.500000
+
+numShortPathVia 139
+numShortPathST 1
+number of paths 1
+v 55: 139.000000
+v 55: 139.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 4537.500000
+
+numShortPathVia 140
+numShortPathST 1
+number of paths 1
+v 55: 140.000000
+v 55: 140.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 4677.500000
+
+numShortPathVia 141
+numShortPathST 1
+number of paths 1
+v 55: 141.000000
+v 55: 141.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 4818.500000
+
+numShortPathVia 142
+numShortPathST 1
+number of paths 1
+v 55: 142.000000
+v 55: 142.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 4960.500000
+
+numShortPathVia 143
+numShortPathST 1
+number of paths 1
+v 55: 143.000000
+v 55: 143.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 5103.500000
+
+numShortPathVia 144
+numShortPathST 1
+number of paths 2
+v 55: 72.000000
+v 55: 144.000000
+v 55: 0.500000
+v 55: 0.500000
+v 55: 5175.500000
+
+numShortPathVia 145
+numShortPathST 1
+number of paths 1
+v 55: 145.000000
+v 55: 145.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 5320.500000
+
+numShortPathVia 146
+numShortPathST 1
+number of paths 1
+v 55: 146.000000
+v 55: 146.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 5466.500000
+
+numShortPathVia 147
+numShortPathST 1
+number of paths 1
+v 55: 147.000000
+v 55: 147.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 5613.500000
+
+numShortPathVia 148
+numShortPathST 1
+number of paths 1
+v 55: 148.000000
+v 55: 148.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 5761.500000
+
+numShortPathVia 149
+numShortPathST 2
+number of paths 2
+v 55: 74.500000
+v 55: 149.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 5836.000000
+
+numShortPathVia 150
+numShortPathST 2
+number of paths 3
+v 55: 50.000000
+v 55: 150.000000
+v 55: 0.333333
+v 55: 0.666667
+v 55: 5886.000000
+
+numShortPathVia 151
+numShortPathST 2
+number of paths 2
+v 55: 75.500000
+v 55: 151.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 5961.500000
+
+numShortPathVia 152
+numShortPathST 2
+number of paths 2
+v 55: 76.000000
+v 55: 152.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 6037.500000
+
+numShortPathVia 153
+numShortPathST 2
+number of paths 2
+v 55: 76.500000
+v 55: 153.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 6114.000000
+
+numShortPathVia 154
+numShortPathST 2
+number of paths 2
+v 55: 77.000000
+v 55: 154.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 6191.000000
+
+numShortPathVia 155
+numShortPathST 2
+number of paths 2
+v 55: 77.500000
+v 55: 155.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 6268.500000
+
+numShortPathVia 156
+numShortPathST 2
+number of paths 2
+v 55: 78.000000
+v 55: 156.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 6346.500000
+
+numShortPathVia 157
+numShortPathST 2
+number of paths 2
+v 55: 78.500000
+v 55: 157.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 6425.000000
+
+numShortPathVia 158
+numShortPathST 2
+number of paths 2
+v 55: 79.000000
+v 55: 158.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 6504.000000
+
+numShortPathVia 159
+numShortPathST 2
+number of paths 2
+v 55: 79.500000
+v 55: 159.000000
+v 55: 0.500000
+v 55: 1.000000
+v 55: 6583.500000
+
+numShortPathVia 160
+numShortPathST 1
+number of paths 1
+v 55: 160.000000
+v 55: 160.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 6743.500000
+
+numShortPathVia 161
+numShortPathST 1
+number of paths 2
+v 55: 80.500000
+v 55: 161.000000
+v 55: 0.500000
+v 55: 0.500000
+v 55: 6824.000000
+
+numShortPathVia 162
+numShortPathST 1
+number of paths 1
+v 55: 162.000000
+v 55: 162.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 6986.000000
+
+numShortPathVia 163
+numShortPathST 1
+number of paths 1
+v 55: 163.000000
+v 55: 163.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 7149.000000
+
+numShortPathVia 164
+numShortPathST 1
+number of paths 1
+v 55: 164.000000
+v 55: 164.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 7313.000000
+
+numShortPathVia 165
+numShortPathST 1
+number of paths 1
+v 55: 165.000000
+v 55: 165.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 7478.000000
+
+numShortPathVia 166
+numShortPathST 1
+number of paths 1
+v 55: 166.000000
+v 55: 166.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 7644.000000
+
+numShortPathVia 167
+numShortPathST 1
+number of paths 1
+v 55: 167.000000
+v 55: 167.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 7811.000000
+
+numShortPathVia 168
+numShortPathST 1
+number of paths 1
+v 55: 168.000000
+v 55: 168.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 7979.000000
+
+numShortPathVia 169
+numShortPathST 1
+number of paths 1
+v 55: 169.000000
+v 55: 169.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 8148.000000
+
+numShortPathVia 170
+numShortPathST 1
+number of paths 1
+v 55: 170.000000
+v 55: 170.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 8318.000000
+
+numShortPathVia 171
+numShortPathST 1
+number of paths 1
+v 55: 171.000000
+v 55: 171.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 8489.000000
+
+numShortPathVia 172
+numShortPathST 1
+number of paths 1
+v 55: 172.000000
+v 55: 172.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 8661.000000
+
+numShortPathVia 173
+numShortPathST 1
+number of paths 1
+v 55: 173.000000
+v 55: 173.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 8834.000000
+
+numShortPathVia 174
+numShortPathST 1
+number of paths 1
+v 55: 174.000000
+v 55: 174.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 9008.000000
+
+numShortPathVia 175
+numShortPathST 1
+number of paths 1
+v 55: 175.000000
+v 55: 175.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 9183.000000
+
+numShortPathVia 176
+numShortPathST 1
+number of paths 1
+v 55: 176.000000
+v 55: 176.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 9359.000000
+
+numShortPathVia 177
+numShortPathST 1
+number of paths 1
+v 55: 177.000000
+v 55: 177.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 9536.000000
+
+numShortPathVia 178
+numShortPathST 1
+number of paths 1
+v 55: 178.000000
+v 55: 178.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 9714.000000
+
+numShortPathVia 179
+numShortPathST 1
+number of paths 1
+v 55: 179.000000
+v 55: 179.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 9893.000000
+
+numShortPathVia 180
+numShortPathST 1
+number of paths 1
+v 55: 180.000000
+v 55: 180.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 10073.000000
+
+numShortPathVia 181
+numShortPathST 1
+number of paths 1
+v 55: 181.000000
+v 55: 181.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 10254.000000
+
+numShortPathVia 182
+numShortPathST 1
+number of paths 1
+v 55: 182.000000
+v 55: 182.000000
+v 55: 1.000000
+v 55: 1.000000
+v 55: 10436.000000
+
+0: 0.000000
+1: 0.000000
+2: 0.000000
+3: 0.000000
+4: 0.000000
+5: 0.000000
+6: 0.000000
+7: 0.000000
+8: 0.000000
+9: 0.000000
+10: 0.000000
+11: 205.333333
+12: 47.500000
+13: 0.000000
+14: 0.000000
+15: 0.000000
+16: 0.000000
+17: 0.000000
+18: 0.000000
+19: 0.000000
+20: 0.000000
+21: 0.000000
+22: 0.000000
+23: 338.416667
+24: 70.833333
+25: 267.833333
+26: 123.000000
+27: 128.500000
+28: 31.000000
+29: 65.000000
+30: 0.000000
+31: 0.000000
+32: 0.000000
+33: 0.000000
+34: 0.000000
+35: 0.000000
+36: 0.000000
+37: 0.000000
+38: 0.000000
+39: 24.750000
+40: 0.000000
+41: 10.500000
+42: 0.000000
+43: 0.000000
+44: 0.000000
+45: 0.000000
+46: 0.000000
+47: 21.000000
+48: 253.250000
+49: 23.000000
+50: 0.000000
+51: 27.000000
+52: 0.000000
+53: 0.000000
+54: 43.333333
+55: 10436.000000
+56: 0.000000
+57: 184.916667
+58: 21.333333
+59: 7.000000
+60: 12.333333
+61: 4.000000
+62: 1.500000
+63: 10.000000
+64: 2.833333
+65: 0.333333
+66: 3.000000
+67: 0.000000
+68: 0.000000
+69: 0.000000
+70: 17.666667
+71: 8.166667
+72: 0.000000
+73: 0.000000
+74: 0.000000
+75: 0.000000
+76: 0.000000

@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
 		ShortestPaths paths = dijkstra(g, i);
 		displayShortestPathsStruct(paths);
 		freeShortestPaths(paths);
+		//GraphShow(g);
 	}
 	GraphFree(g);
 }
