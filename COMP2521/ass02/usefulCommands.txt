@@ -261,3 +261,31 @@
   261  dcc DijkstraMKII.c CentralityMeasuresIII.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
   262  ./testCentralityMeasures Ass2_Testing/graphs/1.in bn > Ass2_Testing/centralityMeasuresTests/1bn.out
   263  history > usefulCommands.txt
+
+dcc DijkstraMKII.c CentralityMeasuresVI.c  PQ.c Graph.c Ass2_Testing/GraphRead.c  Ass2_Testing/testCentralityMeasures.c -o testCentralityMeasures
+./testCentralityMeasures Ass2_Testing/graphs/1.in b > Ass2_Testing/centralityMeasuresTests/1b.out
+./testCentralityMeasures Ass2_Testing/graphs/2.in b > Ass2_Testing/centralityMeasuresTests/2b.out
+./testCentralityMeasures Ass2_Testing/graphs/3.in b > Ass2_Testing/centralityMeasuresTests/3b.out
+./testCentralityMeasures Ass2_Testing/graphs/4.in b > Ass2_Testing/centralityMeasuresTests/4b.out
+./testCentralityMeasures Ass2_Testing/graphs/5.in b > Ass2_Testing/centralityMeasuresTests/5b.out
+./testCentralityMeasures Ass2_Testing/graphs/6.in b > Ass2_Testing/centralityMeasuresTests/6b.out
+diff Ass2_Testing/centralityMeasuresTests/1b.out Ass2_Testing/centralityMeasuresTests/1b.exp
+diff Ass2_Testing/centralityMeasuresTests/2b.out Ass2_Testing/centralityMeasuresTests/2b.exp
+diff Ass2_Testing/centralityMeasuresTests/3b.out Ass2_Testing/centralityMeasuresTests/3b.exp
+diff Ass2_Testing/centralityMeasuresTests/4b.out Ass2_Testing/centralityMeasuresTests/4b.exp
+diff Ass2_Testing/centralityMeasuresTests/5b.out Ass2_Testing/centralityMeasuresTests/5b.exp
+diff Ass2_Testing/centralityMeasuresTests/6b.out Ass2_Testing/centralityMeasuresTests/6b.exp
+
+
+./testCentralityMeasures Ass2_Testing/graphs/1.in bn > Ass2_Testing/centralityMeasuresTests/1bn.out
+./testCentralityMeasures Ass2_Testing/graphs/2.in bn > Ass2_Testing/centralityMeasuresTests/2bn.out
+./testCentralityMeasures Ass2_Testing/graphs/3.in bn > Ass2_Testing/centralityMeasuresTests/3bn.out
+./testCentralityMeasures Ass2_Testing/graphs/4.in bn > Ass2_Testing/centralityMeasuresTests/4bn.out
+./testCentralityMeasures Ass2_Testing/graphs/5.in bn > Ass2_Testing/centralityMeasuresTests/5bn.out
+./testCentralityMeasures Ass2_Testing/graphs/6.in bn > Ass2_Testing/centralityMeasuresTests/6bn.out
+diff Ass2_Testing/centralityMeasuresTests/1bn.out Ass2_Testing/centralityMeasuresTests/1bn.exp
+diff Ass2_Testing/centralityMeasuresTests/2bn.out Ass2_Testing/centralityMeasuresTests/2bn.exp
+diff Ass2_Testing/centralityMeasuresTests/3bn.out Ass2_Testing/centralityMeasuresTests/3bn.exp
+diff Ass2_Testing/centralityMeasuresTests/4bn.out Ass2_Testing/centralityMeasuresTests/4bn.exp
+diff Ass2_Testing/centralityMeasuresTests/5bn.out Ass2_Testing/centralityMeasuresTests/5bn.exp
+diff Ass2_Testing/centralityMeasuresTests/6bn.out Ass2_Testing/centralityMeasuresTests/6bn.exp

@@ -88,7 +88,7 @@ int isPred (PredNode *head, int v) {
 
 
 //A function that returns the sum of all the shortest paths
-//By backtracking from t to s
+//By backtracking from t to s using BFS
 int numShortPathST (ShortestPaths sp, int s, int t) {
     int count = 1;
     PQ pq = PQNew();
@@ -108,7 +108,30 @@ int numShortPathST (ShortestPaths sp, int s, int t) {
     PQFree(pq);
     return count;
 }
+//A function that returns the sum of all the shortest paths
+//By backtracking from t to s using DFS
+/*
+int numShortPathDFS (ShortestPaths sp, int s, int t) {
+    int count = 0;
+    
+    //base case:
+    if (t == via) {
+        count +=1;
+    }
+    else if (t == s) {
+        return 0;
+    }
 
+    //Recursive case:
+    //Continue searching
+    PredNode *currTar = sp.pred[t];
+    while (currTar != NULL) {
+        count += numShortPathDFS(sp, s, currTar->v);
+        currTar = currTar->next;
+    }
+    return count;
+}
+*/
 //Return the number of paths that go through the node via from target to src.
 //By using a back tracking DFS
 int numShortPathVia (ShortestPaths sp, int s, int t, int via) {
@@ -196,21 +219,20 @@ NodeValues betweennessCentrality(Graph g) {
             //Ensure node t is not isolated and is not the source
             if (sp.dist[t] && t != s) {
                 //FETCH number of shortest paths for each target node,
-                //int numSP = numShortPath(sp.pred[t]);
 
                 PQ pq = PQNew();
                 addPredNode(sp, pq, t);
                 //OBTAIN the number of paths that pass through v
                 //from node s to t 
-                //By starting from t and returning to s.
-                //printf("source %d, target %d\n\n", s, t);
+                //By backtracking from t and returning to s.
+
                 //Use BFS to backtrack through to s
                 //and add edges on the shortest path
                 //We may be missing edges
                 int numSP = numShortPathST(sp, s, t);
                 int vPrev = t;
                 while (!PQIsEmpty(pq)) {
-                    if (s == 45 || s == 44) {
+                    if (s == 66 && t == 41) {
                         //printf("source %d, target %d\n", s, t);
                     }
                     //There may be possible predecessors, remove them
@@ -220,13 +242,14 @@ NodeValues betweennessCentrality(Graph g) {
                         //Check that v is connected to s and t on SP
                         //Check that v is a predecessor of vPrev
                         //Check that v is not s nor t
-                        if (v != t && v != s && (v == 61)) {
+                        if (v != t && v != s && (v == 47)) {
                             //PQShow(pq);
                             //printf("Target %d\n\n", t);
                             int numST = numShortPathVia(sp, s, t, v);
                             int numST2 = numShortPathST(sp, s, v);
                             //n1 = numShortPathVia(sp, s, t, v);
                             n2 += 1.0 * numST2 / numSP;
+                            n1 += 1.0 * numST / numSP;
                             //calculate centrality
                             nvs.values[v] += 1.0 * numST / numSP;
                             printf("source %d, target %d\n", s, t);
@@ -234,7 +257,7 @@ NodeValues betweennessCentrality(Graph g) {
                             //printf("numShortPathST %d\n", n2);
                             printf("number of paths %d\n", numSP);
                             //printf("v %d: %lf\n", v, 1.0 * n1 / numSP);
-                            //printf("v %d: %lf\n", v, 1.0 * n1);
+                            printf("v %d: %lf\n", v, 1.0 * n1);
                             printf("v %d: %lf\n", v, 1.0 * numST / numSP);
                             printf("v %d: %lf\n", v, 1.0 * numST2 / numSP);
                             printf("v %d: %lf\n", v, n2);
@@ -242,8 +265,8 @@ NodeValues betweennessCentrality(Graph g) {
                             //printf("vPrev %d, curr %d\n\n", vPrev, v);
                             //Need to check adjacent vertices on the 
                             //Shortest path from s to t
+                            addPredNode(sp, pq, v);
                             if (numOfPred < 2) {
-                                addPredNode(sp, pq, v);
                                 vPrev = v;
                             }
                         }
@@ -253,8 +276,8 @@ NodeValues betweennessCentrality(Graph g) {
                             nvs.values[v] += 1.0 * numPaths / numSP;
                             //Need to check adjacent vertices on the 
                             //Shortest path from s to t
+                            addPredNode(sp, pq, v);
                             if (numOfPred < 2) {
-                                addPredNode(sp, pq, v);
                                 vPrev = v;
                             }
                         }

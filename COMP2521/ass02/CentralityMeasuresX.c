@@ -80,8 +80,9 @@ int isPred (PredNode *head, int v) {
 
 
 //A function that returns the sum of all the shortest paths
-//By backtracking from t to s
-int numShortPathST (ShortestPaths sp, int s, int t) {
+//By backtracking from t to s using BFS
+//BUG we are double COUNTING!
+int numShortPathST (ShortestPaths sp, int s, int t, int **hasVisitedST) {
     int count = 1;
     PQ pq = PQNew();
     addPredNode(sp, pq, t);
@@ -90,15 +91,44 @@ int numShortPathST (ShortestPaths sp, int s, int t) {
         int v = PQDequeue(pq);
         //Add the number of possible paths by checking the predecessor node
         int backTrack = numPred(sp.pred[vPrev]) - 1;
-        if (backTrack > 0) {
+        //v or vPrev?
+        if (backTrack > 0 && (!hasVisitedST[vPrev][t] 
+                          || !hasVisitedST[s][t] ) 
+                          ) {
             count +=backTrack;
         }
         vPrev = v;
         addPredNode(sp, pq, v);
-        
     }
     PQFree(pq);
     return count;
+}
+//A function that returns the sum of all the shortest paths
+//By backtracking from via to s using DFS
+int numShortPathDFS (ShortestPaths sp, int s, int t) {
+    int count = 0;
+    PredNode *currTar = sp.pred[t];
+    
+    //base case:
+    //Successful alternate path
+    if (t == s) {
+        return 1;
+    }
+
+    //Recursive case:
+    //Continue searching
+    while (currTar != NULL) {
+        count += numShortPathDFS(sp, s, currTar->v);
+        currTar = currTar->next;
+    }
+    return count;
+}
+
+//Return the number of paths that go through the node via from target to src.
+//Use a pincer movement, v to s * s to v will give us the total
+//number of paths
+int numShortPathVia (ShortestPaths sp, int s, int t, int via) {
+    return numShortPathDFS(sp, s, via) * numShortPathDFS(sp, via, t);
 }
 
 
@@ -150,12 +180,17 @@ NodeValues betweennessCentrality(Graph g) {
     NodeValues nvs;
     nvs.numNodes = GraphNumVertices(g);
     nvs.values = malloc(nvs.numNodes * sizeof(double));
+    //st = source target 2d array
+    int **hasVisitedST = (int**) calloc(nvs.numNodes, sizeof(int*));
+
+    for (int i = 0; i < nvs.numNodes; i +=1) {
+        hasVisitedST[i] = calloc(nvs.numNodes, sizeof(int));
+    }
 
     //set array of values to 0.0 for safety
     for (int i = 0; i < nvs.numNodes; i +=1) {
         nvs.values[i] = 0.0;
     }
-
     int s = 0; 
     while (s < nvs.numNodes) {
         ShortestPaths sp = dijkstra(g, s);
@@ -165,68 +200,41 @@ NodeValues betweennessCentrality(Graph g) {
             //Ensure node t is not isolated and is not the source
             if (sp.dist[t] && t != s) {
                 //FETCH number of shortest paths for each target node,
-                //int numSP = numShortPath(sp.pred[t]);
-
+                int *hasVisitedV = calloc(nvs.numNodes, sizeof(int));
                 PQ pq = PQNew();
                 addPredNode(sp, pq, t);
                 //OBTAIN the number of paths that pass through v
                 //from node s to t 
-                //By starting from t and returning to s.
-                //printf("source %d, target %d\n\n", s, t);
+                //By backtracking from t and returning to s.
+
                 //Use BFS to backtrack through to s
                 //and add edges on the shortest path
-                //We may be missing edges
-                int numSP = numShortPathST(sp, s, t);
-                int vPrev = t;
+                //Don't double count paths..
+                int numSP = numShortPathST(sp, s, t, hasVisitedST);
                 while (!PQIsEmpty(pq)) {
-                    if (s == 45 || s == 44) {
-                        //printf("source %d, target %d\n", s, t);
+                    int v = PQDequeue(pq);
+                    if (v != s && v != t && !hasVisitedV[v]) {
+                        int numPaths = numShortPathVia(sp, s, t, v);
+                        //calculate centrality
+                        nvs.values[v] += 1.0 * numPaths / numSP;
+                        addPredNode(sp, pq, v);
+                        hasVisitedST[s][t] = 1;
+                        hasVisitedV[v] = 1;
                     }
-                    //There may be possible predecessors, remove them
-                    int numOfPred = numPred(sp.pred[vPrev]);
-                    while (numOfPred > 0) {
-                        int v = PQDequeue(pq);
-                        //Check that v is connected to s and t on SP
-                        //Check that v is a predecessor of vPrev
-                        //Check that v is not s nor t
-                        if (v != t && v != s && v == 47 ) {
-                            //PQShow(pq);
-                            //printf("Target %d\n\n", t);
-                            int numPaths = numShortPathST(sp, s, v);
-                            //calculate centrality
-                            nvs.values[v] += 1.0 * numPaths / numSP;
-                            printf("source %d, target %d\n", s, t);
-                            printf("v %d: %lf\n\n", v, 1.0 * numPaths / numSP);
-                            //printf("vPrev %d, curr %d\n\n", vPrev, v);
-                            //Need to check adjacent vertices on the 
-                            //Shortest path from s to t
-                            if (numOfPred < 2) {
-                                addPredNode(sp, pq, v);
-                                vPrev = v;
-                            }
-                        }
-                        else if (v != s && v != t) {
-                            int numPaths = numShortPathST(sp, s, v);
-                            //calculate centrality
-                            nvs.values[v] += 1.0 * numPaths / numSP;
-                            //Need to check adjacent vertices on the 
-                            //Shortest path from s to t
-                            if (numOfPred < 2) {
-                                addPredNode(sp, pq, v);
-                                vPrev = v;
-                            }
-                        }
-                        numOfPred -=1;
-                    }
-
                 }
                 PQFree(pq);
+                free(hasVisitedV);
             }
             t +=1;
         }
         freeShortestPaths(sp);
         s +=1;
     }
+
+    for (int i = 0; i < nvs.numNodes; i +=1) {
+        free(hasVisitedST[i]);
+    }
+    free(hasVisitedST);
 	return nvs;
 }
 

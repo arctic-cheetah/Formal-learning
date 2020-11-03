@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 		printUsage();
 		return EXIT_FAILURE;
 	}
-	
+	//wow a function pointer!!
 	NodeValues (*fn)(Graph) = NULL;
 	
 	Graph g = readGraph(argv[1]);
