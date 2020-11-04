@@ -272,7 +272,7 @@ void FbFriendRecs1(Fb fb, char *name) {
 	//Simplifying this leaves us with O(n^2)
 	
 	free(mutual);
-    ListFree(numPeople);
+    
 }
 
 //Prints  friend  recommendations for a person based on the distance
@@ -322,10 +322,8 @@ void FbFriendRecs2(Fb fb, char *name) {
 			j +=1;	
 		}
 	}
-	
 	QueueFree(q);
     free(hasVisited);
-    ListFree(numPeople);
 }
 
 ////////////////////////////////////////////////////////////////////////
