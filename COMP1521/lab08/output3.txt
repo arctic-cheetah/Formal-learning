@@ -1,0 +1,15 @@
+byte    0: 104 0x68 'h'
+byte    1: 101 0x65 'e'
+byte    2: 108 0x6c 'l'
+byte    3: 108 0x6c 'l'
+byte    4: 111 0x6f 'o'
+byte    5:  10 0x0a 
+byte    6: 103 0x67 'g'
+byte    7: 111 0x6f 'o'
+byte    8: 111 0x6f 'o'
+byte    9: 100 0x64 'd'
+byte   10:  32 0x20 ' '
+byte   11:  98 0x62 'b'
+byte   12: 121 0x79 'y'
+byte   13: 101 0x65 'e'
+byte   14:  10 0x0a 
