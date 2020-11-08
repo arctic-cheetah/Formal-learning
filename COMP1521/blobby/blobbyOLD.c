@@ -3,12 +3,6 @@
 // COMP1521 20T3 Assignment 2
 // Written by <YOUR NAME HERE>
 
-
-//TODO
-//Perform error checking for all file functions
-//Consider edge cases for lengths!
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,17 +50,12 @@ uint8_t blobby_hash(uint8_t hash, uint8_t byte);
 
 
 // ADD YOUR FUNCTION PROTOTYPES HERE
-uint64_t fetchByte (uint64_t begin, uint64_t end, FILE *f);
-void checkMagicNum (FILE *f);
-char *fetchFileName (uint64_t begin, uint64_t end, FILE *f, char *s);
-void checkBlobHash (FILE *f, uint64_t begin, uint64_t end, uint8_t h);
-
 //A function that obtains each byte given a range from a file
 uint64_t fetchByte (uint64_t begin, uint64_t end, FILE *f) {
 	uint64_t data = 0;
 	uint64_t c = 0;
 	int j = end - begin;
-	for (int i = begin; i <= end; i +=1) {
+	for (int i = begin; i < end; i +=1) {
     	c = fgetc(f);
     	c = c << (j * BYTE);
     	data = data | c;
@@ -75,13 +64,12 @@ uint64_t fetchByte (uint64_t begin, uint64_t end, FILE *f) {
     return data;
 }
 
-
 //A function which checks whether a byte is a magic number
 void checkMagicNum (FILE *f) {
 	uint32_t c = fgetc(f);
     //Check for magic number
     if (c != BLOBETTE_MAGIC_NUMBER) {
-    	fprintf(stderr, "ERROR: Magic byte of blobette incorrect\n");
+    	fprintf(stderr, "The byte is not a magic number!\n");
     	exit(1);
     }
 }
@@ -91,7 +79,7 @@ void checkMagicNum (FILE *f) {
 char *fetchFileName (uint64_t begin, uint64_t end, FILE *f, char *s) {
 	uint64_t c = 0;
 	int j = 0;
-	for (int i = begin; i <= end; i +=1) {
+	for (int i = begin; i < end; i +=1) {
     	c = fgetc(f);
     	s[j] = c;
     	j +=1;
@@ -99,25 +87,6 @@ char *fetchFileName (uint64_t begin, uint64_t end, FILE *f, char *s) {
     //Null terminate the string for printf
     s[j - 1] = '\0';
     return s;
-}
-
-//A function which the hash value of a blobette
-void checkBlobHash (FILE *f, uint64_t begin, uint64_t end, uint8_t h) {
-	//Set the file pointer to the beginning
-	fseek(f, begin, SEEK_SET);
-	uint8_t hash = 0;
-    //Check for the magic number
-
-    for (uint64_t i = begin; i < end; i +=1) {
-    	hash = blobby_hash(hash, fgetc(f));
-    }
-    //printf("Evaluated: %d, From file: %d\n", hash, h);
-    
-    if (hash != h) {
-    	fprintf(stderr, "ERROR: blob hash incorrect\n");
-    	exit(1);
-    }
-    //Restore the original position of the pointer
 }
 
 
@@ -227,166 +196,61 @@ void list_blob(char *blob_pathname) {
     	fprintf(stderr, "The file was NULL!\n");
     	exit(1);
     }
-
+    
     FILE *size = fopen(blob_pathname, "r");
     if (size == NULL) {
     	fprintf(stderr, "The file was NULL!\n");
     	exit(1);
     }
-
+    
     fseek(size, 0, SEEK_END);
     long blobSize = ftell(size);
-    //printf("The blob size is: %ld\n", blobSize);
+    printf("The blob size is: %ld\n", blobSize);
     uint64_t i = 1;
-    uint64_t offset0 = 0;
+    int j = 0;
     while (i < blobSize - 1) {
 		//Fetch the bytes for each blob field
 		//and calculate each offset
+		uint64_t offset0 = 1;
 		checkMagicNum(f1);
-
-		uint64_t mode = fetchByte(i, i + 2, f1);
+		
+		uint64_t mode = fetchByte(i, i + 3, f1);
 		uint64_t offset1 = (i + 2) + 1;
-		//printf("offset1: %lu\n", offset1);
-		uint64_t pathname_length = fetchByte(offset1, offset1 + 1, f1);
+		printf("offset1: %lu\n", offset1);
+		uint64_t pathname_length = fetchByte(offset1, offset1 + 2, f1);
 		uint64_t offset2 = (offset1 + 1);
-		//printf("offset2: %lu\n", offset2);
-		uint64_t content_length = fetchByte(offset2, offset2 + 5, f1);
+		printf("offset2: %lu\n", offset2);
+		uint64_t content_length = fetchByte(offset2, offset2 + 6, f1);
 		uint64_t offset3 = (offset2 + 6) + 1;
-		//printf("offset3: %lu\n", offset3);
-
+		printf("offset3: %lu\n", offset3);
 		//Allocate memory for the length of the string
 		char *pathName = malloc((pathname_length + 1) * sizeof(char));
-		fetchFileName(offset3, offset3 + pathname_length, f1, pathName);
-		printf("%06lo %5lu %s\n", mode, content_length, pathName);
+		//fetchFileName(offset3, offset3 + pathname_length, f1, pathName);
+		//printf("%06lo %5lu %s\n", mode, content_length, pathName);
 		free(pathName);
-
+		
 		//calculate the offset for the file
 		//and set the file pointer in the correct position
 		i = offset3 + offset0 + pathname_length + content_length;
 		fseek(f1, 0, SEEK_SET);
 		fseek(f1, i, SEEK_CUR);
-
-		//printf("count is: %lu & %lu\n", i, ftell(f1));
-
-		//Check if EOF is reached
-		//to avoid offset issues
-		if (fgetc(f1) != EOF) {
-			i += 1;
-			offset0 = 1;
-			fseek(f1, 0, SEEK_SET);
-			fseek(f1, i, SEEK_CUR);
-			//printf("count is: %lu & %lu\n", i, ftell(f1));
-		}
-		else {
-			offset0 = 0;
-		}
+		
+		
+		printf("count is: %lu & %lu\n", i, ftell(f1));
     }
-
+    
     fclose(size);
     fclose(f1);
 }
 
 
 // extract the contents of blob_pathname
+
 void extract_blob(char *blob_pathname) {
 
-    FILE *f1 = fopen(blob_pathname, "r");
-    if (f1 == NULL) {
-    	fprintf(stderr, "The file was NULL!\n");
-    	exit(1);
-    }
+    // REPLACE WITH YOUR CODE FOR -x
 
-    FILE *size = fopen(blob_pathname, "r");
-    if (size == NULL) {
-    	fprintf(stderr, "The file was NULL!\n");
-    	exit(1);
-    }
-
-    fseek(size, 0, SEEK_END);
-    long blobSize = ftell(size);
-    //printf("The blob size is: %ld\n", blobSize);
-    uint64_t i = 1;
-    uint64_t offset0 = 0;
-    uint64_t hashBegin = 0;
-    while (i < blobSize - 1) {
-		//Fetch the bytes for each blob field
-		//and calculate each offset
-		checkMagicNum(f1);
-		uint64_t mode = fetchByte(i, i + 2, f1);
-		uint64_t offset1 = (i + 2) + 1;
-		//printf("offset1: %lu\n", offset1);
-		uint64_t pathname_length = fetchByte(offset1, offset1 + 1, f1);
-		uint64_t offset2 = (offset1 + 1);
-		//printf("offset2: %lu\n", offset2);
-		uint64_t content_length = fetchByte(offset2, offset2 + 5, f1);
-		uint64_t offset3 = (offset2 + 6) + 1;
-		//printf("offset3: %lu\n", offset3);
-		//Allocate memory for the length of the string
-		char *pathName = malloc((pathname_length + 1) * sizeof(char));
-		fetchFileName(offset3, offset3 + pathname_length, f1, pathName);
-		printf("Extracting: %s\n", pathName);
-		uint64_t offset4 = offset3 + pathname_length;
-		//printf("%lu \n", offset4);
-
-		//Get the offset for the newFile in the correct position
-		if (hashBegin) {
-			offset4 +=1;
-		}
-
-		//Create a new file
-		FILE *newFile = fopen(pathName, "w+");
-		//Place the pointer at the correct offset
-		fseek(f1, offset4, SEEK_SET);
-
-
-		for (int j = 0; j < content_length; j +=1) {
-			//Copy all the contents
-			int c = fetchByte(j, j, f1);
-			fputc(c, newFile);
-			//printf("J is %d: c is %c\n", j, c);
-		}
-		
-		//Set correct file permissions
-		//Perform error checking
-		if ( chmod(pathName, mode) == -1 ) {
-			fprintf(stderr, "Error with changing permissions\n");
-			exit(1);
-		}
-
-		fclose(newFile);
-		free(pathName);
-
-		//set the file pointer in the correct position
-		i = offset3 + offset0 + pathname_length + content_length;
-		fseek(f1, i, SEEK_SET);
-
-		//Fetch the hash value
-		uint8_t hash = fetchByte(i, i, f1);
-		//printf("Hashing begins: %lu and ends at: %lu\n", hashBegin, i);
-		
-		//Check the hash value;
-		checkBlobHash(f1, hashBegin, i, hash);
-		//printf("count is: %lu & %lu\n", i, ftell(f1));
-
-		//Check if EOF is reached
-		if (fgetc(f1) != EOF) {
-			i += 1;
-			offset0 = 1;
-			fseek(f1, 0, SEEK_SET);
-			fseek(f1, i, SEEK_CUR);
-			//printf("count is: %lu & %lu\n", i, ftell(f1));
-		}
-		else {
-			offset0 = 0;
-		}
-		//Shift the calculation of the hash blobette to the new
-		//beginning position
-		hashBegin = i;
-
-    }
-
-    fclose(size);
-    fclose(f1);
+    printf("extract_blob called to extract '%s'\n", blob_pathname);
 }
 
 // create blob_pathname from NULL-terminated array pathnames
