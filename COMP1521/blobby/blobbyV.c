@@ -2,11 +2,12 @@
 // blob file archiver
 // COMP1521 20T3 Assignment 2
 // Written by <YOUR NAME HERE>
+//MKV: Major step in extracting folders and files
 
 
 //TODO
 //Perform error checking for all file functions
-//Consider edge cases for lengths!
+//Consider edge cases for length name of files!
 
 //BUG!
 //max file size is 6 bytes, need to change byte count to uint64_t
@@ -41,6 +42,8 @@
 // ADD YOUR #defines HERE
 #define BYTE 8
 #define EXTRACT 0xFF
+#define MAX_PATHNAME_LEN 65536
+#define CHECK_DIR 0x4000
 
 typedef enum action {
     a_invalid,
@@ -62,14 +65,28 @@ uint8_t blobby_hash(uint8_t hash, uint8_t byte);
 
 
 // ADD YOUR FUNCTION PROTOTYPES HERE
+//Subset 0 functions
 uint64_t fetchByte (uint64_t begin, uint64_t end, FILE *f);
 void checkMagicNum (FILE *f);
 char *fetchFileName (uint64_t begin, uint64_t end, FILE *f, char *s);
 void checkBlobHash (FILE *f, uint64_t begin, uint64_t end, uint8_t h);
+//Subset 1/2 functions
 int putContent (FILE *f, FILE *newBlob, int size, uint64_t *byteCount);
 int putFields (FILE *newBlob, int size, int64_t data, uint64_t *byteCount);
 int putPathName (FILE *newBlob, char *s, uint64_t *byteCount);
 uint8_t fetchHash (FILE *newBlob, uint64_t begin ,uint64_t byteCount);
+int isInDir(char *pathName);
+//Three classes of functions for subset 3
+char *getDir (int begin, int end, char *name);
+int addDirToBlob (char *dir, uint64_t *byteCount,
+         uint64_t *beginBobblet, FILE *newBlob);
+int addFileToBlob (char *dir, uint64_t *byteCount,
+         uint64_t *beginBobblet, FILE *newBlob);
+void addRecurToBlob (char *basePath, uint64_t *byteCount,
+         uint64_t *beginBobblet, FILE * newBlob);
+int addParent (int numBackSlash, char *pathName, FILE *newBlob,
+         uint64_t *byteCount, uint64_t *beginBobblet);
+
 
 // YOU SHOULD NOT NEED TO CHANGE main, usage or process_arguments
 
@@ -270,6 +287,7 @@ void extract_blob(char *blob_pathname) {
     uint64_t i = 1;
     uint64_t offset0 = 0;
     uint64_t hashBegin = 0;
+    
     while (i < blobSize - 1) {
 		//Fetch the bytes for each blob field
 		//and calculate each offset
@@ -390,66 +408,103 @@ void create_blob(char *blob_pathname, char *pathnames[], int compress_blob) {
 	uint64_t byteCount = 0;
     uint64_t beginBobblet = 0;
     for (int p = 0; pathnames[p]; p +=1) {
-        beginBobblet = byteCount;
-    	//Meta data work
-        FILE *f = fopen(pathnames[p], "r");
-        if (f == NULL) {
-            fprintf(stderr, "File was NULL\n");
-            exit(1);
-        }
-    	struct stat pathName;
-    	//Set a new magic number as the first position
-    	fputc(BLOBETTE_MAGIC_NUMBER, newBlob);
-    	byteCount +=1;
 
+        beginBobblet = byteCount;
+
+    	struct stat pathName;
     	//Extract the permissions of the file
     	if (stat(pathnames[p], &pathName) ) {
     		fprintf(stderr, "There was an issue with the filename\n");
     		exit(1);
     	}
+        //If the file is under a directory
+        //Only add the parent directories/directory to the blob
+        int numBackSlash = isInDir(pathnames[p]);
+        if (numBackSlash) {
+            addParent(numBackSlash, pathnames[p], newBlob,
+                &byteCount, &beginBobblet);
+        }
 
-    	//Deconstruct the permissions into bytes
-        putFields (newBlob, BLOBETTE_MODE_LENGTH_BYTES,
-                 pathName.st_mode, &byteCount);
-		//Fetch the length of the file name
-		uint64_t pathname_length = strlen(pathnames[p]);
-		//Deconstruct the file name into bytes using big endian format
-        putFields (newBlob, BLOBETTE_PATHNAME_LENGTH_BYTES,
-                 pathname_length, &byteCount);
-
-		//Fetch the size of the content
-        uint64_t content_length = pathName.st_size;
-        putFields (newBlob, BLOBETTE_CONTENT_LENGTH_BYTES,
-                 content_length, &byteCount);
-		//Deconstruct the content size into bytes using big endian format
-
-        //Place the name of the file in the blob
-        putPathName(newBlob, pathnames[p], &byteCount);
-//////////////////////////////////////////////////////////////////////
-///
-
-		//Transfer the contents of the file into the blob
-        putContent(f, newBlob, content_length, &byteCount);
-
-        //Set the blob file pointer to the beginning of the bobblet
-        fseek(newBlob, beginBobblet, SEEK_SET);
-        //printf("beginBobblet: %lu\n", beginBobblet);
-
-		//Calculate the hash key and add it to the end of the file
-        uint8_t hash = fetchHash(newBlob, beginBobblet, byteCount);
-        fseek(newBlob, byteCount, SEEK_SET);
-        putFields(newBlob, BLOBETTE_HASH_BYTES, hash, &byteCount);
-
-        //printf("ByteCount: %d\n", byteCount);
-        printf("Adding: %s\n", pathnames[p]);
-        fclose(f);
+        //We are dealing with a directory
+        //use recursion
+        if (pathName.st_mode & S_IFDIR) {
+            addDirToBlob(pathnames[p], &byteCount, &beginBobblet, newBlob);
+            addRecurToBlob(pathnames[p], &byteCount, &beginBobblet, newBlob);
+        }
+        //Dealing with a file
+        else {
+            addFileToBlob(pathnames[p], &byteCount, &beginBobblet, newBlob);
+        }
     }
 
     fclose(newBlob);
 }
 //////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 //My functions:
-//A function which adds a file to a blob
+
+//A recursive function which adds a file or directory to a blob
+//With code adapted from the COMP1521 week08 slides
+//on mkdir
+
+//There's a bug, readdir can only read a max of 256 characters.
+//It will break if the name of the file/directory exceeds 256 chars
+void addRecurToBlob (char *basePath, uint64_t *byteCount,
+                uint64_t *beginBobblet, FILE * newBlob) {
+
+    char pathName[MAX_PATHNAME_LEN];
+    DIR *dirp = opendir(basePath);
+    struct stat pN;
+    //printf("%s\n", basePath);
+
+    if (stat(basePath, &pN) ) {
+        fprintf(stderr, "There was an issue with the filename\n");
+        exit(1);
+    }
+
+    //base case
+    if (!dirp) {
+        return;
+    }
+    struct dirent *de;
+    //Recursive case
+    while ((de = readdir(dirp)) != NULL) {
+        if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
+            //check if pathname length is too big
+            //printf("Looking at: %s\n", de->d_name);
+            //int check = strlen(pathName) + strlen(basePath);
+            /*
+            if (check == (MAX_PATHNAME_LEN - 1) ) {
+                return;
+            }
+            */
+            strcpy(pathName, basePath);
+            /*
+            check = strlen(pathName) + 1;
+            if (check == (MAX_PATHNAME_LEN - 1) ) {
+                return;
+            }
+            */
+            strcat(pathName, "/");
+            /*
+            check = strlen(pathName) + strlen(de->d_name);
+            if (strlen(pathName) == (MAX_PATHNAME_LEN - 1) ) {
+                return;
+            }
+            */
+            strcat(pathName, de->d_name);
+
+            //Check if the object is a directory
+            if (de->d_type == DT_DIR) {
+                addDirToBlob(pathName, byteCount, beginBobblet, newBlob);
+            }
+            else {
+                addFileToBlob(pathName, byteCount, beginBobblet, newBlob);
+            }
+            addRecurToBlob(pathName, byteCount, beginBobblet, newBlob);
+        }
+    }
+}
 
 //A function that obtains each byte given a range from a file
 uint64_t fetchByte (uint64_t begin, uint64_t end, FILE *f) {
@@ -509,8 +564,6 @@ void checkBlobHash (FILE *f, uint64_t begin, uint64_t end, uint8_t h) {
     }
     //Restore the original position of the pointer
 }
-
-
 
 
 //A function that places the fields into a blob using big endian format
@@ -577,6 +630,162 @@ uint8_t fetchHash (FILE *newBlob, uint64_t begin ,uint64_t byteCount) {
     return hash;
 }
 
+//A function which checks if a file is under a directory
+//by checking for "/"
+//By the definition from the C standard, a string must be terminated
+//with a '\0'
+//Returns the number of "/"
+int isInDir (char *pathName) {
+    int i = 0;
+    int backSlashCount = 0;
+    while (pathName[i] != '\0') {
+        if (pathName[i] == '/') {
+            backSlashCount +=1;
+        }
+        i +=1;
+    }
+    return backSlashCount;
+}
+
+//A function that returns string of the parent directory
+// given that the file has a parent directory
+char *getDir (int begin, int end, char *name) {
+    int i = 0;
+    int sLen = strlen(name) + 1;
+    //Move the counter up to the nth backslash
+    while (begin < end && i < sLen) {
+        if (name[i] == '/') {
+            begin +=1;
+        }
+        i +=1;
+    }
+    //Copy the string up to the nth backslash and null terminate it
+    char *dir = malloc(sizeof(char) * (i));
+    int j = 0;
+    for (; j < i; j +=1) {
+        dir[j] = name[j];
+    }
+    dir[j - 1] = '\0';
+    //printf("%s\n", dir);
+    return dir;
+}
+//A function that only adds directories to the blob
+int addDirToBlob (char *dir, uint64_t *byteCount,
+    uint64_t *beginBobblet, FILE *newBlob) {
+
+
+    struct stat pathName;
+    if (stat(dir, &pathName) ) {
+        fprintf(stderr, "There was an issue with the filename\n");
+        exit(1);
+    }
+    //Add the magic number
+    fputc(BLOBETTE_MAGIC_NUMBER, newBlob);
+    *byteCount +=1;
+
+    putFields (newBlob, BLOBETTE_MODE_LENGTH_BYTES,
+             pathName.st_mode, byteCount);
+    //Fetch the length of the directory name
+    uint64_t pathname_length = strlen(dir);
+    //Deconstruct the dir name into bytes using big endian format
+    putFields (newBlob, BLOBETTE_PATHNAME_LENGTH_BYTES,
+             pathname_length, byteCount);
+
+    //The size of the contents of a directory is 0
+    putFields (newBlob, BLOBETTE_CONTENT_LENGTH_BYTES,
+             0, byteCount);
+    //Deconstruct the content size into bytes using big endian format
+
+    //Place the name of the dir in the blob
+    putPathName(newBlob, dir, byteCount);
+//////////////////////////////////////////////////////////////////////
+///
+
+    //Set the blob file pointer to the beginning of the bobblet
+    fseek(newBlob, *beginBobblet, SEEK_SET);
+    //printf("beginBobblet: %lu\n", beginBobblet);
+
+    //Calculate the hash key and add it to the end of the file
+    uint8_t hash = fetchHash(newBlob, *beginBobblet, *byteCount);
+    fseek(newBlob, *byteCount, SEEK_SET);
+    putFields(newBlob, BLOBETTE_HASH_BYTES, hash, byteCount);
+
+    *beginBobblet = *byteCount;
+    printf("Adding: %s\n", dir);
+    return 1;
+}
+
+//A function that only adds files to the blob
+int addFileToBlob (char *fileName, uint64_t *byteCount,
+    uint64_t *beginBobblet, FILE *newBlob) {
+
+
+    struct stat pathName;
+    if (stat(fileName, &pathName) ) {
+        fprintf(stderr, "There was an issue with the filename\n");
+        exit(1);
+    }
+
+    FILE *f = fopen(fileName, "r");
+    if (f == NULL) {
+        perror("Error:");
+        exit(1);
+    }
+    //Set a new magic number
+    fputc(BLOBETTE_MAGIC_NUMBER, newBlob);
+    *byteCount +=1;
+
+    //Deconstruct the permissions into bytes
+    putFields (newBlob, BLOBETTE_MODE_LENGTH_BYTES,
+             pathName.st_mode, byteCount);
+    //Fetch the length of the file name
+    uint64_t pathname_length = strlen(fileName);
+    //Deconstruct the file name into bytes using big endian format
+    putFields (newBlob, BLOBETTE_PATHNAME_LENGTH_BYTES,
+             pathname_length, byteCount);
+
+    //Fetch the size of the content
+    uint64_t content_length = pathName.st_size;
+    putFields (newBlob, BLOBETTE_CONTENT_LENGTH_BYTES,
+             content_length, byteCount);
+    //Deconstruct the content size into bytes using big endian format
+
+    //Place the name of the file in the blob
+    putPathName(newBlob, fileName, byteCount);
+//////////////////////////////////////////////////////////////////////
+///
+
+    //Transfer the contents of the file into the blob
+    putContent(f, newBlob, content_length, byteCount);
+
+    //Set the blob file pointer to the beginning of the bobblet
+    fseek(newBlob, *beginBobblet, SEEK_SET);
+    //printf("beginBobblet: %lu\n", beginBobblet);
+
+    //Calculate the hash key and add it to the end of the file
+    uint8_t hash = fetchHash(newBlob, *beginBobblet, *byteCount);
+    fseek(newBlob, *byteCount, SEEK_SET);
+    putFields(newBlob, BLOBETTE_HASH_BYTES, hash, byteCount);
+
+    //printf("ByteCount: %d\n", byteCount);
+    printf("Adding: %s\n", fileName);
+    *beginBobblet = *byteCount;
+    fclose(f);
+    return 1;
+}
+
+//A function that adds the parent directories to the blob
+int addParent (int numBackSlash, char *pathName, FILE *newBlob,
+    uint64_t *byteCount, uint64_t *beginBobblet) {
+    int i = 0;
+    while (i < numBackSlash) {
+        char *dir = getDir(0, i + 1, pathName);
+        addDirToBlob(dir, byteCount, beginBobblet, newBlob);
+        free(dir);
+        i +=1;
+    }
+    return 1;
+}
 
 
 // YOU SHOULD NOT CHANGE CODE BELOW HERE
