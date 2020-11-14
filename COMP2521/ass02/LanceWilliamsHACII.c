@@ -10,8 +10,8 @@
 
 
 //DEFINES EXIST HERE
-//#define INF 0x7FFFFFFF
-#define INF 10
+#define INF 0x7FFFFFFF
+//#define INF 10
 #define NO_DIAGONAL = 9
 #define INTERSECTION_NODE -1
 
@@ -30,11 +30,11 @@ int length_of_dendA (Dendrogram *dendA, int nV);
 
 void print_array (double **array, int length) {
     for (int i = 0; i < length; i+=1) {
-        printf("[   ");
+        printf("   ");
         for (int j = 0; j < length; j +=1) {
-            printf("%.3f   ", array[i][j]);
+            printf("%.3f   ,", array[i][j]);
         }
-        printf("]\n");
+        printf("\n");
     }
 }
 
@@ -67,7 +67,7 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
     //O(n^2)
     setDist(dist, g);
 
-    //print_array(dist, nV);
+    print_array(dist, nV);
 
     //Follow Lance-williams HAC algorithm
     //SINGLE-linkage
@@ -129,6 +129,8 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
         i+=1;
     }
 
+    printf("length: %d\n", length_of_dendA(dendA, nV) );
+
     //Fetch the head of the dendrogram
     int head = 0;
     while (head < nV) {
@@ -142,10 +144,11 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
     //Connect any disconnected clusters to the root of the 
     //dendrogram
     for (int m = 0; m < nV; m +=1) {
-        if (dendA[head] && dendA[m]) {
-            root = mergeCluster(dendA[head], dendA[m]);
+        if (dendA[head] && dendA[m] && head != m) {
+            dendA[head] = mergeCluster(dendA[head], dendA[m]);
         }
     }
+    root = dendA[head];
 
     //Free the distance array & dendA
     for (int m = 0; m < nV; m +=1) {

@@ -40,7 +40,7 @@ NodeValues betweennessCentralityNormalised(Graph g);
  * This  function is for you to print out the NodeValues structure while
  * you are debugging/testing your implementation. 
  * 
- * We  will  not call this function during testing, so you may print out
+ * We  will call this function during testing, so you may print out
  * the given NodeValues structure in whatever format you want.
  */
 void showNodeValues(NodeValues nvs);

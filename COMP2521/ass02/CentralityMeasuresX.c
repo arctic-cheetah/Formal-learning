@@ -24,11 +24,8 @@ int numShortPathVia (ShortestPaths sp, int s, int t, int via);
 
 
 /////////////////////////////////////////////////////////////////////////
-/**
- * Finds the closeness centrality for each vertex in the given graph and
- * returns the results in a NodeValues structure.
- */
 
+//O(n^3)
 NodeValues closenessCentrality(Graph g) {
 	NodeValues nvs;
     nvs.numNodes = GraphNumVertices(g);
@@ -41,12 +38,15 @@ NodeValues closenessCentrality(Graph g) {
 
     //Find the centrality value for all nodes
     int v = 0;
+    
+    //This loop is O(n)
     while (v < nvs.numNodes) {
-        ShortestPaths sp = dijkstra(g, v);
+        ShortestPaths sp = dijkstra(g, v); //O(n^2)
         //Fetch the number of vertices reachable from v
         //and the sum of all dist from v
-        int reachable = reachableNodes(sp, v);
-        int sum = sumOfAllDist(sp, v);
+
+        int reachable = reachableNodes(sp, v); //O(n)
+        int sum = sumOfAllDist(sp, v); //O(n)
 
         //Check if reachable or sum is zero
         //Ensure N-1 is not zero!
@@ -68,6 +68,11 @@ NodeValues closenessCentrality(Graph g) {
 	return nvs;
 }
 
+//This function has a complexity of O(n^5),
+//because there are three loops that index the graph with n vertices
+//resulting in a complexity of O(n^3) and
+//the helper functions have a complexity of O(n^2).
+//Ergo, this function is O(n^5)
 NodeValues betweennessCentrality(Graph g) {
     NodeValues nvs;
     nvs.numNodes = GraphNumVertices(g);
@@ -84,12 +89,17 @@ NodeValues betweennessCentrality(Graph g) {
         nvs.values[i] = 0.0;
     }
     int s = 0; 
+    
+    //This loop is O(n)
     while (s < nvs.numNodes) {
         ShortestPaths sp = dijkstra(g, s);
         //Loop through the pred list,
+
         int t = 0;
+        //This loop is O(n)
         while (t < nvs.numNodes) {
-            //Ensure node t is not isolated and is not the source
+
+            //Ensure target is not isolated and is not the source
             if (sp.dist[t] && t != s) {
                 //FETCH number of shortest paths for each target node,
                 int *hasVisitedV = calloc(nvs.numNodes, sizeof(int));
@@ -98,14 +108,19 @@ NodeValues betweennessCentrality(Graph g) {
                 //OBTAIN the number of paths that pass through v
                 //from node s to t 
                 //By backtracking from t and returning to s.
-
                 //Use BFS to backtrack through to s
                 //and add edges on the shortest path
                 //Don't double count paths..
-                int numSP = numShortPathST(sp, s, t, hasVisitedST);
+
+                int numSP = numShortPathST(sp, s, t, hasVisitedST);//O(n^2)
+
+                //This loop is O(n) at worst
+                //if the graph is incredibly dense aka connected
                 while (!PQIsEmpty(pq)) {
                     int v = PQDequeue(pq);
                     if (v != s && v != t && !hasVisitedV[v]) {
+                        
+                        //O(n^2);
                         int numPaths = numShortPathVia(sp, s, t, v);
                         //calculate centrality for each node on the path
                         //from s to t
@@ -131,8 +146,9 @@ NodeValues betweennessCentrality(Graph g) {
 	return nvs;
 }
 
+//O(n^5)
 NodeValues betweennessCentralityNormalised(Graph g) {
-	NodeValues nvs = betweennessCentrality(g);
+	NodeValues nvs = betweennessCentrality(g);//O(n^5)
     int v = 0;
     while (v < nvs.numNodes) {
         ShortestPaths sp = dijkstra(g, v);
@@ -228,6 +244,8 @@ int isPred (PredNode *head, int v) {
 
 //A function that returns the sum of all the shortest paths
 //By backtracking from t to s using BFS
+//Number of Shortest Path Source Target (numShortPathST)
+//O(n^2)
 int numShortPathST (ShortestPaths sp, int s, int t, int **hasVisitedST) {
     int count = 1;
     PQ pq = PQNew();
@@ -251,6 +269,7 @@ int numShortPathST (ShortestPaths sp, int s, int t, int **hasVisitedST) {
 }
 //A function that returns the sum of all the shortest paths
 //By backtracking from via to s using DFS
+//O(n^2)
 int numShortPathDFS (ShortestPaths sp, int s, int t) {
     int count = 0;
     PredNode *currTar = sp.pred[t];
@@ -271,8 +290,9 @@ int numShortPathDFS (ShortestPaths sp, int s, int t) {
 }
 
 //Return the number of paths that go through the node via from target to src.
-//Use a pincer movement, v to s * s to v will give us the total
+//Use a pincer movement, (v to s) * (s to v) will give us the total
 //number of paths
+//O(n^2)
 int numShortPathVia (ShortestPaths sp, int s, int t, int via) {
     return numShortPathDFS(sp, s, via) * numShortPathDFS(sp, via, t);
 }

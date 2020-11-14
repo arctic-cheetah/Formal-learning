@@ -298,7 +298,11 @@ gdb --args ./LWH Ass2_Testing/graphs/1.in
 break LanceWilliamsHAC.c : 100
 ./LWH Ass2_Testing/graphs/1.in | sort -n
 
+./LWH Ass2_Testing/graphs/1.in | sort -n > Ass2_Testing/lanceWilliamsHACTests/1.out
+ ./LWH Ass2_Testing/graphs/2.in | sort -n > Ass2_Testing/lanceWilliamsHACTests/2.out
+ ./LWH Ass2_Testing/graphs/3.in | sort -n > Ass2_Testing/lanceWilliamsHACTests/3.out
+ ./LWH Ass2_Testing/graphs/4.in | sort -n > Ass2_Testing/lanceWilliamsHACTests/4.out
 
-
+diff Ass2_Testing/lanceWilliamsHACTests/1.out Ass2_Testing/lanceWilliamsHACTests/LW1.exp
 
 
