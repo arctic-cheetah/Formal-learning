@@ -12,7 +12,6 @@
 //BUG!
 //max file size is 6 bytes, need to change byte count to uint64_t
 //Check for file permissions when using fopen
-//We cannot have a forward slash '/' at the end of our directory!
 
 
 #include <stdio.h>
@@ -88,7 +87,6 @@ void addRecurToBlob (char *basePath, uint64_t *byteCount,
          uint64_t *beginBobblet, FILE * newBlob);
 int addParent (int numBackSlash, char *pathName, FILE *newBlob,
          uint64_t *byteCount, uint64_t *beginBobblet);
-void cleanPathName (char *name);
 
 
 // YOU SHOULD NOT NEED TO CHANGE main, usage or process_arguments
@@ -298,8 +296,7 @@ void extract_blob(char *blob_pathname) {
 		uint64_t mode = fetchByte(i, i + 2, f1);
 		uint64_t offset1 = (i + 2) + 1;
 		//printf("offset1: %lu\n", offset1);
-        
-        //Fetch the pathname length
+
 		uint64_t pathname_length = fetchByte(offset1, offset1 + 1, f1);
 		if (pathname_length < 1 ||
 				pathname_length > BLOBETTE_MAX_PATHNAME_LENGTH) {
@@ -307,7 +304,6 @@ void extract_blob(char *blob_pathname) {
 			exit(1);
 		}
 
-        //Fetch the length of the content
 		uint64_t offset2 = (offset1 + 1);
 		//printf("offset2: %lu\n", offset2);
 		uint64_t content_length = fetchByte(offset2, offset2 + 5, f1);
@@ -322,82 +318,50 @@ void extract_blob(char *blob_pathname) {
 		//Allocate memory for the length of the string
 		char *pathName = malloc((pathname_length + 1) * sizeof(char));
 		fetchFileName(offset3, offset3 + pathname_length, f1, pathName);
+		printf("Extracting: %s\n", pathName);
 		uint64_t offset4 = offset3 + pathname_length;
-		//printf("%lu %lu \n", offset4, i);
+		//printf("%lu \n", offset4);
 
-        //Offset to the correct position for the new obj
+		//Get the offset for the newFile in the correct position
 		if (hashBegin) {
 			offset4 +=1;
 		}
-        //Check if the obj is a file or directory
-        //By using the mode
-        
-        //Directory
-        if (mode & S_IFDIR) {
-            if (!mkdir(pathName, mode)) {
-                printf("Creating directory: %s\n", pathName);
-            }
-            if( chmod(pathName, mode) ) {
-                perror("Error2");
-                exit(1);
-            }
-            //Set the correct offset
-            i = offset4;
-            if ( fseek(f1, offset4, SEEK_SET) == -1 ) {
-                fprintf(stderr, "Error with getting file pointer\n");
-                exit(1);
-            }
-        }
-        //File
-        else {
-            printf("Extracting: %s\n", pathName);
-            //Create a new file
-            FILE *newFile = fopen(pathName, "w+");
-            if (!newFile) {
-                perror("Error");
-                exit(1);
-            }
 
-            //Check if the file is in a directory
-
-            //Place the pointer at the correct offset
-            if ( fseek(f1, offset4, SEEK_SET) == -1 ) {
-                fprintf(stderr, "Error with getting file pointer\n");
-                exit(1);
-            }
+		//Create a new file
+		FILE *newFile = fopen(pathName, "w+");
+		//Place the pointer at the correct offset
+		if ( fseek(f1, offset4, SEEK_SET) == -1 ) {
+			fprintf(stderr, "Error with getting file pointer\n");
+			exit(1);
+		}
 
 
-            for (int j = 0; j < content_length; j +=1) {
-                //Copy all the contents
-                int c = fetchByte(j, j, f1);
-                fputc(c, newFile);
-                //printf("J is %d: c is %c\n", j, c);
-            }
+		for (int j = 0; j < content_length; j +=1) {
+			//Copy all the contents
+			int c = fetchByte(j, j, f1);
+			fputc(c, newFile);
+			//printf("J is %d: c is %c\n", j, c);
+		}
 
-            //Set correct file permissions
-            //Perform error checking
-            if ( chmod(pathName, mode) == -1 ) {
-                fprintf(stderr, "Error with changing permissions\n");
-                exit(1);
-            }
+		//Set correct file permissions
+		//Perform error checking
+		if ( chmod(pathName, mode) == -1 ) {
+			fprintf(stderr, "Error with changing permissions\n");
+			exit(1);
+		}
 
-            fclose(newFile);
-            free(pathName);
+		fclose(newFile);
+		free(pathName);
 
-            //set the file pointer in the correct position
-            i = offset3 + offset0 + pathname_length + content_length;
-            if ( fseek(f1, i, SEEK_SET) == -1 ) {
-                fprintf(stderr, "Error with getting file pointer\n");
-                exit(1);
-            }
-        }
-        
-        //printf("%s\n", pathName);
-        //printf("%lu %lu \n", offset4, i);
-        
+		//set the file pointer in the correct position
+		i = offset3 + offset0 + pathname_length + content_length;
+		if ( fseek(f1, i, SEEK_SET) == -1 ) {
+			fprintf(stderr, "Error with getting file pointer\n");
+			exit(1);
+		}
+
 		//Fetch the hash value
 		uint8_t hash = fetchByte(i, i, f1);
-        //printf("Hash: %d\n", hash);
 		//printf("Hashing begins: %lu and ends at: %lu\n", hashBegin, i);
 
 		//Check the hash value;
@@ -448,8 +412,6 @@ void create_blob(char *blob_pathname, char *pathnames[], int compress_blob) {
 
         beginBobblet = byteCount;
 
-        cleanPathName(pathnames[p]);
-
     	struct stat pathName;
     	//Extract the permissions of the file
     	if (stat(pathnames[p], &pathName) ) {
@@ -466,7 +428,7 @@ void create_blob(char *blob_pathname, char *pathnames[], int compress_blob) {
 
         //We are dealing with a directory
         //use recursion
-        if (S_ISDIR(pathName.st_mode)) {
+        if (pathName.st_mode & S_IFDIR) {
             addDirToBlob(pathnames[p], &byteCount, &beginBobblet, newBlob);
             addRecurToBlob(pathnames[p], &byteCount, &beginBobblet, newBlob);
         }
@@ -552,7 +514,6 @@ uint64_t fetchByte (uint64_t begin, uint64_t end, FILE *f) {
 	int j = end - begin;
 	for (int i = begin; i <= end; i +=1) {
     	c = fgetc(f);
-        //printf("%lx ", c);
     	c = c << (j * BYTE);
     	data = data | c;
     	j -=1;
@@ -669,8 +630,8 @@ uint8_t fetchHash (FILE *newBlob, uint64_t begin ,uint64_t byteCount) {
     //printf("hash: %d\n", hash);
     return hash;
 }
-//This function assumes it is looking at a file!
-//It checks if a file is under a directory
+
+//A function which checks if a file is under a directory
 //by checking for "/"
 //By the definition from the C standard, a string must be terminated
 //with a '\0'
@@ -825,15 +786,6 @@ int addParent (int numBackSlash, char *pathName, FILE *newBlob,
         i +=1;
     }
     return 1;
-}
-
-//A function which removes any backslash at the end of a pathname
-void cleanPathName (char *name) {
-    int length = strlen(name);
-    //Check if the 2nd last character is a forward slash '/'
-    if (name[length - 1] == '/') {
-        name[length - 1] = '\0';
-    }
 }
 
 

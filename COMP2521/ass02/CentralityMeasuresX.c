@@ -12,6 +12,153 @@
 #define LOWPRIORITY 0x7FFFFFFF
 
 /////////////////////////////////////////////////////////////////////////
+///Function prototypes:
+int reachableNodes (ShortestPaths sp, int v);
+int sumOfAllDist (ShortestPaths sp, int v);
+int addPredNode (ShortestPaths sp, PQ pq, int v);
+int numPred (PredNode *head);
+int isPred (PredNode *head, int v);
+int numShortPathST (ShortestPaths sp, int s, int t, int **hasVisitedST);
+int numShortPathDFS (ShortestPaths sp, int s, int t);
+int numShortPathVia (ShortestPaths sp, int s, int t, int via);
+
+
+/////////////////////////////////////////////////////////////////////////
+/**
+ * Finds the closeness centrality for each vertex in the given graph and
+ * returns the results in a NodeValues structure.
+ */
+
+NodeValues closenessCentrality(Graph g) {
+	NodeValues nvs;
+    nvs.numNodes = GraphNumVertices(g);
+    nvs.values = malloc(nvs.numNodes * sizeof(double));
+
+    //set array of values to 0.0 for safety
+    for (int i = 0; i < nvs.numNodes; i +=1) {
+        nvs.values[i] = 0.0;
+    }
+
+    //Find the centrality value for all nodes
+    int v = 0;
+    while (v < nvs.numNodes) {
+        ShortestPaths sp = dijkstra(g, v);
+        //Fetch the number of vertices reachable from v
+        //and the sum of all dist from v
+        int reachable = reachableNodes(sp, v);
+        int sum = sumOfAllDist(sp, v);
+
+        //Check if reachable or sum is zero
+        //Ensure N-1 is not zero!
+        if (sum && reachable && (nvs.numNodes - 1)) {
+            double x = 1.0 * reachable / (nvs.numNodes - 1);
+            double y = 1.0 * reachable / sum;
+            nvs.values[v] = x*y;
+        }
+        //If N-1 == 0, there is only one vertex
+        //If n-1 == 0, no reachable nodes
+        else {
+            nvs.values[v] = 0.0;
+        }
+        //Free sp
+        freeShortestPaths(sp);
+        v +=1;
+    }
+
+	return nvs;
+}
+
+NodeValues betweennessCentrality(Graph g) {
+    NodeValues nvs;
+    nvs.numNodes = GraphNumVertices(g);
+    nvs.values = malloc(nvs.numNodes * sizeof(double));
+    //st = source target 2d array
+    int **hasVisitedST = (int**) calloc(nvs.numNodes, sizeof(int*));
+
+    for (int i = 0; i < nvs.numNodes; i +=1) {
+        hasVisitedST[i] = calloc(nvs.numNodes, sizeof(int));
+    }
+
+    //set array of values to 0.0 for safety
+    for (int i = 0; i < nvs.numNodes; i +=1) {
+        nvs.values[i] = 0.0;
+    }
+    int s = 0; 
+    while (s < nvs.numNodes) {
+        ShortestPaths sp = dijkstra(g, s);
+        //Loop through the pred list,
+        int t = 0;
+        while (t < nvs.numNodes) {
+            //Ensure node t is not isolated and is not the source
+            if (sp.dist[t] && t != s) {
+                //FETCH number of shortest paths for each target node,
+                int *hasVisitedV = calloc(nvs.numNodes, sizeof(int));
+                PQ pq = PQNew();
+                addPredNode(sp, pq, t);
+                //OBTAIN the number of paths that pass through v
+                //from node s to t 
+                //By backtracking from t and returning to s.
+
+                //Use BFS to backtrack through to s
+                //and add edges on the shortest path
+                //Don't double count paths..
+                int numSP = numShortPathST(sp, s, t, hasVisitedST);
+                while (!PQIsEmpty(pq)) {
+                    int v = PQDequeue(pq);
+                    if (v != s && v != t && !hasVisitedV[v]) {
+                        int numPaths = numShortPathVia(sp, s, t, v);
+                        //calculate centrality for each node on the path
+                        //from s to t
+                        nvs.values[v] += 1.0 * numPaths / numSP;
+                        addPredNode(sp, pq, v);
+                        hasVisitedST[s][t] = 1;
+                        hasVisitedV[v] = 1;
+                    }
+                }
+                PQFree(pq);
+                free(hasVisitedV);
+            }
+            t +=1;
+        }
+        freeShortestPaths(sp);
+        s +=1;
+    }
+
+    for (int i = 0; i < nvs.numNodes; i +=1) {
+        free(hasVisitedST[i]);
+    }
+    free(hasVisitedST);
+	return nvs;
+}
+
+NodeValues betweennessCentralityNormalised(Graph g) {
+	NodeValues nvs = betweennessCentrality(g);
+    int v = 0;
+    while (v < nvs.numNodes) {
+        ShortestPaths sp = dijkstra(g, v);
+        int n = nvs.numNodes;
+        nvs.values[v] *= 1.0/(n - 1) * 1.0/(n - 2);
+        freeShortestPaths(sp);
+        v +=1;
+    }
+
+	return nvs;
+}
+
+//Print out the NodeValues struct
+void showNodeValues(NodeValues nvs) {
+    for (int i = 0; i < nvs.numNodes; i +=1) {
+        printf("%d: %lf\n", i, nvs.values[i]);
+    }
+}
+
+void freeNodeValues(NodeValues nvs) {
+    free(nvs.values);
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////
 ///Helper functions
 
 //A function that returns the number of nodes reachable from v in a graph
@@ -81,7 +228,6 @@ int isPred (PredNode *head, int v) {
 
 //A function that returns the sum of all the shortest paths
 //By backtracking from t to s using BFS
-//BUG we are double COUNTING!
 int numShortPathST (ShortestPaths sp, int s, int t, int **hasVisitedST) {
     int count = 1;
     PQ pq = PQNew();
@@ -129,136 +275,4 @@ int numShortPathDFS (ShortestPaths sp, int s, int t) {
 //number of paths
 int numShortPathVia (ShortestPaths sp, int s, int t, int via) {
     return numShortPathDFS(sp, s, via) * numShortPathDFS(sp, via, t);
-}
-
-
-
-/////////////////////////////////////////////////////////////////////////
-/**
- * Finds the closeness centrality for each vertex in the given graph and
- * returns the results in a NodeValues structure.
- */
-
-NodeValues closenessCentrality(Graph g) {
-	NodeValues nvs;
-    nvs.numNodes = GraphNumVertices(g);
-    nvs.values = malloc(nvs.numNodes * sizeof(double));
-
-    //set array of values to 0.0 for safety
-    for (int i = 0; i < nvs.numNodes; i +=1) {
-        nvs.values[i] = 0.0;
-    }
-
-    //Find the centrality value for all nodes
-    int v = 0;
-    while (v < nvs.numNodes) {
-        ShortestPaths sp = dijkstra(g, v);
-        //Fetch the number of vertices reachable from v
-        //and the sum of all dist from v
-        int reachable = reachableNodes(sp, v);
-        int sum = sumOfAllDist(sp, v);
-
-        //Check if reachable or sum is zero
-        //Ensure N-1 is not zero!
-        if (sum && reachable && (nvs.numNodes - 1)) {
-            double x = 1.0 * reachable / (nvs.numNodes - 1);
-            double y = 1.0 * reachable / sum;
-            nvs.values[v] = x*y;
-        }
-        else {
-            nvs.values[v] = 0.0;
-        }
-        //Free sp
-        freeShortestPaths(sp);
-        v +=1;
-    }
-
-	return nvs;
-}
-
-NodeValues betweennessCentrality(Graph g) {
-    NodeValues nvs;
-    nvs.numNodes = GraphNumVertices(g);
-    nvs.values = malloc(nvs.numNodes * sizeof(double));
-    //st = source target 2d array
-    int **hasVisitedST = (int**) calloc(nvs.numNodes, sizeof(int*));
-
-    for (int i = 0; i < nvs.numNodes; i +=1) {
-        hasVisitedST[i] = calloc(nvs.numNodes, sizeof(int));
-    }
-
-    //set array of values to 0.0 for safety
-    for (int i = 0; i < nvs.numNodes; i +=1) {
-        nvs.values[i] = 0.0;
-    }
-    int s = 0; 
-    while (s < nvs.numNodes) {
-        ShortestPaths sp = dijkstra(g, s);
-        //Loop through the pred list,
-        int t = 0;
-        while (t < nvs.numNodes) {
-            //Ensure node t is not isolated and is not the source
-            if (sp.dist[t] && t != s) {
-                //FETCH number of shortest paths for each target node,
-                int *hasVisitedV = calloc(nvs.numNodes, sizeof(int));
-                PQ pq = PQNew();
-                addPredNode(sp, pq, t);
-                //OBTAIN the number of paths that pass through v
-                //from node s to t 
-                //By backtracking from t and returning to s.
-
-                //Use BFS to backtrack through to s
-                //and add edges on the shortest path
-                //Don't double count paths..
-                int numSP = numShortPathST(sp, s, t, hasVisitedST);
-                while (!PQIsEmpty(pq)) {
-                    int v = PQDequeue(pq);
-                    if (v != s && v != t && !hasVisitedV[v]) {
-                        int numPaths = numShortPathVia(sp, s, t, v);
-                        //calculate centrality
-                        nvs.values[v] += 1.0 * numPaths / numSP;
-                        addPredNode(sp, pq, v);
-                        hasVisitedST[s][t] = 1;
-                        hasVisitedV[v] = 1;
-                    }
-                }
-                PQFree(pq);
-                free(hasVisitedV);
-            }
-            t +=1;
-        }
-        freeShortestPaths(sp);
-        s +=1;
-    }
-
-    for (int i = 0; i < nvs.numNodes; i +=1) {
-        free(hasVisitedST[i]);
-    }
-    free(hasVisitedST);
-	return nvs;
-}
-
-NodeValues betweennessCentralityNormalised(Graph g) {
-	NodeValues nvs = betweennessCentrality(g);
-    int v = 0;
-    while (v < nvs.numNodes) {
-        ShortestPaths sp = dijkstra(g, v);
-        int n = nvs.numNodes;
-        nvs.values[v] *= 1.0/(n - 1) * 1.0/(n - 2);
-        freeShortestPaths(sp);
-        v +=1;
-    }
-
-	return nvs;
-}
-
-//Print out the NodeValues struct
-void showNodeValues(NodeValues nvs) {
-    for (int i = 0; i < nvs.numNodes; i +=1) {
-        printf("%d: %lf\n", i, nvs.values[i]);
-    }
-}
-
-void freeNodeValues(NodeValues nvs) {
-    free(nvs.values);
 }

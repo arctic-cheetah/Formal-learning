@@ -289,3 +289,16 @@ diff Ass2_Testing/centralityMeasuresTests/3bn.out Ass2_Testing/centralityMeasure
 diff Ass2_Testing/centralityMeasuresTests/4bn.out Ass2_Testing/centralityMeasuresTests/4bn.exp
 diff Ass2_Testing/centralityMeasuresTests/5bn.out Ass2_Testing/centralityMeasuresTests/5bn.exp
 diff Ass2_Testing/centralityMeasuresTests/6bn.out Ass2_Testing/centralityMeasuresTests/6bn.exp
+
+
+dcc LanceWilliamsHAC.c Ass2_Testing/testLanceWilliamsHAC.c Graph.c Ass2_Testing/BSTree.c Ass2_Testing/GraphRead.c -o LWH
+
+./LWH Ass2_Testing/graphs/1.in
+gdb --args ./LWH Ass2_Testing/graphs/1.in
+break LanceWilliamsHAC.c : 100
+./LWH Ass2_Testing/graphs/1.in | sort -n
+
+
+
+
+
