@@ -47,6 +47,7 @@
 #define EXTRACT 0xFF
 #define MAX_PATHNAME_LEN 65536
 #define CHECK_DIR 0x4000
+#define MAX_FILE_SIZE 0xFFFFFF
 
 typedef enum action {
     a_invalid,
@@ -91,8 +92,11 @@ void addRecurToBlob (char *basePath, uint64_t *byteCount,
 int addParent (int numBackSlash, char *pathName, FILE *newBlob,
          uint64_t *byteCount, uint64_t *beginBobblet);
 void cleanPathName (char *name);
+//Subset 04
 int isXZ(char *f);
 char *decompressedFile(char *text);
+void list_blob_not_compressed(char *blob_pathname);
+void print_file(char *file);
 
 
 // YOU SHOULD NOT NEED TO CHANGE main, usage or process_arguments
@@ -196,86 +200,19 @@ action_t process_arguments(int argc, char *argv[], char **blob_pathname,
 
 void list_blob(char *blob_pathname) {
 
-
-    FILE *f1 = fopen(blob_pathname, "r");
-    if (f1 == NULL) {
-    	perror("");
-    	exit(1);
+    //Check if the file is XZ
+    if (isXZ(blob_pathname)) {
+        printf("XZ FILE!\n");
+        char *decompFile = decompressedFile(blob_pathname);
+        print_file(decompFile);
+        //Uncompress the file
+    }
+    //If dealing with an ordinary file
+    //then execute normally
+    else {
+        list_blob_not_compressed(blob_pathname);
     }
 
-    FILE *size = fopen(blob_pathname, "r");
-    if (size == NULL) {
-    	perror("");
-        exit(1);
-    }
-
-    fseek(size, 0, SEEK_END);
-    long blobSize = ftell(size);
-    //printf("The blob size is: %ld\n", blobSize);
-    uint64_t i = 1;
-    uint64_t offset0 = 0;
-    while (i < blobSize - 1) {
-		//Fetch the bytes for each blob field
-		//and calculate each offset
-		checkMagicNum(f1);
-
-		uint64_t mode = fetchByte(i, i + 2, f1);
-		uint64_t offset1 = (i + 2) + 1;
-		//printf("offset1: %lu\n", offset1);
-		uint64_t pathname_length = fetchByte(offset1, offset1 + 1, f1);
-		if (pathname_length < 1 ||
-				pathname_length > BLOBETTE_MAX_PATHNAME_LENGTH) {
-			fprintf(stderr, "The length of the pathname was too long\n");
-			exit(1);
-		}
-		uint64_t offset2 = (offset1 + 1);
-		//printf("offset2: %lu\n", offset2);
-		uint64_t content_length = fetchByte(offset2, offset2 + 5, f1);
-		if (content_length < 0 ||
-				pathname_length > BLOBETTE_MAX_CONTENT_LENGTH) {
-			fprintf(stderr, "The size of the content was too large\n");
-			exit(1);
-		}
-		uint64_t offset3 = (offset2 + 6) + 1;
-		//printf("offset3: %lu\n", offset3);
-
-		//Allocate memory for the length of the string
-		char *pathName = malloc((pathname_length + 1) * sizeof(char));
-		fetchFileName(offset3, offset3 + pathname_length, f1, pathName);
-		printf("%06lo %5lu %s\n", mode, content_length, pathName);
-		free(pathName);
-
-		//calculate the offset for the file
-		//and set the file pointer in the correct position
-		i = offset3 + offset0 + pathname_length + content_length;
-		if ( fseek(f1, i, SEEK_SET) == -1 ) {
-			fprintf(stderr, "Error with getting file pointer\n");
-			exit(1);
-		}
-
-		//printf("count is: %lu & %lu\n", i, ftell(f1));
-
-		//Check if EOF is reached
-		//to avoid offset issues
-		if (fgetc(f1) != EOF) {
-			i += 1;
-			offset0 = 1;
-			fseek(f1, 0, SEEK_SET);
-			fseek(f1, i, SEEK_CUR);
-			//printf("count is: %lu & %lu\n", i, ftell(f1));
-		}
-		else {
-			offset0 = 0;
-		}
-    }
-
-    if (waitpid(pid, &exit_status, 0) == -1) {
-        perror("waitpid");
-        return 1;
-    }
-
-    fclose(size);
-    fclose(f1);
 }
 
 
@@ -1005,6 +942,92 @@ char *decompressedFile(char *text) {
     posix_spawn_file_actions_destroy(&actions);
 
     return line;
+}
+
+void list_blob_not_compressed(char *blob_pathname) {
+
+    FILE *f1 = fopen(blob_pathname, "r");
+    if (f1 == NULL) {
+    	perror("");
+    	exit(1);
+    }
+
+    FILE *size = fopen(blob_pathname, "r");
+    if (size == NULL) {
+    	perror("");
+        exit(1);
+    }
+
+    fseek(size, 0, SEEK_END);
+    long blobSize = ftell(size);
+    //printf("The blob size is: %ld\n", blobSize);
+    uint64_t i = 1;
+    uint64_t offset0 = 0;
+    while (i < blobSize - 1) {
+		//Fetch the bytes for each blob field
+		//and calculate each offset
+		checkMagicNum(f1);
+
+		uint64_t mode = fetchByte(i, i + 2, f1);
+		uint64_t offset1 = (i + 2) + 1;
+		//printf("offset1: %lu\n", offset1);
+		uint64_t pathname_length = fetchByte(offset1, offset1 + 1, f1);
+		if (pathname_length < 1 ||
+				pathname_length > BLOBETTE_MAX_PATHNAME_LENGTH) {
+			fprintf(stderr, "The length of the pathname was too long\n");
+			exit(1);
+		}
+		uint64_t offset2 = (offset1 + 1);
+		//printf("offset2: %lu\n", offset2);
+		uint64_t content_length = fetchByte(offset2, offset2 + 5, f1);
+		if (content_length < 0 ||
+				pathname_length > BLOBETTE_MAX_CONTENT_LENGTH) {
+			fprintf(stderr, "The size of the content was too large\n");
+			exit(1);
+		}
+		uint64_t offset3 = (offset2 + 6) + 1;
+		//printf("offset3: %lu\n", offset3);
+
+		//Allocate memory for the length of the string
+		char *pathName = malloc((pathname_length + 1) * sizeof(char));
+		fetchFileName(offset3, offset3 + pathname_length, f1, pathName);
+		printf("%06lo %5lu %s\n", mode, content_length, pathName);
+		free(pathName);
+
+		//calculate the offset for the file
+		//and set the file pointer in the correct position
+		i = offset3 + offset0 + pathname_length + content_length;
+		if ( fseek(f1, i, SEEK_SET) == -1 ) {
+			fprintf(stderr, "Error with getting file pointer\n");
+			exit(1);
+		}
+
+		//printf("count is: %lu & %lu\n", i, ftell(f1));
+
+		//Check if EOF is reached
+		//to avoid offset issues
+		if (fgetc(f1) != EOF) {
+			i += 1;
+			offset0 = 1;
+			fseek(f1, 0, SEEK_SET);
+			fseek(f1, i, SEEK_CUR);
+			//printf("count is: %lu & %lu\n", i, ftell(f1));
+		}
+		else {
+			offset0 = 0;
+		}
+    }
+
+    fclose(size);
+    fclose(f1);
+} 
+
+void print_file(char *file) {
+    int i = 0;
+    while (file[i] != EOF) {
+        printf("%c", file[i]);
+        i +=1;
+    }
 }
 
 

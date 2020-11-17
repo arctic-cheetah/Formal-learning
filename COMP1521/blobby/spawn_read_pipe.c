@@ -7,12 +7,12 @@
 
 int isXZ(char *f);
 char *decompressedFile(char *text);
-#define MAX_LENGTH 0xFFFFFF
+#define MAX_LENGTH 0xFFFFFFFFFFFFF
 
 int main(void) {
 
     //check the type of the file
-    char *text = "text_file";
+    char *text = "examples/text_file.compressed.blob";
     int fileType = isXZ(text);
     //printf("%d", fileType);
     if (fileType) {
@@ -20,6 +20,7 @@ int main(void) {
 
         char *file = decompressedFile(text);
 
+        //Transfer the contents of the file into an array
         int i = 0;
         while (file[i] != EOF) {
             printf("%c", file[i]);
@@ -108,6 +109,8 @@ int isXZ(char *text) {
     return !strcmp(line, xz);
 }
 
+//A function that returns an arrray to the
+//decompressed file
 char *decompressedFile(char *text) {
     // create a pipe
     int pipe_file_descriptors[2];
@@ -170,14 +173,7 @@ char *decompressedFile(char *text) {
     line[i + 1] = EOF;
 
     //printf("\n\n\n");
-    /*
-    int j = 0;
-    while (j < i) {
-        printf("%c", line[j]);
-        j +=1;
-    }
-    printf("\n");
-    */
+    
     // close read-end of the pipe
     // spawned process will now receive EOF if attempts to read input
     fclose(f);
