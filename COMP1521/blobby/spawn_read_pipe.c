@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int check_file_type(char *f);
+int isXZ(char *f);
 char *decompressedFile(char *text);
 #define MAX_LENGTH 0xFFFFFF
 
@@ -13,8 +13,9 @@ int main(void) {
 
     //check the type of the file
     char *text = "text_file";
-    int fileType = check_file_type(text);
-    if (!fileType) {
+    int fileType = isXZ(text);
+    //printf("%d", fileType);
+    if (fileType) {
         printf("The file is XZ!\n");
 
         char *file = decompressedFile(text);
@@ -34,7 +35,7 @@ int main(void) {
 }
 
 //Returns 0 if the file is xz
-int check_file_type(char *text) {
+int isXZ(char *text) {
 
     char *xz = ": XZ compressed data\n";
 
@@ -104,7 +105,7 @@ int check_file_type(char *text) {
 
     posix_spawn_file_actions_destroy(&actions);
     fclose(f);
-    return strcmp(line, xz);
+    return !strcmp(line, xz);
 }
 
 char *decompressedFile(char *text) {
@@ -186,7 +187,6 @@ char *decompressedFile(char *text) {
         perror("waitpid");
         exit(1);
     }
-    printf("/bin/date exit status was %d\n", exit_status);
 
     // free the list of file actions
     posix_spawn_file_actions_destroy(&actions);
