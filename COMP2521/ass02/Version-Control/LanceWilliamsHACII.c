@@ -67,6 +67,8 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
     //O(n^2)
     setDist(dist, g);
 
+    //print_array(dist, nV);
+
     //Follow Lance-williams HAC algorithm
     //SINGLE-linkage
     //or complete-linkage
@@ -91,6 +93,8 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
                         min = dist[j][k];
                         x = j;
                         y = k;
+                        //printf("\n\n");
+                        //print_array(dist, nV);
                     }
                 }
                 else {
@@ -125,6 +129,7 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
         i+=1;
     }
 
+    //printf("length: %d\n", length_of_dendA(dendA, nV) );
 
     //Fetch the head of the dendrogram
     int head = 0;
@@ -148,10 +153,10 @@ Dendrogram LanceWilliamsHAC(Graph g, int method) {
     //Free the distance array & dendA
     for (int m = 0; m < nV; m +=1) {
         free(dist[m]);
-        
+        /*
         if (m != head) {
             free(dendA[m]);
-        }
+        }*/
     }
     free(dist);
     free(dendA);

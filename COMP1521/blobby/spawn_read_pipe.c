@@ -4,22 +4,26 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 int isXZ(char *f);
 char *decompressedFile(char *text);
-#define MAX_LENGTH 0xFFFFFFFFFFFFF
+void compressFile(char *text);
+uint64_t fileArraySize (char *text);
+
+#define MAX_LENGTH 0xFFFFFF
 
 int main(void) {
 
     //check the type of the file
-    char *text = "examples/text_file.compressed.blob";
+    char *text = "text_file.txt";
+
     int fileType = isXZ(text);
     //printf("%d", fileType);
     if (fileType) {
         printf("The file is XZ!\n");
 
         char *file = decompressedFile(text);
-
         //Transfer the contents of the file into an array
         int i = 0;
         while (file[i] != EOF) {
@@ -27,10 +31,11 @@ int main(void) {
             i +=1;
         }
     }
-    else {
-        printf("The file is ascii!\n");
-        exit(1);
-    }
+
+    printf("Compressing file\n");
+    compressFile(text);
+    char *curr = "text_file.txt.xz";
+    rename(curr, text);
 
     return 0;
 }
@@ -86,7 +91,7 @@ int isXZ(char *text) {
     int i = 0;
     int hasReachedSemiColon = 0;
     while ((c = fgetc(f)) != EOF) {
-        printf("%c", c);
+        //printf("%c", c);
         if (c == ':') {
             hasReachedSemiColon = 1;
         }
@@ -188,6 +193,73 @@ char *decompressedFile(char *text) {
     posix_spawn_file_actions_destroy(&actions);
 
     return line;
+}
+
+//A function that compresses a file
+void compressFile(char *text) {
+    // create a pipe
+    int pipe_file_descriptors[2];
+    if (pipe(pipe_file_descriptors) == -1) {
+        perror("pipe");
+        exit(1);
+    }
+
+    // create a list of file actions to be carried out on spawned process
+    posix_spawn_file_actions_t actions;
+    if (posix_spawn_file_actions_init(&actions) != 0) {
+        perror("posix_spawn_file_actions_init");
+        exit(1);
+    }
+
+    // tell spawned process to close unused read end of pipe
+    // without this - spawned process would not receive EOF
+    // when read end of the pipe is closed below,
+    if (posix_spawn_file_actions_addclose(&actions, pipe_file_descriptors[0]) != 0) {
+        perror("posix_spawn_file_actions_init");
+        exit(1);
+    }
+
+    // tell spawned process to replace file descriptor 1 (stdout)
+    // with write end of the pipe
+    if (posix_spawn_file_actions_adddup2(&actions, pipe_file_descriptors[1], 1) != 0) {
+        perror("posix_spawn_file_actions_adddup2");
+        exit(1);
+    }
+
+    pid_t pid;
+    extern char **environ;
+    char *xz[] = {"xz", "-z", text, NULL};
+    if (posix_spawn(&pid, "/usr/bin/xz", &actions, NULL, xz, environ) != 0) {
+        perror("spawn");
+        exit(1);
+    }
+
+    // close unused write end of pipe
+    // in some case processes will deadlock without this
+    // not in this case, but still good practice
+    close(pipe_file_descriptors[1]);
+
+    // create a stdio stream from read end of pipe
+    FILE *f = fdopen(pipe_file_descriptors[0], "r");
+    if (f == NULL) {
+        perror("fdopen");
+        exit(1);
+    }
+
+    //printf("\n\n\n");
+    
+    // close read-end of the pipe
+    // spawned process will now receive EOF if attempts to read input
+    fclose(f);
+
+    int exit_status;
+    if (waitpid(pid, &exit_status, 0) == -1) {
+        perror("waitpid");
+        exit(1);
+    }
+
+    // free the list of file actions
+    posix_spawn_file_actions_destroy(&actions);
 }
 
 

@@ -42,7 +42,7 @@ int main(void) {
 
 
     // create a process running /usr/bin/xz
-    char *xz[] = {"xz", "-dc", NULL};
+    char *xz[] = {"xz", "-z", NULL};
     pid_t pid;
     extern char **environ;
     if (posix_spawn(&pid, "/usr/bin/xz", &actions, NULL, xz, environ) != 0) {

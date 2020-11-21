@@ -117,11 +117,8 @@ ShortestPaths dijkstra(Graph g, Vertex src) {
 		}
 	}
 
-	/*
-	free(dist);
-	free(pred);
+
     free(hasVisited);
-	*/
 
     return sp;
 }

@@ -10,9 +10,10 @@ int main (int argc, char **argv) {
 		perror("Not enough arguments");
 		exit(1);
 	}
-	char *value = calloc(MAX_LEN, sizeof(char));
-	strcpy(value, getenv("HOME"));
-	char *path = strcat(value, "/.diary");
+	char *path = calloc(MAX_LEN, sizeof(char));
+	strcpy(path, getenv("HOME"));
+	strcat(value, "/.diary");
+	
 	FILE *f = fopen(path, "a");
 	
 	for (int k = 1; k < argc; k +=1) {

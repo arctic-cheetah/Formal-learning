@@ -28,9 +28,4 @@ int main(void) {
     // but with gcc 7 on x86_64/Linux
     // i would be stored where a[11] is stored
 
-    for (i = 0; i <= 11; i++) {
-        a[i] = 0;
-    }
-
-    return 0;
-}
+    for (i = 0;ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
