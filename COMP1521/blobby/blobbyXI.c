@@ -2,18 +2,7 @@
 // blob file archiver
 // COMP1521 20T3 Assignment 2
 // Written by <Jeremy Mang>
-//MKIX: Utilised xz correctly-- But have not implemented -c -z
-
-
-//TODO
-//Perform error checking for all file functions
-//Consider edge cases for length name of files!
-//Remove debugging output
-
-//BUG!
-//max file size is 6 bytes, need to change byte count to uint64_t
-//Check for file permissions when using fopen
-//We cannot have a forward slash '/' at the end of our directory!
+//MKXI: Removed debugging outputs, Ready for submission!
 
 
 #include <stdio.h>
@@ -49,7 +38,7 @@
 #define EXTRACT 0xFF
 #define MAX_PATHNAME_LEN 65536
 #define CHECK_DIR 0x4000
-#define MAX_FILE_SIZE 0xFFFFFF
+#define MAX_FILE_SIZE 0xFFFFFFF
 
 typedef enum action {
     a_invalid,
@@ -218,7 +207,6 @@ void list_blob(char *blob_pathname) {
 
     //Check if the file is XZ
     if (isXZ(blob_pathname)) {
-        //printf("XZ FILE!\n");
         list_blob_compressed(blob_pathname);
     }
     //Dealing with an ordinary file
@@ -233,7 +221,6 @@ void list_blob(char *blob_pathname) {
 void extract_blob(char *blob_pathname) {
     //Check if the file is xz
     if (isXZ(blob_pathname)) {
-        //printf("XZ FILE!\n");
         extract_blob_compressed(blob_pathname);
     }
     //If dealing with an ordinary file
@@ -251,7 +238,7 @@ void create_blob(char *blob_pathname, char *pathnames[], int compress_blob) {
 	//Create a new blob
 	FILE *newBlob = fopen(blob_pathname, "w+");
     if (newBlob == NULL) {
-        fprintf(stderr, "File was NULL\n");
+        perror(blob_pathname);
         exit(1);
     }
 
@@ -261,19 +248,30 @@ void create_blob(char *blob_pathname, char *pathnames[], int compress_blob) {
 
         beginBobblet = byteCount;
 
-        cleanPathName(pathnames[p]);
+        //Check if a forward slash exists at the end of the pathname
+        int nameLen = strlen(pathnames[p]) - 1;
+        int hasForwardSlashAtEnd = 0;
+        if (pathnames[p][nameLen] == '/') {
+            hasForwardSlashAtEnd = 1;
+        }
 
     	struct stat pathName;
-    	//Extract the permissions of the file
-    	if (stat(pathnames[p], &pathName) ) {
-    		fprintf(stderr, "There was an issue with the filename\n");
+        //Fetch the stat
+        if (stat(pathnames[p], &pathName) ) {
+    		fprintf(stdout, "%s: Not a directory\n", pathnames[p]);
     		exit(1);
     	}
-        //If the file is under a directory
+
+
         //Only add the parent directories/directory to the blob
+        //Check if there is a slash at the end
         int numBackSlash = isInDir(pathnames[p]);
-        if (numBackSlash) {
+        if (!hasForwardSlashAtEnd && numBackSlash) {
             addParent(numBackSlash, pathnames[p], newBlob,
+                &byteCount, &beginBobblet);
+        }
+        else if (hasForwardSlashAtEnd && numBackSlash) {
+            addParent(numBackSlash - 1, pathnames[p], newBlob,
                 &byteCount, &beginBobblet);
         }
 
@@ -281,6 +279,9 @@ void create_blob(char *blob_pathname, char *pathnames[], int compress_blob) {
         //use recursion
         if (S_ISDIR(pathName.st_mode)) {
             addDirToBlob(pathnames[p], &byteCount, &beginBobblet, newBlob);
+            if (hasForwardSlashAtEnd) {
+                cleanPathName(pathnames[p]);
+            }
             addRecurToBlob(pathnames[p], &byteCount, &beginBobblet, newBlob);
         }
         //Dealing with a file
@@ -295,7 +296,6 @@ void create_blob(char *blob_pathname, char *pathnames[], int compress_blob) {
         uint64_t size = ftell(newBlob);
         char *buffer = (char *)calloc(size + 1, sizeof(char));
         fseek(newBlob, 0, SEEK_SET);
-        //Put the contents into stdin
         int c = 0;
         int j = 0;
         while ((c = fgetc(newBlob)) != EOF) {
@@ -329,14 +329,13 @@ void addRecurToBlob (char *basePath, uint64_t *byteCount,
     char pathName[MAX_PATHNAME_LEN];
     DIR *dirp = opendir(basePath);
     struct stat pN;
-    //printf("%s\n", basePath);
 
-    if (stat(basePath, &pN) ) {
-        fprintf(stderr, "There was an issue with the filename\n");
+    if (stat(basePath, &pN) == -1) {
+        perror(basePath);
         exit(1);
     }
 
-    //base case
+    //base case, not a directory
     if (!dirp) {
         return;
     }
@@ -346,28 +345,9 @@ void addRecurToBlob (char *basePath, uint64_t *byteCount,
         
         //Exclude the parent or current directory
         if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
-            //check if pathname length is too big
-            //printf("Looking at: %s\n", de->d_name);
-            //int check = strlen(pathName) + strlen(basePath);
-            /*
-            if (check == (MAX_PATHNAME_LEN - 1) ) {
-                return;
-            }
-            */
+            //Add the new item
             strcpy(pathName, basePath);
-            /*
-            check = strlen(pathName) + 1;
-            if (check == (MAX_PATHNAME_LEN - 1) ) {
-                return;
-            }
-            */
             strcat(pathName, "/");
-            /*
-            check = strlen(pathName) + strlen(de->d_name);
-            if (strlen(pathName) == (MAX_PATHNAME_LEN - 1) ) {
-                return;
-            }
-            */
             strcat(pathName, de->d_name);
 
             //Check if the object is a directory
@@ -377,6 +357,7 @@ void addRecurToBlob (char *basePath, uint64_t *byteCount,
             else {
                 addFileToBlob(pathName, byteCount, beginBobblet, newBlob);
             }
+            //Add any existing directories
             addRecurToBlob(pathName, byteCount, beginBobblet, newBlob);
         }
     }
@@ -389,7 +370,6 @@ uint64_t fetchByte (uint64_t begin, uint64_t end, FILE *f) {
 	int j = end - begin;
 	for (int i = begin; i <= end; i +=1) {
     	c = fgetc(f);
-        //printf("%lx ", c);
     	c = c << (j * BYTE);
     	data = data | c;
     	j -=1;
@@ -423,7 +403,7 @@ char *fetchFileName (uint64_t begin, uint64_t end, FILE *f, char *s) {
     return s;
 }
 
-//A function which the hash value of a blobette
+//A function which checks the hash value of a blobette
 void checkBlobHash (FILE *f, uint64_t begin, uint64_t end, uint8_t h) {
 	//Set the file pointer to the beginning
 	fseek(f, begin, SEEK_SET);
@@ -433,7 +413,6 @@ void checkBlobHash (FILE *f, uint64_t begin, uint64_t end, uint8_t h) {
     for (uint64_t i = begin; i < end; i +=1) {
     	hash = blobby_hash(hash, fgetc(f));
     }
-    //printf("Evaluated: %d, From file: %d\n", hash, h);
 
     if (hash != h) {
     	fprintf(stderr, "ERROR: blob hash incorrect\n");
@@ -454,17 +433,14 @@ int putFields (FILE *newBlob, int size, int64_t data, uint64_t *byteCount) {
         c = c >> (j * BYTE);
         c = c & 0xFF;
         info[i] = c;
-        //printf("%x ", info[i]);
         i -=1;
 	}
-    //printf("Data: %lo, %lx\n", data, data);
 
     //Put the byte into the blob
     for (int j = 0; j < size; j +=1) {
         fputc(info[j], newBlob);
         *byteCount +=1;
 	}
-    //printf("The byte count is: %d\n", *byteCount);
     free(info);
     return 1;
 }
@@ -503,16 +479,12 @@ uint8_t fetchHash (FILE *newBlob, uint64_t begin ,uint64_t byteCount) {
     for (int i = begin; i < byteCount; i +=1) {
         hash = blobby_hash(hash, (uint8_t)fgetc(newBlob));
     }
-    //printf("hash: %d\n", hash);
     return hash;
 }
 
 //This function assumes it is looking at a file!
 //It checks if a file is under a directory
-//by checking for "/"
-//By the definition from the C standard, a string must be terminated
-//with a '\0'
-//Returns the number of "/"
+//Returns the number of '/'
 int isInDir (char *pathName) {
     int i = 0;
     int backSlashCount = 0;
@@ -544,7 +516,6 @@ char *getDir (int begin, int end, char *name) {
         dir[j] = name[j];
     }
     dir[j - 1] = '\0';
-    //printf("%s\n", dir);
     return dir;
 }
 //A function that only adds directories to the blob
@@ -553,8 +524,8 @@ int addDirToBlob (char *dir, uint64_t *byteCount,
 
 
     struct stat pathName;
-    if (stat(dir, &pathName) ) {
-        fprintf(stderr, "There was an issue with the filename\n");
+    if (stat(dir, &pathName) == -1) {
+        perror(dir);
         exit(1);
     }
     //Add the magic number
@@ -581,7 +552,6 @@ int addDirToBlob (char *dir, uint64_t *byteCount,
 
     //Set the blob file pointer to the beginning of the bobblet
     fseek(newBlob, *beginBobblet, SEEK_SET);
-    //printf("beginBobblet: %lu\n", beginBobblet);
 
     //Calculate the hash key and add it to the end of the file
     uint8_t hash = fetchHash(newBlob, *beginBobblet, *byteCount);
@@ -599,8 +569,8 @@ int addFileToBlob (char *fileName, uint64_t *byteCount,
 
 
     struct stat pathName;
-    if (stat(fileName, &pathName) ) {
-        fprintf(stderr, "There was an issue with the filename\n");
+    if (stat(fileName, &pathName) == -1) {
+        perror(fileName);
         exit(1);
     }
 
@@ -638,14 +608,12 @@ int addFileToBlob (char *fileName, uint64_t *byteCount,
 
     //Set the blob file pointer to the beginning of the bobblet
     fseek(newBlob, *beginBobblet, SEEK_SET);
-    //printf("beginBobblet: %lu\n", beginBobblet);
 
     //Calculate the hash key and add it to the end of the file
     uint8_t hash = fetchHash(newBlob, *beginBobblet, *byteCount);
     fseek(newBlob, *byteCount, SEEK_SET);
     putFields(newBlob, BLOBETTE_HASH_BYTES, hash, byteCount);
 
-    //printf("ByteCount: %d\n", byteCount);
     printf("Adding: %s\n", fileName);
     *beginBobblet = *byteCount;
     fclose(f);
@@ -673,6 +641,7 @@ void cleanPathName (char *name) {
         name[length - 1] = '\0';
     }
 }
+
 
 //A function that checks if the compressed file is a xz
 //Returns 1 if the file is xz
@@ -738,8 +707,6 @@ char *decompressFile(char *text, uint64_t *blobSize) {
     }
 
     // close unused write end of pipe
-    // in some case processes will deadlock without this
-    // not in this case, but still good practice
     close(pipe_file_descriptors[1]);
 
     // create a stdio stream from read end of pipe
@@ -754,7 +721,6 @@ char *decompressFile(char *text, uint64_t *blobSize) {
     int c = 0;
     int i = 0;
     while ((c = fgetc(f)) != EOF) {
-        //printf("%c", c);
         line[i] = c;
         i +=1;
         *blobSize +=1;
@@ -773,7 +739,6 @@ char *decompressFile(char *text, uint64_t *blobSize) {
 
     // free the list of file actions
     posix_spawn_file_actions_destroy(&actions);
-
     return line;
 }
 
@@ -782,19 +747,18 @@ void list_blob_not_compressed(char *blob_pathname) {
 
     FILE *f1 = fopen(blob_pathname, "r");
     if (f1 == NULL) {
-    	perror("");
+    	perror(blob_pathname);
     	exit(1);
     }
 
     FILE *size = fopen(blob_pathname, "r");
     if (size == NULL) {
-    	perror("");
+    	perror(blob_pathname);
         exit(1);
     }
 
     fseek(size, 0, SEEK_END);
     long blobSize = ftell(size);
-    //printf("The blob size is: %ld\n", blobSize);
     uint64_t i = 1;
     uint64_t offset0 = 0;
     while (i < blobSize - 1) {
@@ -803,8 +767,8 @@ void list_blob_not_compressed(char *blob_pathname) {
 		checkMagicNum(f1);
 
 		uint64_t mode = fetchByte(i, i + 2, f1);
-		uint64_t offset1 = (i + 2) + 1;
-		//printf("offset1: %lu\n", offset1);
+		uint64_t offset1 = (i + BLOBETTE_MODE_LENGTH_BYTES);
+
 		uint64_t pathname_length = fetchByte(offset1, offset1 + 1, f1);
 		if (pathname_length < 1 ||
 				pathname_length > BLOBETTE_MAX_PATHNAME_LENGTH) {
@@ -812,15 +776,14 @@ void list_blob_not_compressed(char *blob_pathname) {
 			exit(1);
 		}
 		uint64_t offset2 = (offset1 + 1);
-		//printf("offset2: %lu\n", offset2);
+
 		uint64_t content_length = fetchByte(offset2, offset2 + 5, f1);
 		if (content_length < 0 ||
 				pathname_length > BLOBETTE_MAX_CONTENT_LENGTH) {
 			fprintf(stderr, "The size of the content was too large\n");
 			exit(1);
 		}
-		uint64_t offset3 = (offset2 + 6) + 1;
-		//printf("offset3: %lu\n", offset3);
+		uint64_t offset3 = (offset2 + BLOBETTE_CONTENT_LENGTH_BYTES) + 1;
 
 		//Allocate memory for the length of the string
 		char *pathName = malloc((pathname_length + 1) * sizeof(char));
@@ -832,11 +795,9 @@ void list_blob_not_compressed(char *blob_pathname) {
 		//and set the file pointer in the correct position
 		i = offset3 + offset0 + pathname_length + content_length;
 		if ( fseek(f1, i, SEEK_SET) == -1 ) {
-			fprintf(stderr, "Error with getting file pointer\n");
+            perror(blob_pathname);
 			exit(1);
 		}
-
-		//printf("count is: %lu & %lu\n", i, ftell(f1));
 
 		//Check if EOF is reached
 		//to avoid offset issues
@@ -845,7 +806,6 @@ void list_blob_not_compressed(char *blob_pathname) {
 			offset0 = 1;
 			fseek(f1, 0, SEEK_SET);
 			fseek(f1, i, SEEK_CUR);
-			//printf("count is: %lu & %lu\n", i, ftell(f1));
 		}
 		else {
 			offset0 = 0;
@@ -860,9 +820,7 @@ void list_blob_compressed(char *blob_pathname) {
     //Uncompress the file & get the size of the file
     uint64_t blobSize = 0;
     char *f1 = decompressFile(blob_pathname, &blobSize);
-    //printf("\n\n");
     
-    //printf("The blob size is: %ld\n", blobSize);
     uint64_t i = 0;
     while (i < blobSize - 1) {
         //Fetch the bytes for each blob field
@@ -870,21 +828,19 @@ void list_blob_compressed(char *blob_pathname) {
         checkMagicNumArray(f1, &i);
 
         uint64_t mode = fetchByteArray(&i, i + 2, f1);
-        //printf("offset1: %lu 0x%lx\n", i, mode);
+
         uint64_t pathname_length = fetchByteArray(&i, i + 1, f1);
         if (pathname_length < 1 ||
                 pathname_length > BLOBETTE_MAX_PATHNAME_LENGTH) {
             fprintf(stderr, "The length of the pathname was too long\n");
             exit(1);
         }
-        //printf("offset2: %lu\n", offset2);
         uint64_t content_length = fetchByteArray(&i, i + 5, f1);
         if (content_length < 0 ||
                 pathname_length > BLOBETTE_MAX_CONTENT_LENGTH) {
             fprintf(stderr, "The size of the content was too large\n");
             exit(1);
         }
-        //printf("offset3: %lu\n", i);
 
         //Allocate memory for the length of the string
         char *pathName = malloc((pathname_length + 1) * sizeof(char));
@@ -894,7 +850,6 @@ void list_blob_compressed(char *blob_pathname) {
 
         //calculate the offset for the array
         i = i + content_length;
-        //printf("count is: %lu\n", i);
     }
 }
 
@@ -950,19 +905,19 @@ char *fetchFileNameArray(uint64_t *begin, uint64_t end, char *f, char *s){
 void extract_blob_not_compressed(char *blob_pathname) {
     FILE *f1 = fopen(blob_pathname, "r");
     if (f1 == NULL) {
-    	fprintf(stderr, "The file was NULL!\n");
+    	perror(blob_pathname);
     	exit(1);
     }
 
     FILE *size = fopen(blob_pathname, "r");
     if (size == NULL) {
-    	fprintf(stderr, "The file was NULL!\n");
+    	perror(blob_pathname);
     	exit(1);
     }
 
     fseek(size, 0, SEEK_END);
-    long blobSize = ftell(size);
-    //printf("The blob size is: %ld\n", blobSize);
+    uint64_t blobSize = ftell(size);
+
     uint64_t i = 1;
     uint64_t offset0 = 0;
     uint64_t hashBegin = 0;
@@ -973,7 +928,6 @@ void extract_blob_not_compressed(char *blob_pathname) {
 		checkMagicNum(f1);
 		uint64_t mode = fetchByte(i, i + 2, f1);
 		uint64_t offset1 = (i + 2) + 1;
-		//printf("offset1: %lu\n", offset1);
         
         //Fetch the pathname length
 		uint64_t pathname_length = fetchByte(offset1, offset1 + 1, f1);
@@ -985,7 +939,7 @@ void extract_blob_not_compressed(char *blob_pathname) {
 
         //Fetch the length of the content
 		uint64_t offset2 = (offset1 + 1);
-		//printf("offset2: %lu\n", offset2);
+
 		uint64_t content_length = fetchByte(offset2, offset2 + 5, f1);
 		if (content_length < 0 ||
 				pathname_length > BLOBETTE_MAX_CONTENT_LENGTH) {
@@ -994,12 +948,10 @@ void extract_blob_not_compressed(char *blob_pathname) {
 		}
 
 		uint64_t offset3 = (offset2 + 6) + 1;
-		//printf("offset3: %lu\n", offset3);
 		//Allocate memory for the length of the string
 		char *pathName = malloc((pathname_length + 1) * sizeof(char));
 		fetchFileName(offset3, offset3 + pathname_length, f1, pathName);
 		uint64_t offset4 = offset3 + pathname_length;
-		//printf("%lu %lu \n", offset4, i);
 
         //Offset to the correct position for the new obj
 		if (hashBegin) {
@@ -1010,11 +962,13 @@ void extract_blob_not_compressed(char *blob_pathname) {
         
         //Directory
         if (mode & S_IFDIR) {
-            if (!mkdir(pathName, mode)) {
-                printf("Creating directory: %s\n", pathName);
+            if (mkdir(pathName, mode) == -1) {
+                perror(pathName);
+                exit(1);
             }
-            if( chmod(pathName, mode) ) {
-                perror("Error2");
+            printf("Creating directory: %s\n", pathName);
+            if(chmod(pathName, mode) == -1) {
+                perror(pathName);
                 exit(1);
             }
             //Return the position for the file pointer
@@ -1026,19 +980,19 @@ void extract_blob_not_compressed(char *blob_pathname) {
         }
         //File
         else {
-            printf("Extracting: %s\n", pathName);
             //Create a new file
             FILE *newFile = fopen(pathName, "w+");
             if (!newFile) {
-                perror("Error");
+                perror(pathName);
                 exit(1);
             }
+            printf("Extracting: %s\n", pathName);
 
             //Check if the file is in a directory
 
             //Place the pointer at the correct offset
             if ( fseek(f1, offset4, SEEK_SET) == -1 ) {
-                fprintf(stderr, "Error with getting file pointer\n");
+                perror(pathName);
                 exit(1);
             }
 
@@ -1047,13 +1001,12 @@ void extract_blob_not_compressed(char *blob_pathname) {
                 //Copy all the contents
                 int c = fetchByte(j, j, f1);
                 fputc(c, newFile);
-                //printf("J is %d: c is %c\n", j, c);
             }
 
             //Set correct file permissions
             //Perform error checking
             if ( chmod(pathName, mode) == -1 ) {
-                fprintf(stderr, "Error with changing permissions\n");
+                perror(pathName);
                 exit(1);
             }
 
@@ -1063,22 +1016,17 @@ void extract_blob_not_compressed(char *blob_pathname) {
             //set the file pointer in the correct position
             i = offset3 + offset0 + pathname_length + content_length;
             if ( fseek(f1, i, SEEK_SET) == -1 ) {
-                fprintf(stderr, "Error with getting file pointer\n");
+                perror(pathName);
                 exit(1);
             }
         }
         
-        //printf("%s\n", pathName);
-        //printf("%lu %lu \n", offset4, i);
         
 		//Fetch the hash value
 		uint8_t hash = fetchByte(i, i, f1);
-        //printf("Hash: %d\n", hash);
-		//printf("Hashing begins: %lu and ends at: %lu\n", hashBegin, i);
 
-		//Check the hash value;
+		//Check if the hash value is correct
 		checkBlobHash(f1, hashBegin, i, hash);
-		//printf("count is: %lu & %lu\n", i, ftell(f1));
 
 		//Check if EOF is reached
 		if (fgetc(f1) != EOF) {
@@ -1086,7 +1034,6 @@ void extract_blob_not_compressed(char *blob_pathname) {
 			offset0 = 1;
 			fseek(f1, 0, SEEK_SET);
 			fseek(f1, i, SEEK_CUR);
-			//printf("count is: %lu & %lu\n", i, ftell(f1));
 		}
 		else {
 			offset0 = 0;
@@ -1105,9 +1052,7 @@ void extract_blob_compressed(char *blob_pathname) {
 
     uint64_t blobSize = 0;
     char *f1 = decompressFile(blob_pathname, &blobSize);
-    //printf("\n\n");
     
-    //printf("The blob size is: %ld\n", blobSize);
     uint64_t i = 0;
     uint64_t hashBegin = 0;
 
@@ -1117,7 +1062,6 @@ void extract_blob_compressed(char *blob_pathname) {
 
 		checkMagicNumArray(f1, &i);
 		uint64_t mode = fetchByteArray(&i, i + 2, f1);
-		//printf("offset1: %lu\n", offset1);
         
         //Fetch the pathname length
 		uint64_t pathname_length = fetchByteArray(&i, i + 1, f1);
@@ -1128,7 +1072,6 @@ void extract_blob_compressed(char *blob_pathname) {
 		}
 
         //Fetch the length of the content
-		//printf("offset2: %lu\n", offset2);
 		uint64_t content_length = fetchByteArray(&i, i + 5, f1);
 		if (content_length < 0 ||
 				pathname_length > BLOBETTE_MAX_CONTENT_LENGTH) {
@@ -1136,35 +1079,35 @@ void extract_blob_compressed(char *blob_pathname) {
 			exit(1);
 		}
 
-		//printf("offset3: %lu\n", i);
 		//Allocate memory for the length of the string
 		char *pathName = malloc((pathname_length + 1) * sizeof(char));
 		fetchFileNameArray(&i, i + pathname_length, f1, pathName);
-		//printf("%lu \n", i);
 
         //Check if the obj is a file or directory
         //By using the mode
         
         //Directory
         if (mode & S_IFDIR) {
-            if (!mkdir(pathName, mode)) {
-                printf("Creating directory: %s\n", pathName);
+            if (mkdir(pathName, mode) == -1) {
+                perror(pathName);
+                exit(1);
             }
+            printf("Creating directory: %s\n", pathName);
             if( chmod(pathName, mode) ) {
-                perror("Error2");
+                perror(pathName);
                 exit(1);
             }
             i -=1;
         }
         //File
         else {
-            printf("Extracting: %s\n", pathName);
             //Create a new file
             FILE *newFile = fopen(pathName, "w+");
             if (!newFile) {
-                perror("Error");
+                perror(pathName);
                 exit(1);
             }
+            printf("Extracting: %s\n", pathName);
 
             //Check if the file is in a directory
             i -=1;
@@ -1172,13 +1115,12 @@ void extract_blob_compressed(char *blob_pathname) {
                 //Copy all the contents
                 int c = fetchByteArray(&i, i, f1);
                 fputc(c, newFile);
-                //printf("c is %c\n", c);
             }
 
             //Set correct file permissions
             //Perform error checking
             if ( chmod(pathName, mode) == -1 ) {
-                fprintf(stderr, "Error with changing permissions\n");
+                perror(pathName);
                 exit(1);
             }
 
@@ -1186,16 +1128,11 @@ void extract_blob_compressed(char *blob_pathname) {
             free(pathName);
         }
         
-        //printf("%s\n", pathName);
-        //printf("%lu %lu \n", offset4, i);
         
 		//Fetch the hash value
 		uint8_t hash = fetchByteArray(&i, i, f1);
-        //printf("Hash: %d\n", hash);
         i -=1;
-		//printf("Hashing begins: %lu and ends at: %lu\n", hashBegin, i);
-        //printf("count is: %lu\n", i);
-		//Check the hash value;
+		//Check if the hash value is correct
 		checkBlobHashArray(f1, hashBegin, i, hash);
         i +=1;
 		//Shift the calculation of the hash blobette to the new
@@ -1217,7 +1154,6 @@ void checkBlobHashArray (char *f, uint64_t begin,
     for (uint64_t i = begin; i < end; i +=1) {
         hash = blobby_hash(hash, f[i]);
     }
-    //printf("Evaluated: %d, From file: %d\n", hash, h);
     if (hash != h) {
         fprintf(stderr, "ERROR: blob hash incorrect\n");
         exit(1);
@@ -1240,7 +1176,7 @@ uint64_t copyContentArray (uint64_t *begin, uint64_t end,
 
 }
 
-//A function that compresses a file
+//A function that compresses a data
 void compressFile(char *text, FILE *newBlob, uint64_t buffSize, 
                   char *blob_pathname) {
     //pipe #1 to allow the parent to send data to the child
@@ -1250,7 +1186,7 @@ void compressFile(char *text, FILE *newBlob, uint64_t buffSize,
         exit(1);
     }
     //open the file
-    int read = open(blob_pathname, (O_RDONLY | O_WRONLY));
+    int read = open(blob_pathname, (O_WRONLY | O_TRUNC));
     
     // create a list of file actions to be carried out on spawned process
     posix_spawn_file_actions_t actions;
@@ -1285,33 +1221,23 @@ void compressFile(char *text, FILE *newBlob, uint64_t buffSize,
 
     close(fd[0]);
     int j = 0;
-    while (j < buffSize) {
-        FILE *send = fdopen(fd[1], "w");
-        if (send == NULL) {
-            perror("fdopen2");
-            exit(1);
-        }
-        if (!j) {
-            fputc(text[j], send);
-            j +=1;
-        }
 
-        //Send the buffer to xz to process data
-        while (j % 4094) {
-            fputc(text[j], send);
-            j +=1;
-        }
-        if (text[j] != EOF) {
-            fputc(text[j], send);
-            j +=1;
-        }
-        printf("%d\n", j);
-        fclose(send);
+    FILE *send = fdopen(fd[1], "w");
+    if (send == NULL) {
+        perror("fdopen2");
+        exit(1);
     }
+
+    //Send the buffer to xz to process data
+    while (j < buffSize) {
+        fputc(text[j], send);
+        j +=1;
+    }
+
+    fclose(send);
     
     // close read-end of the pipe
     // spawned process will now receive EOF if attempts to read input
-    //fclose(f);
 
     int exit_status;
     if (waitpid(pid, &exit_status, 0) == -1) {

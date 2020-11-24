@@ -1,0 +1,37 @@
+#include "bit_rotate.h"
+
+// return the value bits rotated left n_rotations
+uint16_t bit_rotate(int n_rotations, uint16_t bits) {
+
+    if (n_rotations == 0) {
+        return bits;
+    }
+    uint16_t temp = 0;
+    int i = 0;//position of the it
+    while (i < 16) {
+        uint16_t extract = bits >> i;
+        
+        //if rotations is positive, the shift to the left
+        if (n_rotations > 0) {
+            int shift = (i + n_rotations) % 16;        
+            extract = extract << shift;
+            temp = extract | temp;
+        }
+        //if rotations is negative, the shift to the right
+        else {
+            int shift = (i + n_rotations) % 16;
+            if (shift < 0) {
+                shift +=16;
+            }        
+            extract = extract << shift;
+            temp = extract | temp;
+        }
+        
+        
+        i +=1;
+    }
+
+
+
+    return temp;
+}
