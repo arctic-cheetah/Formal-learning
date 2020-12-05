@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://cgi.cse.unsw.edu.au/~cs1521/20T3/exam/practice/questions -->
+<html lang="en"><script>try {
+                        Object.defineProperty(screen, "availTop", { value: 0 });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(screen, "availLeft", { value: 0 });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(screen, "availWidth", { value: 1920 });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(screen, "availHeight", { value: 1080 });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(screen, "colorDepth", { value: 24 });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(screen, "pixelDepth", { value: 24 });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(navigator, "keyboard", { value: undefined });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(navigator, "hardwareConcurrency", { value: 8 });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(navigator, "deviceMemory", { value: 8 });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(navigator, "webkitTemporaryStorage", { value: undefined });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(navigator, "webkitPersistentStorage", { value: undefined });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(navigator, "appVersion", { value: "5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36" });
+                    } catch (e) {}
+                    try {
+                        Object.defineProperty(navigator, "doNotTrack", { value: null });
+                    } catch (e) {}
+                    
+                navigator.getBattery = function getBattery () {
+                let battery = {"charging":true,"chargingTime":0,"dischargingTime":null,"level":1}
+            
+                try {
+                    Object.defineProperty(battery, 'onchargingchange', {
+                        enumerable: true,
+                        configurable: false,
+                        writable: false,
+                        value: undefined
+                    })
+                } catch (e) {}
+                
+                try {
+                    Object.defineProperty(battery, 'onchargingtimechange', {
+                        enumerable: true,
+                        configurable: false,
+                        writable: false,
+                        value: undefined
+                    })
+                } catch (e) {}
+                
+                try {
+                    Object.defineProperty(battery, 'ondischargingtimechange', {
+                        enumerable: true,
+                        configurable: false,
+                        writable: false,
+                        value: undefined
+                    })
+                } catch (e) {}
+                
+                try {
+                    Object.defineProperty(battery, 'onlevelchange', {
+                        enumerable: true,
+                        configurable: false,
+                        writable: false,
+                        value: undefined
+                    })
+                } catch (e) {}
+                
+                    battery.addEventListener = function addEventListener () {
+                        return
+                    }
+                
+                return Promise.resolve(battery)
+                }
+            
+            try {
+                window.screenY = 0
+            } catch (e) { }
+        
+            try {
+                window.screenTop = 0
+            } catch (e) { }
+        
+            try {
+                window.top.window.outerHeight = 0
+            } catch (e) { }
+        
+            try {
+                window.screenX = 0
+            } catch (e) { }
+        
+            try {
+                window.screenLeft = 0
+            } catch (e) { }
+        
+            try {
+                window.top.window.outerWidth = 0
+            } catch (e) { }
+        </script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+<title>
+COMP1521 20T3 —
+
+20T2 Final Exam
+Questions
+
+</title><link href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/" rel="canonical">
+<link crossorigin="anonymous" href="./COMP1521 20T2 — 20T2 Final Exam Questions_files/bootstrap.min.css" integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" rel="stylesheet">
+<link href="./COMP1521 20T2 — 20T2 Final Exam Questions_files/course.css" rel="stylesheet">
+<script crossorigin="anonymous" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" src="./COMP1521 20T2 — 20T2 Final Exam Questions_files/jquery.min.js"></script>
+<script crossorigin="anonymous" integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" src="./COMP1521 20T2 — 20T2 Final Exam Questions_files/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha256-OFRAJNoaD8L3Br5lglV7VyLRf0itmoBzWUoM+Sji4/8=" src="./COMP1521 20T2 — 20T2 Final Exam Questions_files/bootstrap.min.js"></script>
+<script src="./COMP1521 20T2 — 20T2 Final Exam Questions_files/course.js"></script>
+<!-- <script async src="https://static.codepen.io/assets/embed/ei.js"></script> -->
+<!-- MathJax. -->
+
+<script type="text/javascript" async="" src="./COMP1521 20T2 — 20T2 Final Exam Questions_files/MathJax.js"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body class="d-flex flex-column" style="min-height: 100vh;"><div id="MathJax_Message" style="display: none;"></div>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light no-print" id="header-navbar">
+<div class="container">
+<button aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right" data-target="#navmenu" data-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<a class="navbar-brand" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/">
+      COMP1521 20T3
+    </a>
+<div class="collapse navbar-collapse" id="navmenu">
+<ul class="navbar-nav mr-auto">
+<li class="nav-item active"><a class="nav-link" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/outline">Outline</a></li>
+<li class="nav-item active"><a class="nav-link" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/student/">Submissions</a></li>
+<li class="nav-item active"><a class="nav-link" href="https://discourse.cse.unsw.edu.au/20t3/comp1521/">Forum</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<main aria-label="Content" class="container" style="flex: 1; padding-top: 4rem;">
+<header>
+<h1 class="text-center">
+20T2 Final Exam
+Questions
+</h1>
+</header>
+<div class="tutlab lab">
+<h3>Exam Conditions</h3>
+<ul>
+<li><p>You can start reading this exam at <b>Saturday   28 November 12:50</b> Sydney time.
+</p></li><li><p>You can start typing at <b>Saturday   28 November 13:00</b> Sydney time.
+</p></li><li><p>You have until <b>Saturday   28 November 16:00</b> Sydney time to complete this exam
+</p></li><li><p>Only submissions before <b>Saturday   28 November 16:00</b> Sydney time will be marked
+</p></li><li><p>Except, students with extra exam time approved by Equitable Learning Services (ELS) can make submissions after <b>Saturday   28 November 16:00</b> within their approved extra time
+</p></li><li><p>You are not permitted to communicate (email, phone, message, talk, …) with anyone during this exam,
+except COMP1521 staff via <b>cs1521.exam@cse.unsw.edu.au</b>
+</p></li><li><p>You are not permitted to get help from anyone but COMP1521 staff during this exam.
+</p></li><li><p>This is a closed book exam.
+</p></li><li><p>You are not permitted to access papers or books.
+</p></li><li><p>You are not permitted to access files on your computer or other computers, except the files for the exam.
+</p></li><li><p>You are not permitted to access web pages or other internet resources, except the web pages for the exam
+and the online language cheatsheets &amp; documentation linked below
+</p></li><li><p>Even after you finish the exam, do not communicate your exam answers to anyone or the day of the exam.  Some students have extended time to complete the exam.
+</p></li><li><p>Do not place your exam work in any location, including file sharing services such as Dropbox,
+accessible to any other person .
+</p></li><li><p>Ensure during the exam no other person in your household can access your work.
+</p></li><li><p>Your <b>zpass</b> should not be disclosed to any other person.  If you have disclosed your 
+<b>zpass</b>, you should change it immediately.
+</p></li><li><p><strong class="text-danger">Deliberate violation of exam conditions will be referred to Student Integrity as serious misconduct</strong>
+</p></li></ul>
+<h3>Exam Structure</h3>
+<ul>
+<li><p> There are <b>11</b> questions on this exam.
+</p></li><li><p> Total mark of questions on this exam is <b>100</b>.
+</p></li><li><p> Questions are
+
+<b>NOT</b>
+
+worth equal marks.
+</p></li><li><p> All 11 questions are practical (programming) questions.
+</p></li><li><p> Not all questions may have provided files,
+	You should create any files needed for submission if they are not provided.
+</p></li><li><p> Answer each question in a <b>SEPARATE</b> file.
+	Each question specifies the name of the file to use.
+	These are named after the corresponding question number,
+	Make sure you use <b>EXACTLY</b> this file name.
+</p></li><li><p> When you finish working on a question, submit the files using the
+	<b>give</b> command provided in the question.
+	<b>You may submit your answers as many times as you like.</b>
+	The last submission <b>ONLY</b> will be marked.
+</p></li><li><p> Do not leave it to the deadline to submit your answers.
+	Submit each question when you finish working on it.
+	Running autotests does not automatically submit your code.
+</p></li><li><p> You can verify what submissions you have made with <b><code>1521 classrun -check practice_q<em>&lt;N&gt;</em></code></b>
+</p></li></ul>
+<h3>Language Documentation</h3>
+
+You may access this <strong>language documentation</strong> while attempting this test:
+
+<ul>
+<li><a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/resources/cheatsheets/c-qrc.pdf">C quick reference</a>
+</li><li><a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/resources/MIPS32-QRC.pdf">MIPS Quick Reference Card</a>
+</li><li><a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/resources/MIPS32-II-r5.04.pdf">MIPS Instruction Reference</a>
+</li><li><a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/resources/spim-guide.html">SPIM Documentation</a>
+</li><li><a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/resources/spim-tute.html">MIPS Quick Tutorial</a>
+</li></ul>
+<p>
+You may also access:
+</p><ul>
+<li><p>manual entries via the <code>man</code> command <br>
+</p></li><li><p>Texinfo pages via the <code>info</code> command <br>
+</p></li></ul>
+<p>
+</p><h3>Special Considerations</h3>
+<div class="alert alert-warning">This exam is covered by the Fit-to-Sit policy. That means that
+by sitting this exam, you are declaring yourself well enough to do so. You will be unable to apply
+for special consideration after the exam for circumstances affecting you before it began.
+If you have questions, or you feel unable to complete the exam, contact <b>cs1521.exam@cse.unsw.edu.au</b></div>
+<p>
+If you experience a technical issue before or during the exam, you should follow the following instructions:
+
+</p><p>
+    Take screenshots of as many of the following as possible:
+</p><p>
+</p><ul>
+<li>error messages</li>
+<li>screen not loading </li>
+<li>timestamped speed tests  </li>
+<li>power outage maps </li>
+<li>messages or information from your internet provider regarding the issues experienced</li>
+</ul>
+<p>
+You should then get in touch with course staff via <b>cs1521.exam@cse.unsw.edu.au</b> as soon as the issue arises
+
+
+</p><h3>Getting Started</h3>
+<p>
+Set up for the exam by
+creating a new directory called <code>exam_practice</code>,
+changing to this directory,
+and fetching the provided code by running these commands:
+
+</p><pre is="tty"><kbd is="sh">mkdir -m 700 exam_practice</kbd>
+<kbd is="sh">cd exam_practice</kbd>
+<kbd is="sh">1521 fetch exam_practice</kbd>
+</pre>
+<p>
+Or you can download the provided code
+as a <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/exam/practice/provided.zip">zip file</a>
+or a <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/exam/practice/provided.tar">tar file</a>.
+
+</p><p>
+If you make a mistake and need a new copy of a particular file you can do the follow:
+</p><pre is="tty"><kbd is="sh">rm <i>broken-file</i></kbd>
+<kbd is="sh">1521 fetch exam_practice</kbd>
+</pre>
+Only files that don't exist will be recreated, all other files will remain untouched
+
+
+
+
+
+
+    
+         
+
+
+
+<section class="exercise with-test">
+<header><h3>Question 1
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (10 marks)
+    </small></h3></header>
+<p>
+You have been given <code>practice_q1.s</code>, a MIPS assembler program that reads one number and then prints it.
+
+</p><p>
+Add code to <code>practice_q1.s</code> to make it equivalent to this C program:
+
+
+</p><div class="highlight"><pre><span></span><span class="c1">// print the sum of two integers</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>
+In other words, it should read 2 numbers and print their sum.
+
+</p><p>
+For example:
+
+</p><pre is="tty"><kbd is="sh">1521 spim -f practice_q1.s</kbd>
+<kbd>5
+8
+</kbd>13
+<kbd is="sh">1521 spim -f practice_q1.s</kbd>
+<kbd>118
+26
+</kbd>144
+<kbd is="sh">1521 spim -f practice_q1.s</kbd>
+<kbd>42
+42
+</kbd>84
+</pre>
+<aside class="note">
+<p>
+No error checking is required.
+</p><p>
+Your program can assume its input always contains two integers, and only two integers.
+</p><p>
+You can assume the value of the expression can be represented as a signed 32 bit value.
+In other words, you can assume overflow/underflow does not occur.
+</p><p>
+Your solution must be in MIPS assembler only.
+</p></aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q1</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q1 practice_q1.s</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q1</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 2
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+Your task is to add code to this function in <b>practice_q2.c</b>:
+
+
+</p><div class="highlight"><pre><span></span><span class="c1">// given a uint32_t value,</span>
+<span class="c1">// return 1 iff the least significant (bottom) byte</span>
+<span class="c1">// is equal to the 2nd least significant byte; and</span>
+<span class="c1">// return 0 otherwise</span>
+<span class="kt">int</span> <span class="nf">practice_q2</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// PUT YOUR CODE HERE</span>
+
+    <span class="k">return</span> <span class="mi">42</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>
+Add code to the function <code>practice_q2</code> so that,
+given a <code>uint32_t</code> value,
+it returns <strong>1</strong>
+<abbr title="if and only if">iff</abbr> the least significant (bottom) byte of <code>value</code>
+is equal to the second least significant byte.
+<code>practice_q2</code> should return <strong>0</strong> otherwise.
+
+</p><p>
+For example, given the hexadecimal value <strong>0x12345678</strong>,
+<code>practice_q2</code> should return <strong>0</strong>,
+because the least significant byte, <strong>0x78</strong>,
+<em>is not</em> equal to the second least significant byte, <strong>0x56</strong>.
+
+</p><p>
+Similarly, given the hexadecimal value <strong>0x12345656</strong>,
+<code>practice_q2</code> should return <strong>1</strong>,
+because the least significant byte, <strong>0x56</strong>,
+<em>is</em> equal to the second least significant byte, <strong>0x56</strong>.
+
+</p><p>
+You must use bitwise operators to implement <code>practice_q2</code>.
+
+</p><p>
+For example:
+
+</p><pre is="tty"><kbd is="sh">dcc practice_q2.c test_practice_q2.c -o practice_q2</kbd>
+<kbd is="sh">./practice_q2 0x00000000</kbd>
+practice_q2(0x00000000) returned 1
+<kbd is="sh">./practice_q2 0x00000001</kbd>
+practice_q2(0x00000001) returned 0
+<kbd is="sh">./practice_q2 0x00000100</kbd>
+practice_q2(0x00000100) returned 0
+<kbd is="sh">./practice_q2 0x00000101</kbd>
+practice_q2(0x00000101) returned 1
+<kbd is="sh">./practice_q2 0x00001212</kbd>
+practice_q2(0x00001212) returned 1
+<kbd is="sh">./practice_q2 0x00001213</kbd>
+practice_q2(0x00001213) returned 0
+<kbd is="sh">./practice_q2 0x12345678</kbd>
+practice_q2(0x12345678) returned 0
+<kbd is="sh">./practice_q2 0x12345656</kbd>
+practice_q2(0x12345656) returned 1
+<kbd is="sh">./practice_q2 0x12345634</kbd>
+practice_q2(0x12345634) returned 0
+<kbd is="sh">./practice_q2 0x12345666</kbd>
+practice_q2(0x12345666) returned 0
+<kbd is="sh">./practice_q2 0x12121212</kbd>
+practice_q2(0x12121212) returned 1
+<kbd is="sh">./practice_q2 0x37861212</kbd>
+practice_q2(0x37861212) returned 1
+<kbd is="sh">./practice_q2 0x12121221</kbd>
+practice_q2(0x12121221) returned 0
+</pre>
+<p>
+You can also use <cite><a title="man 1 make" href="https://manpages.debian.org/jump?q=make.1">make</a></cite> to build your code:
+
+</p><pre is="tty"><kbd is="sh">make practice_q2
+</kbd></pre>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+You are not permitted
+to call any functions from the C standard library.
+
+</p></li><li><p>
+You are not permitted to use
+division (<code>/</code>),
+multiplication (<code>*</code>), or
+modulus (<code>%</code>).
+
+</p></li><li><p>
+You are not permitted to change
+the <code>main</code> function you have been given.
+
+</p></li><li><p>
+You are not permitted to change
+<code>practice_q2</code>'s prototype
+(its return type and argument types).
+
+</p></li><li><p>
+No error checking is necessary.
+
+</p></li><li><p>
+You may define and call your own functions if you wish.
+
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q2</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q2 practice_q2.c</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q2</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 3
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+You have been given <code>practice_q3.s</code>,
+a MIPS assembler program that reads an integer value and then prints it.
+
+</p><p>
+Add code to the file <code>practice_q3.s</code>
+so that it prints <strong>1</strong>
+iff the least significant (bottom) byte of value
+is equal to the second least significant byte,
+and prints <strong>0</strong> otherwise.
+
+
+</p><p>
+For example, given the decimal value <strong>305419896</strong>,
+which is hexadecimal <strong>0x12345678</strong>,
+<code>practice_q3.s</code> should print <strong>0</strong>,
+because the least significant byte, <strong>0x78</strong>,
+<em>is not</em> equal to the second least significant byte, <strong>0x56</strong>.
+
+</p><p>
+Similarly, given the decimal value <strong>305419862</strong>,
+which is hexadecimal <strong>0x12345656</strong>,
+<code>practice_q3.s</code> should print <strong>1</strong>,
+because the least significant byte, <strong>0x56</strong>,
+<em>is</em> equal to the second least significant byte, <strong>0x56</strong>.
+
+</p><p>
+For example:
+
+</p><pre is="tty"><kbd is="sh">1521 spim -f practice_q3.s </kbd>
+<kbd>0
+</kbd>1
+<kbd is="sh">1521 spim -f practice_q3.s </kbd>
+<kbd>1
+</kbd>0
+<kbd is="sh">1521 spim -f practice_q3.s </kbd>
+<kbd>256
+</kbd>0
+<kbd is="sh">1521 spim -f practice_q3.s </kbd>
+<kbd>257
+</kbd>1
+<kbd is="sh">1521 spim -f practice_q3.s </kbd>
+<kbd>4626
+</kbd>1
+<kbd is="sh">1521 spim -f practice_q3.s </kbd>
+<kbd>4627
+</kbd>0
+<kbd is="sh">1521 spim -f practice_q3.s </kbd>
+<kbd>305419896
+</kbd>0
+<kbd is="sh">1521 spim -f practice_q3.s </kbd>
+<kbd>305419862
+</kbd>1
+</pre>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+Your solution must be in MIPS assembler only.
+
+</p></li><li><p>
+Your program can assume its input always contains one integer.
+
+</p></li><li><p>
+No error checking is necessary.
+
+</p></li><li><p>
+It is recommended, but not required, that you use bitwise operators.
+
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q3</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q3 practice_q3.s</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q3</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 4
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+You have been given <code>practice_q4.s</code>,
+a MIPS assembler program that reads 1 number and then prints it.
+
+</p><p>
+Add code to <code>practice_q4.s</code> to make it equivalent to this C program:
+
+
+</p><div class="highlight"><pre><span></span><span class="c1">//  read numbers until their sum is &gt;= 42, print their sum</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">sum</span> <span class="o">&lt;</span> <span class="mi">42</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+        <span class="n">sum</span> <span class="o">=</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">sum</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>
+In other words, it should read numbers until their sum is ≥&gt;= 42 and then print their sum.
+
+</p><p>
+For example:
+
+</p><pre is="tty"><kbd is="sh">1521 spim -f practice_q4.s</kbd>
+<kbd>10
+20
+25</kbd>
+55
+<kbd is="sh">1521 spim -f practice_q4.s</kbd>
+<kbd>20
+22</kbd>
+42
+<kbd is="sh">1521 spim -f practice_q4.s</kbd>
+<kbd>100</kbd>
+100
+<kbd is="sh">1521 spim -f practice_q4.s</kbd>
+<kbd>10
+10
+10
+10
+10</kbd>
+50
+</pre>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+No error checking is required.
+
+</p></li><li><p>
+Your program can assume its input contains only integers.
+
+</p></li><li><p>
+Your program can assume these integers sum to ≥at least 42.
+
+</p></li><li><p>
+You can assume the value of the expression can be represented as a signed 32 bit value.
+In other words, you can assume overflow/underflow does not occur.
+
+</p></li><li><p>
+Your solution must be in MIPS assembler only.
+
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q4</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q4 practice_q4.s</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q4</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 5
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+Write a C program, <code>practice_q5.c</code>,
+which takes two names of environment variables as arguments.
+It should print <strong>1</strong>
+iff both environment variables are set to the same value.
+Otherwise,
+if the environment variables differ in value,
+or either environment variable is not set,
+it should print <strong>0</strong>.
+
+</p><p>
+The shell command <code>export</code> sets an environment variable to a value;
+the shell command <code>unset</code> unsets an environment variable.
+In the following example,
+<code>export</code> is used to set the environment variables
+<code>VAR1</code>, <code>VAR2</code> and <code>VAR3</code>, and
+<code>unset</code> is used to ensure environment variables <code>VAR4</code> and <code>VAR5</code> are unset.
+
+</p><pre is="tty"><kbd is="sh">export VAR1=hello</kbd>
+<kbd is="sh">export VAR2=good-bye</kbd>
+<kbd is="sh">export VAR3=hello</kbd>
+<kbd is="sh">unset VAR4</kbd>
+<kbd is="sh">unset VAR5</kbd>
+<kbd is="sh">./practice_q5 VAR1 VAR2</kbd>
+0
+<kbd is="sh">./practice_q5 VAR3 VAR1</kbd>
+1
+<kbd is="sh">./practice_q5 VAR2 VAR4</kbd>
+0
+<kbd is="sh">./practice_q5 VAR4 VAR5</kbd>
+0
+</pre>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+There is no supplied code for this question.
+
+</p></li><li><p>
+Your program can assume it is always given 2 arguments.
+
+</p></li><li><p>
+Your program should always print one line of output.
+The line of output should contain only 0 or 1.
+
+</p></li><li><p>
+Your solution must be in C only.
+
+</p></li><li><p>
+You are not permitted to run external programs.
+You are not permitted to use system, popen, posix_spawn, fork or exec.
+
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q5</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q5 practice_q5.c</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q5</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 6
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+We need to count the number of ASCII bytes in files.
+
+</p><p>
+Write a C program, <code>practice_q6.c</code>,
+which takes a single filename as its argument,
+counts the number of bytes in the named file which are valid ASCII,
+and prints one line of output containing that count.
+
+</p><p>
+Assume a byte is valid ASCII
+iff it contains a value between 0 and 127 inclusive.
+
+</p><p>-
+You must match the output format in the example below exactly.
+
+</p><pre is="tty"><kbd is="sh">dcc practice_q6.c -o practice_q6</kbd>
+<kbd is="sh">echo hello world &gt;file1</kbd>
+<kbd is="sh">./practice_q6 file1</kbd>
+file1 contains 12 ASCII bytes
+<kbd is="sh"> echo -e 'hello\xBAworld' &gt;file2</kbd>
+<kbd is="sh">./practice_q6 file2</kbd>
+file2 contains 11 ASCII bytes
+<kbd is="sh">echo -n -e '\x80\x81' &gt;file3</kbd>
+<kbd is="sh">./practice_q6 file3</kbd>
+file3 contains 0 ASCII bytes
+</pre>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+There is no supplied code for this question.
+
+</p></li><li><p>
+No error checking is required.
+
+</p></li><li><p>
+Your program can assume it is always given the name of a file.
+
+</p></li><li><p>
+Your solution must be in C only.
+
+</p></li><li><p>
+You are not permitted to run external programs.
+You are not permitted to use system, popen, posix_spawn, fork or exec.
+
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q6</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q6 practice_q6.c</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q6</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 7
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+You have been given <code>practice_q7.s</code>,
+a MIPS assembler program that reads 1 number and then prints it.
+
+</p><p>
+Add code to <code>practice_q7.s</code> to make it equivalent to this C program:
+
+
+</p><div class="highlight"><pre><span></span><span class="c1">// Read numbers into an array until their sum is &gt;= 42</span>
+<span class="c1">// then print the numbers in reverse order</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="n">numbers</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">sum</span> <span class="o">&lt;</span> <span class="mi">42</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+        <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">i</span><span class="o">--</span><span class="p">;</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>
+In other words,
+it should read numbers until their sum is ≥ 42,
+and then print the numbers read in reverse order.
+
+</p><p>
+For example:
+
+</p><pre is="tty"><kbd is="sh">1521 spim -f practice_q7.s</kbd>
+<kbd>11
+17
+3
+19</kbd>
+19
+3
+17
+11
+<kbd is="sh">1521 spim -f practice_q7.s</kbd>
+<kbd>10
+20
+30</kbd>
+30
+20
+10
+<kbd is="sh">1521 spim -f practice_q7.s</kbd>
+<kbd>42</kbd>
+42
+</pre>
+<ul class="list-unstyled">
+<li><p>
+No error checking is required.
+
+</p></li><li><p>
+Your program can assume its input contains only integers.
+
+</p></li><li><p>
+Your program can assume these integers sum to ≥ 42.
+
+</p></li><li><p>
+Your program can assume that it will have to read no more than 1000 integers before their sum is ≥ 42.
+
+</p></li><li><p>
+You can assume the value of the expression can be represented as a signed 32 bit value.
+In other words, you can assume overflow/underflow does not occur.
+
+</p></li><li><p>
+Your solution must be in MIPS assembler only.
+
+</p></li></ul>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q7</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q7 practice_q7.s</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q7</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 8
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+We need to count the number of UTF-8 characters in a file,
+and check that the file contains only valid UTF-8.
+
+</p><p>
+Write a C program, <code>practice_q8.c</code>,
+which takes a single filename as its argument,
+counts the number of UTF-8 characters in the named file,
+and prints one line of output containing that count.
+
+</p><p>
+Use the same format as the example below.
+
+</p><pre is="tty"><kbd is="sh">dcc practice_q8.c -o practice_q8</kbd>
+<kbd is="sh">echo hello world &gt;file1</kbd>
+<kbd is="sh">./practice_q8 file1</kbd>
+file1: 12 UTF-8 characters
+<kbd is="sh">echo -e -n '\xF0\x90\x8D\x88' &gt;file2</kbd>
+<kbd is="sh">./practice_q8 file2</kbd>
+file2: 1 UTF-8 characters
+<kbd is="sh">echo -e -n '\x24\xC2\xA2\xE0\xA4\xB9' &gt;file3</kbd>
+<kbd is="sh">./practice_q8 file3</kbd>
+file3: 3 UTF-8 characters
+<kbd is="sh">./practice_q8 utf8.html</kbd>
+utf8.html: 7943 UTF-8 characters
+</pre>
+<p>
+If <code>practice_q8.c</code> reads a byte which is not valid UTF-8,
+it should stop and print an error message
+in the same format as the example below.
+Note the error message includes
+how many valid UTF-8 characters have been previously read.
+
+</p><pre is="tty"><kbd is="sh">echo -e -n '\x24\xC2\xA2\xE0\xA4\x09' &gt;file4</kbd>
+<kbd is="sh">./practice_q8 file4</kbd>
+file4: invalid UTF-8 after 2 valid UTF-8 characters
+</pre>
+<p>
+If the end of file is reached
+before the completion of a UTF-8 character,
+<code>practice_q8.c</code> should also print an error message;
+for example:
+
+</p><pre is="tty"><kbd is="sh">echo -e -n '\x24\xC2\xA2\xE0\xA4' &gt;file5</kbd>
+<kbd is="sh">./practice_q8 file5</kbd>
+file5: invalid UTF-8 after 2 valid UTF-8 characters
+</pre>
+<p>
+A reminder of how UTF-8 is encoded:
+
+</p><table class="table">
+<thead>
+<tr>
+<th style="text-align: right;"><em>#bytes</em></th>
+<th style="text-align: right;"><em>#bits</em></th>
+<th style="text-align: left;"><em>Byte 1</em></th>
+<th style="text-align: left;"><em>Byte 2</em></th>
+<th style="text-align: left;"><em>Byte 3</em></th>
+<th style="text-align: left;"><em>Byte 4</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;"><code>0xxxxxxx</code></td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+</tr><tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;"><code>110xxxxx</code></td>
+<td style="text-align: left;"><code>10xxxxxx</code></td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+</tr><tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;"><code>1110xxxx</code></td>
+<td style="text-align: left;"><code>10xxxxxx</code></td>
+<td style="text-align: left;"><code>10xxxxxx</code></td>
+<td style="text-align: left;">-</td>
+</tr><tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: left;"><code>11110xxx</code></td>
+<td style="text-align: left;"><code>10xxxxxx</code></td>
+<td style="text-align: left;"><code>10xxxxxx</code></td>
+<td style="text-align: left;"><code>10xxxxxx</code></td>
+</tr></tbody>
+</table>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+There is no supplied code for this question.
+
+</p></li><li><p>
+Only the specified error checking is required;
+no additional error checking is required.
+
+</p></li><li><p>
+Your program can assume it is always given a single argument, the name of a file.
+
+</p></li><li><p>
+Your solution must be in C only.
+
+</p></li><li><p>
+You are not permitted to run external programs.
+You are not permitted to use  system, popen, posix_spawn, fork or exec.
+
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q8</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q8 practice_q8.c</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q8</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 9
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+You have been given <code>practice_q9.s</code>,
+a MIPS assembler program that reads a line of input and then prints 42.
+
+</p><p>
+Add code to <code>practice_q9.s</code> to make it equivalent to this C program:
+
+
+</p><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">expression</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">term</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">number</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">line</span><span class="p">[</span><span class="mi">10000</span><span class="p">];</span>
+    <span class="n">fgets</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">line</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">expression</span><span class="p">());</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">expression</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">term</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">s</span> <span class="o">!=</span> <span class="sc">'+'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">left</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">s</span><span class="o">++</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">expression</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">term</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">number</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">s</span> <span class="o">!=</span> <span class="sc">'*'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">left</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">s</span><span class="o">++</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">term</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">left</span> <span class="o">*</span> <span class="n">right</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">number</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="o">*</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="sc">'0'</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="sc">'9'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="o">*</span><span class="n">s</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">;</span>
+        <span class="n">s</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>
+The above C program reads a line of input
+containing an arithmetic expression and prints its value.
+
+</p><p>
+The arithmetic expression contains only positive integers,
+and multiply (<code>'*'</code>)and add (<code>'+'</code>) operators.
+
+</p><p>
+For example:
+
+</p><pre is="tty"><kbd is="sh">1521 spim -f practice_q9.s</kbd>
+<kbd>6*7</kbd>
+42
+<kbd is="sh">1521 spim -f practice_q9.s</kbd>
+<kbd>1+2*3*4+5</kbd>
+30
+<kbd is="sh">1521 spim -f practice_q9.s</kbd>
+<kbd>100+2*20+978</kbd>
+1118
+<kbd is="sh">1521 spim -f practice_q9.s</kbd>
+<kbd>1000+777+66+55*444+9</kbd>
+26272
+</pre>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+No error checking is required.
+
+</p></li><li><p>
+Your program can assume it is given <em>exactly</em> one line of input.
+
+</p></li><li><p>
+Your program can assume this line contains only these 12 characters: <b>0123456789+*</b>
+</p></li><li><p>
+You can assume the line contains less than 10,000 characters.
+
+</p></li><li><p>
+Your program can assume that these characters form a valid arithmetic expression.
+
+</p></li><li><p>
+You can assume the value of the expression can be represented as a signed 32 bit value.
+In other words you can assume overflow does not occur.
+
+</p></li><li><p>
+Your solution must be in MIPS assembler only.
+
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q9</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q9 practice_q9.s</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q9</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 10
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+<p>
+We need a program which will save an entire directory tree as a single file.
+The directory tree may consist of many directories and files.
+
+</p><p>
+Write a C program, <code>practice_q10</code>,
+which is given either 1 or 2 arguments.
+
+</p><p>
+If <code>practice_q10</code> is given 2 arguments,
+the first argument will be the pathname of a file it should create
+and the second argument will be the pathname of a directory.
+<code>practice_q10</code> should then save
+the entire contents of the specified directory tree
+in the specified file.
+
+</p><p>
+If <code>practice_q10</code> is given 1 argument,
+that argument will be the pathname of a file
+in which a directory tree has been saved.
+<code>practice_q10</code> should re-create
+all the directories and files in the directory tree.
+
+</p><p>
+For example,
+these commands create a directory tree named <strong>a</strong>:
+
+</p><pre is="tty"><kbd is="sh">mkdir -p a/b/c</kbd>
+<kbd is="sh">echo hello andrew &gt;a/file1</kbd>
+<kbd is="sh">echo bye andrew &gt;a/b/file2</kbd>
+<kbd is="sh">echo 1 &gt;a/b/c/one</kbd>
+<kbd is="sh">echo 2 &gt;a/b/c/two</kbd>
+<kbd is="sh">ls -lR a</kbd>
+a:
+total 8
+drwxr-xr-x 3 z1234567 z1234567 4096 Aug 19 20:38 b
+-rw-r--r-- 1 z1234567 z1234567   13 Aug 19 20:38 file1
+
+a/b:
+total 8
+drwxr-xr-x 2 z1234567 z1234567 4096 Aug 19 20:38 c
+-rw-r--r-- 1 z1234567 z1234567   11 Aug 19 20:38 file2
+
+a/b/c:
+total 8
+-rw-r--r-- 1 z1234567 z1234567 2 Aug 19 20:38 one
+-rw-r--r-- 1 z1234567 z1234567 2 Aug 19 20:38 two
+<kbd is="sh">cat a/file1</kbd>
+hello andrew
+<kbd is="sh">cat a/b/file2</kbd>
+bye andrew
+</pre>
+<p>
+In this example, <code>practice_q10</code>
+saves the contents of the directory tree <strong>a</strong>
+into a file named <strong>data</strong>:
+
+</p><pre is="tty"><kbd is="sh">dcc practice_q10.c -o practice_q10</kbd>
+<kbd is="sh">./practice_q10 data a</kbd>
+<kbd is="sh">ls -l data</kbd>
+-rw-r--r-- 1 z1234567 z1234567 4567 Aug 19 20:38 data
+</pre>
+<p>
+This example shows <code>practice_q10</code>
+restoring the contents of the directory tree <b>a</b>
+after it has been removed:
+
+</p><pre is="tty"><kbd is="sh">rm -rf a</kbd>
+<kbd is="sh">ls -lR a</kbd>
+ls: cannot access 'a': No such file or directory
+<kbd is="sh">cat a/file1</kbd>
+cat: a/file1: No such file or directory
+<kbd is="sh">./practice_q10 data</kbd>
+<kbd is="sh">ls -lR a</kbd>
+a:
+total 8
+drwxr-xr-x 3 z1234567 z1234567 4096 Aug 19 20:38 b
+-rw-r--r-- 1 z1234567 z1234567   13 Aug 19 20:38 file1
+
+a/b:
+total 8
+drwxr-xr-x 2 z1234567 z1234567 4096 Aug 19 20:38 c
+-rw-r--r-- 1 z1234567 z1234567   11 Aug 19 20:38 file2
+
+a/b/c:
+total 8
+-rw-r--r-- 1 z1234567 z1234567 2 Aug 19 20:38 one
+-rw-r--r-- 1 z1234567 z1234567 2 Aug 19 20:38 two
+<kbd is="sh">cat a/file1</kbd>
+hello andrew
+<kbd is="sh">cat a/b/file2</kbd>
+bye andrew
+</pre>
+<p>
+This example shows <code>practice_q10</code>
+restoring the contents of the directory tree <strong>a</strong>
+in a different directory:
+
+</p><pre is="tty"><kbd is="sh">mkdir new_directory</kbd>
+<kbd is="sh">cd new_directory</kbd>
+<kbd is="sh">../practice_q10 ../data</kbd>
+<kbd is="sh">cat a/file1</kbd>
+hello andrew
+<kbd is="sh">cat a/b/file2</kbd>
+bye andrew
+</pre>
+<aside class="warning">
+<p>
+Autotest will only be of limited assistance in debugging your program.
+Do not expect autotest messages to be easy to understand for this problem.
+You will need to debug your program yourself.
+</p></aside>
+<aside class="danger">
+<p>
+It is easily possible to destroy many files with <cite><a title="man 1 rm" href="https://manpages.debian.org/jump?q=rm.1">rm</a></cite>.
+Do not test this on your working files for this exam, unless you have a backup.
+Do not assume your program will make a good enough backup.
+</p></aside>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+Your solution must be in C only.
+
+</p></li><li><p>
+You are not permitted to run external programs.
+You are not permitted to use  system, popen, posix_spawn, fork or exec.
+
+</p></li><li><p>
+You are not permitted to use libraries other than the default C libraries.
+In other words your solution can not require use of dcc's -l flag.
+If your solution compiles without dcc's -l flag, you are using only the default C libraries.
+All functions discussed in lectures are part of  the default C libraries.
+</p></li><li><p>
+No error checking is necessary.
+
+</p></li><li><p>
+You can assume the directory tree to be saved contains only directories and regular files.
+You can assume it does not contain links or other special files.
+You can assume it does not contain sparse files.
+
+</p></li><li><p>
+You can not assume anything about the size or contents of files in the directory tree.
+The files may contain any byte.
+The files may be any size.
+
+</p></li><li><p>
+Your program does not have to save or restore permissions, modification times, or other file metadata.
+
+</p></li><li><p>
+You can assume the directory tree to be saved contains at most 10000 directories and regular files.
+
+</p></li><li><p>
+You can assume the directory tree to be saved is at most 1000 levels deep.
+
+</p></li><li><p>
+You can assume files and directories do not already exist when restoring a directory tree.
+
+</p></li><li><p>
+You can use any format you choose to save the directory tree in the file.
+
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q10</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q10 practice_q10.c</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q10</code></kbd>
+</pre>
+</section>
+<section class="exercise with-test">
+<header><h3>Question 11
+    <small style="font-variant: small-caps; text-transform: lowercase;">
+       (9 marks)
+    </small></h3></header>
+    
+
+
+
+
+
+
+
+
+
+You have been given <code>practice_q11.s</code> a MIPS assembler program that reads a line of input
+and then prints 42.
+<p>
+You have been given <code>practice_q11.s</code>,
+a MIPS assembler program that reads a line of input and then prints 42.
+
+</p><p>
+Add code to <code>practice_q11.s</code>
+to evaluate the line as an arithmetic expression.
+and print its value.
+
+</p><p>
+The arithmetic expression will contain
+only positive integers
+and multiply (<code>'*'</code>) and add (<code>'+'</code>) operators.
+
+</p><p>
+The integers may be arbitrarily large;
+except they must fit on a line of less than 10,000 characters.
+
+</p><p>
+There are no marks for approaches which
+handle only smaller integers;
+for example, those small enough to be represented in only 32 or 64 bits.
+
+</p><p>
+There are no marks for approaches which use
+floating point arithmetic or other methods
+to produce approximate results.
+
+</p><p>
+For example:
+
+</p><pre is="tty"><kbd is="sh">1521 spim -f practice_q11.s</kbd>
+<kbd>982451653*961748941*472882027*452390477</kbd>
+202133905243937086663174722891174767
+<kbd is="sh">1521 spim -f practice_q11.s</kbd>
+<kbd>2*100000000000000000000000000000000000000000000000000000000000000000000000000+3*4</kbd>
+200000000000000000000000000000000000000000000000000000000000000000000000012
+</pre>
+<aside class="note">
+<ul class="list-unstyled">
+<li><p>
+No error checking is required.
+
+</p></li><li><p>
+Your program can assume it is given <em>exactly</em> one line of input.
+
+</p></li><li><p>
+Your program can assume this line is made up of only these 12 characters: <code>0123456789+*</code>
+</p></li><li><p>
+You can assume the line contains less than 10,000 characters.
+
+</p></li><li><p>
+Your program can assume that these characters form a valid arithmetic expression.
+
+</p></li><li><p>
+Your solution must be in MIPS assembler only.
+
+</p></li><li><p>
+You are not permitted to use floating point operations or registers.
+</p></li></ul>
+</aside>
+<p>
+When you think your program is working, you can run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest practice_q11</kbd>
+</pre>
+
+When you are finished working on this activity you must submit your work by running give:
+
+
+<pre is="tty"><kbd is="sh">give cs1521 practice_q11 practice_q11.s</kbd>
+</pre>
+
+To verify your submissions for this activity:
+
+<pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q11</code></kbd>
+</pre>
+</section>
+</div>
+<section class="exercise">
+<header><h3>Submission</h3></header>
+    
+
+
+When you are finished working on a question, submit your work by running <b>give</b>.
+<p>
+You can run <b>give</b> multiple times.
+Only your last submission will be marked.
+</p><p>
+Don't submit any questions you haven't attempted.
+</p><p>
+Do not leave it to the deadline to submit your answers.
+Submit each question when you finish working on it.
+Running autotests does not automatically submit your code.
+</p><p>
+You can check if you have made a submission with <b><code>1521 classrun -check practice_q<em>&lt;N&gt;</em></code></b>:
+</p><p>
+</p><pre is="tty"><kbd is="sh"><code>1521 classrun -check practice_q1</code></kbd>
+<kbd is="sh"><code>1521 classrun -check practice_q2</code></kbd>
+...
+<kbd is="sh"><code>1521 classrun -check practice_q11</code></kbd>
+</pre>
+
+Remember you have until
+<b>Saturday   28 November 16:00</b> Sydney time
+to complete this exam (not including any extra time provided by ELS conditions).
+<p>
+Do your own testing as well as running <b>autotest</b>
+</p></section>
+</main>
+<footer class="mt-3 pt-3 bg-dark text-center no-print">
+<p class="text-muted">
+<strong>COMP1521 20T3: Computer Systems Fundamentals</strong>
+is brought to you by <br>
+the <a href="https://www.cse.unsw.edu.au/">School of Computer Science and Engineering</a><br>
+at the <a href="https://www.unsw.edu.au/">University of New South Wales</a>, Sydney.<br>
+For all enquiries, please email the class account at
+<a href="mailto:@cse.unsw.edu.au">cs1521@cse.unsw.edu.au</a><br>
+<small>CRICOS Provider 00098G</small>
+</p>
+</footer>
+
+</body></html>

@@ -1,0 +1,16 @@
+
+Displaying tree (sideways) 
+						96
+					94
+				92
+			90
+		80
+	70
+50
+		44
+	30
+		20
+
+ -------  
+nodesNotBalanced(t) returns: 5 
+ -------  

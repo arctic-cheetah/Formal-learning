@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass1/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>
+COMP1521 20T3 —
+
+Assignment 1: mips_sim, MIPS simulator
+
+</title><link rel="canonical" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/">
+
+<link rel="stylesheet" href="./COMP1521 20T3 — Assignment 1_ mips_sim, MIPS simulator_files/bootstrap.min.css" integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous">
+<link rel="stylesheet" href="./COMP1521 20T3 — Assignment 1_ mips_sim, MIPS simulator_files/course.css">
+
+<script src="./COMP1521 20T3 — Assignment 1_ mips_sim, MIPS simulator_files/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script><style id="dark-reader-style" type="text/css">@media screen {
+
+/* Leading rule */
+html {
+  -webkit-filter: invert(100%) hue-rotate(180deg) brightness(60%) sepia(10%) !important;
+  filter: invert(100%) hue-rotate(180deg) brightness(60%) sepia(10%) !important;
+}
+
+/* Reverse rule */
+img,
+video,
+:not(object):not(body)>embed,
+object,
+svg image,
+[style*="background:url"],
+[style*="background-image:url"],
+[style*="background: url"],
+[style*="background-image: url"],
+[background],
+twitterwidget {
+  -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+[style*="background:url"] *,
+[style*="background-image:url"] *,
+[style*="background: url"] *,
+[style*="background-image: url"] *,
+input,
+[background] *,
+img[src^="https://s0.wp.com/latex.php"],
+twitterwidget .NaturalImage-image {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+.compatibility-with-darkreader-below-4-3-3 {
+  background: white !important;
+}
+
+/* Text contrast */
+html {
+  text-shadow: 0 0 0 !important;
+}
+
+/* Full screen */
+:-webkit-full-screen, :-webkit-full-screen * {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+:-moz-full-screen, :-moz-full-screen * {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+:fullscreen, :fullscreen * {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+
+/* Page background */
+html {
+  background: rgb(158,156,152) !important;
+}
+
+/* Custom rules */
+.compatibility-with-darkreader-below-4-3-3 {
+    background: white !important;
+}
+
+}</style>
+<script src="./COMP1521 20T3 — Assignment 1_ mips_sim, MIPS simulator_files/popper.min.js" integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" crossorigin="anonymous"></script>
+<script src="./COMP1521 20T3 — Assignment 1_ mips_sim, MIPS simulator_files/bootstrap.min.js" integrity="sha256-OFRAJNoaD8L3Br5lglV7VyLRf0itmoBzWUoM+Sji4/8=" crossorigin="anonymous"></script>
+
+<script src="./COMP1521 20T3 — Assignment 1_ mips_sim, MIPS simulator_files/course.js"></script>
+
+<!-- <script async src="https://static.codepen.io/assets/embed/ei.js"></script> -->
+
+<!-- MathJax. -->
+
+
+
+
+
+
+<script type="text/javascript" async="" src="./COMP1521 20T3 — Assignment 1_ mips_sim, MIPS simulator_files/MathJax.js"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body class="d-flex flex-column" style="min-height: 100vh;"><div id="MathJax_Message" style="display: none;"></div>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light no-print" id="header-navbar">
+  <div class="container">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/">
+      COMP1521 20T3
+    </a>
+
+    <div class="collapse navbar-collapse" id="navmenu">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active"><a class="nav-link" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/outline">Outline</a></li>
+        <li class="nav-item active"><a class="nav-link" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/student/">Submissions</a></li>
+        <li class="nav-item active"><a class="nav-link" href="https://discourse.cse.unsw.edu.au/20t3/comp1521/">Forum</a></li>
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<main class="container" aria-label="Content" style="flex: 1; padding-top: 4rem;">
+
+
+<header>
+
+<h1 class="text-center">
+Assignment 1: mips_sim, MIPS simulator
+</h1>
+
+</header>
+
+
+
+<p class="text-right text-muted"><small>
+version: 1.4 
+last updated: 2020-10-26 10:10:00
+</small></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Aims</h2>
+<ul>
+<li>Understanding encoding of MIPS instructions
+</li><li>Understanding semantics of MIPS instructions
+</li><li>Generally building a concrete understanding of an example CPU
+</li><li>Practising C, including bit operations
+</li></ul>
+<h2>The Assignment</h2>
+<p>
+Your task in this assignment is to write <code>mips_sim</code> a simulator for a small simple subset of the MIPS .
+</p><p>
+The input to <code>mips_sim</code> will be the 32-bit instruction codes for MIPS instructions
+as  hexadecimal numbers.
+</p><p>
+The command <code>1521 spim2hex</code> will give you the hex codes for MIPS instructions.
+</p><p>
+</p><pre is="tty"><kbd is="sh">cat examples/42.s</kbd>
+    li   $a0, 42          # printf("%d", 42);
+    li   $v0, 1
+    syscall
+    li   $a0, '\n'      # printf("%c", '\n');
+    li   $v0, 11
+    syscall
+<kbd is="sh">1521 spim2hex examples/42.s</kbd>
+3404002a
+34020001
+c
+3404000a
+3402000b
+c
+</pre>
+<p>
+<code>mips_sim.c</code> should simulate executing these instruction like this:
+
+</p><pre is="tty"><kbd is="sh">cat examples/42.hex</kbd>
+3404002a
+34020001
+c
+3404000a
+3402000b
+c
+<kbd is="sh">dcc mips_sim.c -o mips_sim</kbd>
+<kbd is="sh">./mips_sim examples/42.hex</kbd>
+0: 0x3404002A ori  $4, $0, 42
+&gt;&gt;&gt; $4 = 42
+1: 0x34020001 ori  $2, $0, 1
+&gt;&gt;&gt; $2 = 1
+2: 0x0000000C syscall
+&gt;&gt;&gt; syscall 1
+&lt;&lt;&lt; 42
+3: 0x3404000A ori  $4, $0, 10
+&gt;&gt;&gt; $4 = 10
+4: 0x3402000B ori  $2, $0, 11
+&gt;&gt;&gt; $2 = 11
+5: 0x0000000C syscall
+&gt;&gt;&gt; syscall 11
+&lt;&lt;&lt;
+
+</pre>
+
+If the command-line argument <b>-r</b> is given then only
+the output from syscalls should be shown, like this:
+
+<pre is="tty"><kbd is="sh">./mips_sim -r examples/42.hex</kbd>
+42
+</pre>
+<h2>Reference implementation</h2>
+
+A reference implementation is available as <code>1521 mips_sim</code>
+which can use to find the correctoutput for any input, like this:
+
+<pre is="tty"><kbd is="sh">cat examples/square.hex</kbd>
+34100004
+34110003
+72108002
+72318802
+2302020
+34020001
+c
+3404000a
+3402000b
+c
+<kbd is="sh">1521 mips_sim examples/square.hex</kbd>
+0: 0x34100004 ori  $16, $0, 4
+&gt;&gt;&gt; $16 = 4
+1: 0x34110003 ori  $17, $0, 3
+&gt;&gt;&gt; $17 = 3
+2: 0x72108002 mul  $16, $16, $16
+&gt;&gt;&gt; $16 = 16
+3: 0x72318802 mul  $17, $17, $17
+&gt;&gt;&gt; $17 = 9
+4: 0x02302020 add  $4, $17, $16
+&gt;&gt;&gt; $4 = 25
+5: 0x34020001 ori  $2, $0, 1
+&gt;&gt;&gt; $2 = 1
+6: 0x0000000C syscall
+&gt;&gt;&gt; syscall 1
+&lt;&lt;&lt; 25
+7: 0x3404000A ori  $4, $0, 10
+&gt;&gt;&gt; $4 = 10
+8: 0x3402000B ori  $2, $0, 11
+&gt;&gt;&gt; $2 = 11
+9: 0x0000000C syscall
+&gt;&gt;&gt; syscall 11
+&lt;&lt;&lt;
+
+<kbd is="sh">1521 mips_sim -r examples/square.hex</kbd>
+25
+</pre>
+
+Provision of a reference implementation is
+a common, efficient and effective method to provide or define
+an operational specification,
+and it's something you will likely need to work with after you leave UNSW.
+<p>
+Where any aspect of this assignment is undefined in this specification
+you should match the reference implementation's behaviour.
+</p><p>
+Discovering and matching
+the reference implementation's behaviour
+is deliberately part of the assignment.
+</p><p>
+If you discover what you believe to be
+a bug in the reference implementation,
+report it in the class forum.
+If it is a bug, we may fix the bug,
+or indicate that you do not need to match
+the reference implementation's behaviour in this case.
+
+</p><h3>MIPS Instruction Subset</h3>
+<p>
+You need to implement only these 10 MIPS instructions:
+
+
+
+</p><table class="table table-sm table-striped">
+<thead>
+<tr>
+<th>Assembler
+    </th><th>C
+    </th><th>Bit Pattern
+</th></tr></thead>
+<tbody>
+
+<tr><th scope="row"><code>add  $d, $s, $t</code>
+</th><td><code>d = s + t</code>
+</td><td><code>000000ssssstttttddddd00000100000</code>
+
+</td></tr><tr><th scope="row"><code>sub  $d, $s, $t</code>
+</th><td><code>d = s - t</code>
+</td><td><code>000000ssssstttttddddd00000100010</code>
+
+</td></tr><tr><th scope="row"><code>slt  $d, $s, $t</code>
+</th><td><code>d = s &lt; t</code>
+</td><td><code>000000ssssstttttddddd00000101010</code>
+
+</td></tr><tr><th scope="row"><code>mul  $d, $s, $t</code>
+</th><td><code>d = s * t</code>
+</td><td><code>011100ssssstttttddddd00000000010</code>
+
+</td></tr><tr><th scope="row"><code>beq  $s, $t, I</code>
+</th><td><code>if (s == t) PC += I</code>
+</td><td><code>000100ssssstttttIIIIIIIIIIIIIIII</code>
+
+</td></tr><tr><th scope="row"><code>bne  $s, $t, I</code>
+</th><td><code>if (s != t) PC += I</code>
+</td><td><code>000101ssssstttttIIIIIIIIIIIIIIII</code>
+
+</td></tr><tr><th scope="row"><code>addi $t, $s, I</code>
+</th><td><code>t = s + I</code>
+</td><td><code>001000ssssstttttIIIIIIIIIIIIIIII</code>
+
+</td></tr><tr><th scope="row"><code>ori  $t, $s, I</code>
+</th><td><code>t = s | I</code>
+</td><td><code>001101ssssstttttIIIIIIIIIIIIIIII</code>
+
+</td></tr><tr><th scope="row"><code>lui  $t, I</code>
+</th><td><code>t = I &lt;&lt; 16</code>
+</td><td><code>00111100000tttttIIIIIIIIIIIIIIII</code>
+
+</td></tr><tr><th scope="row"><code>syscall</code>
+</th><td><code>syscall</code>
+</td><td><code>00000000000000000000000000001100</code>
+
+</td></tr></tbody>
+</table>
+<p>
+The instruction <b><i>bit pattern</i></b> uniquely identifies each instruction:
+</p><ul>
+<li><b>0</b>: Literal bit zero
+</li><li><b>1</b>: Literal bit one
+</li><li><b>I</b>: Immediate (16-bit signed number)
+</li><li><b>d</b>,  <b>s</b>, <b>t</b>: five-bit register number
+</li></ul>
+<h3>System Calls</h3>
+<p>
+You only need to implement these 3 system calls.
+
+
+
+</p><table class="table table-sm table-striped">
+<thead>
+<tr>
+<th>Description
+    </th><th>$v0
+    </th><th>Pseudo-C
+</th></tr></thead>
+<tbody>
+
+<tr>
+<td>print integer
+    </td><td>1
+    </td><td><code>printf("%d", $a0)</code>
+
+</td></tr><tr>
+<td>exit
+    </td><td>10
+    </td><td><code>exit(0)</code>
+
+</td></tr><tr>
+<td>print character
+    </td><td>11
+    </td><td><code>printf("%c", $a0)</code>
+
+</td></tr></tbody>
+</table>
+<p>
+Syscall 11 should print the low byte (lowest 8 bits) of <code>$a0</code>.
+</p><p>
+If an invalid syscall number is supplied an error message should be printed:
+</p><p>
+Match the reference implementation's message:
+
+</p><pre is="tty"><kbd is="sh">1521 mips_sim examples/bad_syscall.hex</kbd>
+0: 0x34021092 ori  $2, $0, 4242
+&gt;&gt;&gt; $2 = 4242
+1: 0x0000000C syscall
+&gt;&gt;&gt; syscall 4242
+Unknown system call: 4242
+</pre>
+<h2>Registers</h2>
+
+All 32 registers are set to be zero when execution begins.
+<p>
+The value of register $0 <small>($zero)</small> is always 0.
+Instructions which attempt to change it have no effect.
+</p><p>
+The values of registers $2 <small>($v0)</small> and $4 <small>($a0)</small>
+are used by the syscall instruction.
+</p><p>
+The other 31 registers have no special meaning and can be used for any purpose.
+
+</p><h2>Halting</h2>
+
+Execution halts if an exit syscall is executed.
+<p>
+Execution halts if it reaches the location after the last instruction.
+</p><p>
+Execution halts if there is a branch to the location immediately after the last instruction.
+</p><p>
+Execution halts with an error message if there is a branch to any other
+location beyond the range of specified instructions:
+<br>
+<code>Illegal branch to address before instructions: PC = <var>??</var></code>
+<br>
+<code>Illegal branch to address after instructions: PC = <var>??</var></code>
+</p><h2>Examples</h2>
+
+Some example MIPS programs are available as a <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/activities/mips_sim/files.ln/examples.zip">zip file</a>
+<p>
+You will also need to do your own testing and construct your own examples
+using  <code>1521 spim2hex</code>.
+</p><p>
+Note the assembler for the example programs contains pseudo-instructions such as <b>li</b>.
+</p><p>
+To make it easy to use existing code as examples for this assignment
+<code>1521 spim2hex</code> translates some pseudo-instructions and a few   instructions outside the subset
+of this assignment  to  instructions in the subset for this assignment.
+This is just for convenience.
+You do not have to implement pseudo-instructions or instructions outside the specified subset.
+Also for convenience <code>1521 spim2hex</code>  deletes the last instruction if it is <b>jr</b>
+because  <b>jr</b> is not in the subet for this assignment.
+
+</p><h2>Getting Started</h2>
+<p>
+Create a new directory for this assignment
+called <code>mips_sim</code>,
+change to this directory
+, and fetch the provided examples:
+by running these commands:
+
+</p><pre is="tty"><kbd is="sh">mkdir -m 700 mips_sim</kbd>
+<kbd is="sh">cd mips_sim</kbd>
+<kbd is="sh">1521 fetch mips_sim</kbd>
+<kbd is="sh">unzip examples.zip
+....
+</kbd></pre>
+
+Or, if you're not working on CSE, you can download the <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/activities/mips_sim/files.ln/examples.zip"><code>examples.zip</code></a><b></b> and <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/activities/mips_sim/files.cp/mips_sim.c">starting code</a>
+<p>
+You have been given starting code for this assignment in  <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/activities/mips_sim/files.cp/mips_sim.c"><code>mips_sim.c</code></a><b></b>
+which already implements handling command line arguments and
+reading the hexademical instruction code into an array.
+
+</p><pre is="tty"><kbd is="sh">dcc mips_sim.c -o mips_sim</kbd>
+<kbd is="sh">./mips_sim examples/42.hex</kbd>
+0: 3404002a
+1: 34020001
+2: 0000000c
+3: 3404000a
+4: 3402000b
+5: 0000000c
+</pre>
+
+The code calls the function  <b>execute_instructions</b> to simulate execution
+but the supplied code in <b>execute_instructions</b> only prints the instruction codes.
+<p>
+You need to change the code in <b>execute_instructions</b> to simulate the execution of the instructions.
+</p><p>
+You will need to add extra functions and #defines.
+</p><p>
+You may create extra.c or .h files.
+
+</p><h2>Assumptions and Clarifications</h2>
+<p>
+Like all good programmers, you should make as few assumptions as possible.
+</p><p>
+If in doubt, match the output of the reference implementation.
+</p><p>
+You can assume <code>mips_sim.c</code> is given a single file as a command line argument
+</p><p>
+You do not have to implement MIPS instructions, system calls, or features
+which are not explicitly mentioned in the tables above.
+</p><p>
+Your program should print an error message if given a hexadecimal number
+which does not correspond to an instruction in the above MIPS subset.
+</p><p>
+You can print this error message before executing the program
+or when execution reaches the invalid instruction code.
+</p><p>
+Match the reference implementation's message:
+
+</p><pre is="tty"><kbd is="sh">echo 12858AA &gt; invalid.hex</kbd>
+<kbd is="sh">cat invalid.hex</kbd>
+12858AA
+<kbd is="sh">1521 mips_sim invalid.hex</kbd>
+0: 0x012858AA invalid instruction code
+</pre>
+
+The reference implementation uses <code>%08X</code> to print invalid instruction codes.
+<p>
+You will not be penalized if you implement extra MIPS instructions beyond the subset above
+and do not print an error message for them.
+</p><p>
+Execution halts with an error message if there is a system call which is not in this subset.
+You can assume overflow does not occur during arithmetic or other operations.
+</p><p>
+You do not need to handle  instructions which access memory such as  <b>lw</b> or <b>sw</b>.
+</p><p>
+You do not need to handle branch labels.
+<b>1521 spim2hex</b> translates these into the relative offset which is part of
+the branch instruction code.
+</p><p>
+Some of the example assembler (<code>.s</code>) files contain pseudo-instructions, for example <b>li</b>
+and instructions outside the assignment subset (e.g <b>jr</b>).
+You do not need to handle these instructions/pseudo-instruction .
+</p><p>
+The corresponding <code>.hex</code> files contains only instructions in the assignment subset.
+</p><p>
+For convenience <b>spim2hex</b> translates some psuedo-instructions and a few instructions outside
+the subset into instruction codes in the assignment subset.
+</p><p>
+When running MIPS programs the reference implementation print all messages to <b>stdout</b>
+including messgaes indicating errors in the program.
+Some of these messages might normally be printed to <b>stderr</b>.
+This would complicateing autotest/automarking.
+You should also print all messages to <b>stdout</b>.
+</p><p>
+Your submitted code must be C only.
+You may call functions from the standard C library
+(<abbr>e.g.</abbr>,
+functions from <code>stdio.h</code>,
+<code>stdlib.h</code>, <code>string.h</code>, etc.)
+and the mathematics library (<code>math.h</code>).
+You may use <code>assert.h</code>.
+
+</p><p>
+You may not submit code in other languages.
+You may not use <code>system</code>
+or other C functions to run external programs.
+You may not use functions from other libraries;
+in other words, you cannot use dcc's <code>-l</code> flag.
+
+</p><p>
+If you need clarification on
+what you can and cannot use or do for this assignment,
+ask in the class forum.
+
+</p><p>
+You are required to submit
+intermediate versions of your assignment.
+See below for details.
+
+</p><p>
+Your program must not require extra compile options.
+It must compile with <code>dcc *.c -o mips_sim</code>,
+and it will be run with <code>dcc</code> when marking.
+Run-time errors from illegal C will cause your code to fail automarking.
+</p><p>
+If your program writes out debugging output,
+it will fail automarking tests:
+make sure you disable debugging output before submission.
+</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+
+
+
+
+
+
+
+
+<section class="exercise ">
+    <header><h3>Assessment</h3></header>
+    
+
+
+<p>
+When you think your program is working,
+you can use <code>autotest</code>
+to run some simple automated tests:
+
+</p><pre is="tty"><kbd is="sh">1521 autotest mips_sim mips_sim.c <var>[any other .c or .h files]</var></kbd>
+</pre>
+
+
+
+<h3>Submission</h3>
+<p>
+When you are finished working on the assignment,
+you must submit your work by running <code>give</code>:
+
+
+</p><pre is="tty"><kbd is="sh">give cs1521 ass1_mips_sim mips_sim.c <var>[other .c or .h files]</var> </kbd>
+</pre>
+
+
+<p>
+You must run <code>give</code> before <strong>Sunday       November 01 21:00 2020</strong>
+to obtain the marks for this assignment.
+Note that this is an individual exercise,
+the work you submit with <code>give</code> must be entirely your own.
+
+</p><p>
+You can run <code>give</code> multiple times.<br>
+Only your last submission will be marked.
+
+</p><p>
+If you are working at home, you may find it more convenient
+to upload your work via
+<a href="https://cgi.cse.unsw.edu.au/~give/Student/give.php">give's web interface</a>.
+
+</p><p>
+You <em>cannot</em> obtain marks by e-mailing your code to tutors or lecturers.
+
+</p><p>
+You can check your latest submission on CSE servers with:
+</p><pre is="tty"><kbd is="sh">COMP1521 classrun -check ass1_mips_sim</kbd>
+</pre>
+
+<p>
+You can check the files you have submitted <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/student/">here</a>.
+
+</p><p>
+Manual marking will be done by your tutor,
+who will mark for style and readability,
+as described in the <strong>Assessment</strong> section below.
+After your tutor has assessed your work,
+you can <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/student/">view your results here</a>;
+The resulting mark will also be available
+<a href="https://cgi.cse.unsw.edu.au/~give/Student/sturec.php">via give's web interface</a>.
+
+
+
+
+</p><h3>Due Date</h3>
+<p>
+This assignment is tentatively due <strong>Sunday       November 01 21:00 2020</strong>.
+</p><p>
+If your assignment is submitted after this date,
+each hour it is late
+reduces the maximum mark it can achieve by 2%.
+For example,
+if an assignment worth 74% was submitted 10 hours late,
+the late submission would have no effect.
+If the same assignment was submitted 15 hours late,
+it would be awarded 70%,
+the maximum mark it can achieve at that time.
+
+
+
+</p><h2>Assessment Scheme</h2>
+<p>
+This assignment will contribute 15 marks to your final COMP1521 mark.
+</p><p>
+80% of the marks for assignment 1 will come
+from the performance of your code on a large series of tests.
+</p><p>
+20% of the marks for assignment 1 will come from hand marking.
+These marks will be awarded on the basis of
+clarity, commenting, elegance and style.
+In other words, you will be assessed on
+how easy it is for a human to read and understand your program.
+
+</p><p>
+An indicative assessment scheme follows.
+The lecturer may vary the assessment scheme
+after inspecting the assignment submissions,
+but it is likely to be broadly similar to the following:
+
+
+</p><table class="table table-sm w-75 mx-auto">
+<tbody>
+<tr><th scope="row">HD (90+)
+    </th><td>beautiful documented code, works perfectly for all programs
+</td></tr><tr><th scope="row">CR/DN (70+)
+    </th><td>very readable code, works for most programs
+</td></tr><tr><th scope="row">PS/CR (60+)
+    </th><td>readable code, works for some simple programs
+</td></tr><tr><th scope="row">PS (50+)
+    </th><td>close to working for some simple very short programs
+</td></tr><tr><th scope="row">0%
+    </th><td>knowingly providing your work to anyone <br>
+        and it is subsequently submitted (by anyone).
+</td></tr><tr><th scope="row">0 FL for <br> COMP1521
+    </th><td>submitting any other person's work; this includes joint work.
+</td></tr><tr><th scope="row">academic <br> misconduct
+    </th><td>submitting another person's work without their consent;<br>
+        paying another person to do work for you.
+</td></tr></tbody>
+</table>
+
+
+
+
+<h3>Intermediate Versions of Work</h3>
+<p>
+You are required to submit intermediate versions of your assignment.
+</p><p>
+Every time you work on the assignment
+and make some progress
+you should copy your work to your CSE account
+and submit it using the <code>give</code> command below.
+It is fine if intermediate versions do not compile
+or otherwise fail submission tests.
+Only the final submitted version of your assignment will be marked.
+</p><p>
+All these intermediate versions of your work
+will be placed in a Git repository
+and made available to you via a web interface
+at <code>https://gitlab.cse.unsw.edu.au/<var>z5555555</var>/20T3-comp1521-ass1_mips_sim</code>
+(replacing <i>z5555555</i> with your own zID).
+This will allow you to retrieve earlier versions of your code if needed.
+
+
+
+</p><h3>Attribution of Work</h3>
+
+<p>
+This is an individual assignment.
+
+</p><p>
+The work you submit must be entirely your own work,
+apart from any exceptions explicitly included
+in the assignment specification above.
+Submission of work partially or completely derived from any other person
+or jointly written with any other person is not permitted.
+
+</p><p>
+You are only permitted to request help with the assignment
+in the course forum, help sessions,
+or from the teaching staff (the lecturer(s) and tutors) of COMP1521.
+
+</p><p>
+Do not provide or show your assignment work to any other person
+(including by posting it on the forum),
+apart from the teaching staff of COMP1521.
+If you knowingly provide or show your assignment work
+to another person for any reason,
+and work derived from it is submitted,
+you may be penalized,
+even if that work was submitted
+without your knowledge or consent;
+this may apply even if your work is submitted by
+a third party unknown to you.
+You will not be penalized
+if your work is taken
+without your consent or knowledge.
+</p><p>
+Do not place your assignment work in online repositories such as github
+or any where else that is publically accessible.
+You may use a private repository.
+</p><p>
+Submissions that violate these conditions will be penalised.
+Penalties may include negative marks,
+automatic failure of the course,
+and possibly other academic discipline.
+We are also required to report
+acts of plagiarism or other student misconduct:
+if students involved hold scholarships,
+this may result in a loss of the scholarship.
+This may also result in the loss of a student visa.
+
+</p><p>
+Assignment submissions will be examined,
+both automatically and manually,
+for such submissions.
+
+
+
+    </p></section>  
+
+
+<h2>Change Log</h2>
+<dl class="row">
+<dt class="col-3">
+    Version 1.0<br>
+    <small>(2020-10-14 12:00:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Initial release.</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.1<br>
+    <small>(2020-10-16 09:00:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>printf format in supplied code changed to use %08X</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.3<br>
+    <small>(2020-10-17 20:00:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Fixed a bug in 1521 mips_sim where ORI and ADDI would load incorrect values</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.4<br>
+    <small>(2020-10-26 10:10:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Example output from starter code corrected</li>
+    </ul>
+  </dd>
+</dl>
+
+
+
+
+</main>
+
+<footer class="mt-3 pt-3 bg-dark text-center no-print">
+<p class="text-muted">
+<strong>COMP1521 20T3: Computer Systems Fundamentals</strong>
+is brought to you by <br>
+the <a href="https://www.cse.unsw.edu.au/">School of Computer Science and Engineering</a><br>
+at the <a href="https://www.unsw.edu.au/">University of New South Wales</a>, Sydney.<br>
+For all enquiries, please email the class account at
+<a href="mailto:@cse.unsw.edu.au">cs1521@cse.unsw.edu.au</a><br>
+
+<small>CRICOS Provider 00098G</small>
+</p>
+
+
+</footer>
+
+
+</body></html>

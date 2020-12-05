@@ -55,21 +55,6 @@ int nodeHeight (Tree root, int value) {
 	return nodeHeightUtil(root, value, 0);
 }
 
-
-Tree insert_node (Tree t, int val) {
-	if (t != NULL) {
-		if (t->value <= val) {
-			t->right = insert_node(t->right, val);
-		}
-		else if (t->value >= val) {
-			t->left = insert_node(t->left, val);
-		}
-	}
-	else {
-		t = new_node(val);
-	}
-	return t;
-}
 //Need to start from root node, and copy until the desired depth
 
 //My implementation of copying a tree

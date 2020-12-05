@@ -21,7 +21,7 @@ void print_array (int *array, int length) {
 //Find a vertex which has not been visited to find the minimum distance
 int MinDistance(int *NodeDistance, int *HasVisited, int size) {
 	int min = INF;
-	int min_index;
+	int min_index = 0;
 	
 	for (int i = 0; i < size; i +=1) {
 		if (!HasVisited[i] && NodeDistance[i] <= min) {

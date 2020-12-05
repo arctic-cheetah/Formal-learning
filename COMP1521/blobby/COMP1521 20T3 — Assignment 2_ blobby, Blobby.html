@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>
+COMP1521 20T3 —
+
+Assignment 2: blobby, Blobby
+
+</title><link rel="canonical" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/">
+
+<link rel="stylesheet" href="./COMP1521 20T3 — Assignment 2_ blobby, Blobby_files/bootstrap.min.css" integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous">
+<link rel="stylesheet" href="./COMP1521 20T3 — Assignment 2_ blobby, Blobby_files/course.css">
+
+<script src="./COMP1521 20T3 — Assignment 2_ blobby, Blobby_files/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script><style id="dark-reader-style" type="text/css">@media screen {
+
+/* Leading rule */
+html {
+  -webkit-filter: invert(100%) hue-rotate(180deg) brightness(60%) sepia(10%) !important;
+  filter: invert(100%) hue-rotate(180deg) brightness(60%) sepia(10%) !important;
+}
+
+/* Reverse rule */
+img,
+video,
+:not(object):not(body)>embed,
+object,
+svg image,
+[style*="background:url"],
+[style*="background-image:url"],
+[style*="background: url"],
+[style*="background-image: url"],
+[background],
+twitterwidget {
+  -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+[style*="background:url"] *,
+[style*="background-image:url"] *,
+[style*="background: url"] *,
+[style*="background-image: url"] *,
+input,
+[background] *,
+img[src^="https://s0.wp.com/latex.php"],
+twitterwidget .NaturalImage-image {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+.compatibility-with-darkreader-below-4-3-3 {
+  background: white !important;
+}
+
+/* Text contrast */
+html {
+  text-shadow: 0 0 0 !important;
+}
+
+/* Full screen */
+:-webkit-full-screen, :-webkit-full-screen * {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+:-moz-full-screen, :-moz-full-screen * {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+:fullscreen, :fullscreen * {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+
+/* Page background */
+html {
+  background: rgb(158,156,152) !important;
+}
+
+/* Custom rules */
+.compatibility-with-darkreader-below-4-3-3 {
+    background: white !important;
+}
+
+}</style>
+<script src="./COMP1521 20T3 — Assignment 2_ blobby, Blobby_files/popper.min.js" integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" crossorigin="anonymous"></script>
+<script src="./COMP1521 20T3 — Assignment 2_ blobby, Blobby_files/bootstrap.min.js" integrity="sha256-OFRAJNoaD8L3Br5lglV7VyLRf0itmoBzWUoM+Sji4/8=" crossorigin="anonymous"></script>
+
+<script src="./COMP1521 20T3 — Assignment 2_ blobby, Blobby_files/course.js"></script>
+
+<!-- <script async src="https://static.codepen.io/assets/embed/ei.js"></script> -->
+
+<!-- MathJax. -->
+
+
+
+
+
+
+<script type="text/javascript" async="" src="./COMP1521 20T3 — Assignment 2_ blobby, Blobby_files/MathJax.js"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body class="d-flex flex-column" style="min-height: 100vh;"><div id="MathJax_Message" style="display: none;"></div>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light no-print" id="header-navbar">
+  <div class="container">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/">
+      COMP1521 20T3
+    </a>
+
+    <div class="collapse navbar-collapse" id="navmenu">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active"><a class="nav-link" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/outline">Outline</a></li>
+        <li class="nav-item active"><a class="nav-link" href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/student/">Submissions</a></li>
+        <li class="nav-item active"><a class="nav-link" href="https://discourse.cse.unsw.edu.au/20t3/comp1521/">Forum</a></li>
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<main class="container" aria-label="Content" style="flex: 1; padding-top: 4rem;">
+
+
+<header>
+
+<h1 class="text-center">
+Assignment 2: blobby, Blobby
+</h1>
+
+</header>
+
+
+
+<p class="text-right text-muted"><small>
+version: 1.7 
+last updated: 2020-11-21 17:30:00
+</small></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Aims</h2>
+<ul>
+<li>building a concrete understanding of file system objects
+    </li><li>practising C including byte-level operations
+    </li><li>understanding file operations, including I/O of binary data and robust error-handling
+</li></ul>
+<h2>Background</h2>
+<p>
+A <a href="https://en.wikipedia.org/wiki/File_archiver">file archive</a>
+is a single file which can contain the contents,
+names and other metadata of multiple files.
+<br>
+File archives make backups and transport of files more convenient,
+and make compression more efficient.
+</p><p>
+The some common archive formats are:
+</p><ul>
+<li><a href="https://en.wikipedia.org/wiki/Tar_(computing)#File_format">tar</a> for linux. (uses external compression tools)
+    </li><li><a href="https://en.wikipedia.org/wiki/Zip_(file_format)#File_headers">zip</a> for windows. (with inbuilt compression)
+</li></ul>
+<p>
+Wikipedia's <a href="https://en.wikipedia.org/wiki/List_of_archive_formats">list</a> of common file archive formats.
+
+</p><h2>Your Task</h2>
+<p>
+Your task in this assignment is to write a C program <b>blobby.c</b>, a file archiver.
+</p><p>
+The file archives in this assignment are called <b><i>blob</i></b>s.<br>
+Each <b><i>blob</i></b> contains one or more <b><i>blobette</i></b>s.<br>
+Each <b><i>blobette</i></b> records one file system object.<br>
+Their format is described <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Blob_Format">below.</a>
+</p><p>
+<b>blobby.c</b> should be able to:
+
+</p><ul>
+<li>list the contents of a <i>blob</i>
+<small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_0">subset 0</a>)</small>,
+    </li><li>list the permissions of files in a <i>blob</i>
+<small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_0">subset 0</a>)</small>,
+    </li><li>list the size (number of bytes) of files in a <i>blob</i>
+<small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_0">subset 0</a>)</small>,
+    </li><li>check the <i>blobette</i> magic number
+        <small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_0">subset 0</a>)</small>,
+    </li><li>extract files from a <i>blob</i>
+<small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_1">subset 1</a>)</small>,
+    </li><li>check <i>blobette</i> integrity (hashes)
+        <small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_1">subset 1</a>)</small>,
+    </li><li>set the file permissions of files extracted from a <i>blob</i>
+<small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_1">subset 1</a>)</small>,
+    </li><li>create a <i>blob</i> from a list of files
+        <small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_2">subset 2</a>)</small>,
+    </li><li>list, extract, and create <i>blobs</i> that include directories
+        <small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_3">subset 3</a>)</small>,
+    </li><li>list, extract, and create <i>blobs</i> that are compressed
+        <small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_4">subset 4</a>)</small>.
+</li></ul>
+<h3 id="Subset_0">Subset 0</h3>
+
+Given the <code>-l</code> command line argument <code>blobby.c</code> should for each file in the specified <i>blob</i> print:
+<ol>
+<li> The file/directory permissions in octal
+    </li><li> The file/directory size in bytes
+    </li><li> The file/directory pathname
+</li></ol>
+<p>
+It should check <i>blob</i> magic number on each <i>blobette</i>, and emit an error if it is incorrect.
+</p><p>
+</p><pre is="tty"><kbd is="sh_comment">List the details of each item in the <var>blob</var> called <var>text_file.blob</var>, which is in the examples directory</kbd>
+<kbd is="sh">./blobby -l examples/text_file.blob</kbd>
+100644    56 hello.txt
+<kbd is="sh_comment">List the details of each item in the <var>blob</var> called <var>4_files.blob</var>, which is in the examples directory</kbd>
+<kbd is="sh">./blobby -l examples/4_files.blob</kbd>
+100644   256 256.bin
+100644    56 hello.txt
+100444   166 last_goodbye.txt
+100464   148 these_days.txt
+<kbd is="sh_comment">List the details of each item in the <var>blob</var> called <var>hello_world.blob</var>, which is in the examples directory</kbd>
+<kbd is="sh">./blobby -l examples/hello_world.blob</kbd>
+100644    87 hello.c
+100644    82 hello.cpp
+100644    65 hello.d
+100644    77 hello.go
+100644    32 hello.hs
+100644   117 hello.java
+100644    30 hello.js
+100755    47 hello.pl
+100755    97 hello.py
+100644    45 hello.rs
+100644   107 hello.s
+100755    41 hello.sh
+100644    24 hello.sql
+</pre>
+<p>
+</p><aside class="hint">
+    Use <cite><a title="man 3 fopen" href="http://man7.org/linux/man-pages/man3/fopen.3.html">fopen</a></cite> to open the blob file.
+    <p>
+    Use <cite><a title="man 3 fgetc" href="http://man7.org/linux/man-pages/man3/fgetc.3.html">fgetc</a></cite> to read bytes.
+    </p><p>
+    Use C bitwise operations such as <code>&lt;&lt;</code> <code>&amp;</code> and <code>|</code> to combine bytes into integers.
+    </p><p>
+    Think carefully about the functions you can construct to avoid repeated code.
+    </p><p>
+    Review
+    <code>print_borts_file.c,</code> from our <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//tut/08/answers">week 8 tutorial</a> and
+    <code>print_bytes.c</code> from our <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//lab/08/questions">week 8 lab</a>.
+    </p><p>
+<cite><a title="man 3 fseek" href="http://man7.org/linux/man-pages/man3/fseek.3.html">fseek</a></cite> can be used to skip over parts of the <i>blob</i> file,
+    but you can also use a loop and <cite><a title="man 3 fgetc" href="http://man7.org/linux/man-pages/man3/fgetc.3.html">fgetc</a></cite>
+</p><p></p><p></p><p></p><p></p></aside>
+<aside class="note">
+    The order you list files is the order they appear in the <i>blob</i>.
+    <p>
+<i>blob</i> files do not necessarily end with <i>.blob</i>.<br>
+    This has been done with the provided example files purely as a convenience.
+    </p><p>
+    The starting code contains a suitable printf to match the required format.
+    </p><p>
+    The correct format string for this output <code>"%06lo %5lu %s\n"</code>
+    is provided in the given <code>blobby.c</code> file.
+</p><p></p><p></p></aside>
+<h3 id="Subset_1">Subset 1</h3>
+
+Given the <code>-x</code> command line argument <code>blobby.c</code> should:
+<p>
+Extract the files in the specified <i>blob</i>.
+</p><p>
+It should set file permissions for extracted files to the permissions specified in the <i>blob</i>.
+</p><p>
+It should check <i>blob</i> integrity by checking each <i>blobette</i> hash, and emit an error if any are incorrect.
+</p><p>
+</p><pre is="tty"><kbd is="sh_comment">Your program extracts the files into the current working directory.</kbd>
+<kbd is="sh_comment">So we will run your program from a temporary directory <small>(<var>tmp</var>)</small> as to not clutter the base directory.</kbd>
+<kbd is="sh_comment">Once in the <var>tmp</var> directory your program and examples/ will be in the parent directory.</kbd>
+<kbd is="sh_comment">Hence the use of <var>..</var> in pathnames.</kbd>
+
+<kbd is="sh_comment">Make a directory called <var>tmp</var>.</kbd>
+<kbd is="sh">mkdir -p tmp/</kbd>
+<kbd is="sh_comment">Change into the <var>tmp</var> directory.</kbd>
+<kbd is="sh">cd tmp/</kbd>
+<kbd is="sh_comment">Forcibly remove all files inside the <var>tmp</var> directory.</kbd>
+<kbd is="sh">rm -f * .*</kbd>
+<kbd is="sh_comment">Use your program to extract the contents of <var>text_file.blob</var>.</kbd>
+<kbd is="sh">../blobby -x ../examples/text_file.blob</kbd>
+Extracting: hello.txt
+<kbd is="sh_comment">Show the contents of <var>hello.txt</var> in the terminal.</kbd>
+<kbd is="sh_comment">You can manually open it in your text editor too, if you like.</kbd>
+<kbd is="sh">cat hello.txt</kbd>
+Hello COMP1521
+I hope you are enjoying this assignment.
+<kbd is="sh_comment">Forcibly remove all files inside the <var>tmp</var> directory.</kbd>
+<kbd is="sh">rm -f * .*</kbd>
+<kbd is="sh_comment">Use your program to extract the contents of <var>hello_world.blob</var>.</kbd>
+<kbd is="sh">../blobby -x ../examples/hello_world.blob</kbd>
+Extracting: hello.c
+Extracting: hello.cpp
+Extracting: hello.d
+Extracting: hello.go
+Extracting: hello.hs
+Extracting: hello.java
+Extracting: hello.js
+Extracting: hello.pl
+Extracting: hello.py
+Extracting: hello.rs
+Extracting: hello.s
+Extracting: hello.sh
+Extracting: hello.sql
+<kbd is="sh_comment">Show the first 25 lines from the extracted files to confirm the extraction was successful.</kbd>
+<kbd is="sh">cat $(echo * | sort) | head -n 25</kbd>
+extern int puts(const char *s);
+
+int main(void)
+{
+    puts("Hello, World!");
+    return 0;
+}
+#include &lt;iostream&gt;
+
+int main () {
+  std::cout &lt;&lt; "Hello, world!" &lt;&lt; std::endl;
+}
+import std.stdio;
+
+void main() {
+    writeln("Hello, world!");
+}
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+main = putStrLn "Hello, World!"
+<kbd is="sh_comment">Forcibly remove all files inside the <var>tmp</var> directory</kbd>
+<kbd is="sh">rm -f * .*</kbd>
+<kbd is="sh_comment">Use your program to extract the contents of <var>meta.blob</var>.</kbd>
+<kbd is="sh">../blobby -x ../examples/meta.blob</kbd>
+Extracting: 1_file.subdirectory.blob
+Extracting: 1_file.subdirectory.compressed.blob
+Extracting: 2_files.blob
+Extracting: 2_files.compressed.blob
+Extracting: 3_files.bad_hash.blob
+Extracting: 3_files.bad_magic.blob
+Extracting: 3_files.blob
+Extracting: 3_files.compressed.blob
+Extracting: 3_files.subdirectory.bad_hash.blob
+Extracting: 3_files.subdirectory.bad_magic.blob
+Extracting: 3_files.subdirectory.blob
+Extracting: 3_files.subdirectory.compressed.blob
+Extracting: 4_files.blob
+Extracting: 4_files.compressed.blob
+Extracting: all_the_modes.subdirectory.blob
+Extracting: all_the_modes.subdirectory.compressed.blob
+Extracting: binary_file.blob
+Extracting: binary_file.compressed.blob
+Extracting: hello_world.bad_hash.blob
+Extracting: hello_world.bad_magic.blob
+Extracting: hello_world.blob
+Extracting: hello_world.compressed.blob
+Extracting: lecture_code.subdirectory.blob
+Extracting: lecture_code.subdirectory.compressed.blob
+Extracting: text_file.bad_hash.blob
+Extracting: text_file.bad_magic.blob
+Extracting: text_file.blob
+Extracting: text_file.compressed.blob
+<kbd is="sh_comment">Show the first 10 items in this directory alphabetically to check extraction was successful.</kbd>
+<kbd is="sh">ls -1 $(echo * | sort) | head</kbd>
+1_file.subdirectory.blob
+1_file.subdirectory.compressed.blob
+2_files.blob
+2_files.compressed.blob
+3_files.bad_hash.blob
+3_files.bad_magic.blob
+3_files.blob
+3_files.compressed.blob
+3_files.subdirectory.bad_hash.blob
+3_files.subdirectory.bad_magic.blob
+<kbd is="sh_comment">Go back into the directory with your code.</kbd>
+<kbd is="sh">cd ../</kbd>
+<kbd is="sh_comment">Remove the <var>tmp</var> directory and everything inside it.</kbd>
+<kbd is="sh">rm -rf tmp/</kbd>
+</pre>
+<aside class="hint">
+    Use <cite><a title="man 3 fopen" href="http://man7.org/linux/man-pages/man3/fopen.3.html">fopen</a></cite> to open each file you are extracting.
+    <p>
+    Use <cite><a title="man 3 fputc" href="http://man7.org/linux/man-pages/man3/fputc.3.html">fputc</a></cite> to write bytes to each file..
+    </p><p>
+    In our <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//lec/files/slides">lectures on files</a>
+    we covered copying bytes to a file in the <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//topic/files/cp_fgetc.c">cp_fgetc.c</a> example
+    and setting the permisisons of a file in the <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//topic/files/chmod.c">chmod.c</a> example.
+    </p><p>
+    Think carefully about the functions you can construct to avoid repeated code.
+    </p><p>
+    For example, for every byte you read with <code>fgetc</code> you need to
+    call <code>blobby_hash</code> to calculate a new hash value, so write a function
+    that does both. Hint: have the function take a pointer to a hash value which it can update.
+</p><p></p><p></p><p></p></aside>
+<aside class="note">
+    blobby should overwrite an files that already exist.
+    <p>
+    blobby can leave already extracted/partially extracted files in the event of an error.
+</p></aside>
+<h3 id="Subset_2">Subset 2</h3>
+
+Given the <code>-c</code> command line argument <code>blobby.c</code> should:
+<p>
+Create a <i>blob</i> containing the specified files.
+</p><p>
+</p><pre is="tty"><kbd is="sh_comment">These "echo" lines show you how to create these test files and what their contents are.</kbd>
+
+<kbd is="sh_comment">Create a file called <var>hello.txt</var> with the contents "hello".</kbd>
+<kbd is="sh">echo hello &gt; hello.txt</kbd>
+<kbd is="sh_comment">Create a file called <var>hola.txt</var> with the contents "hola".</kbd>
+<kbd is="sh">echo hola &gt; hola.txt</kbd>
+<kbd is="sh_comment">Create a file called <var>hi.txt</var> with the contents "hi".</kbd>
+<kbd is="sh">echo hi &gt; hi.txt</kbd>
+<kbd is="sh_comment">Set the permissions of these files to <var>644</var> (octal permission string (equivalent to <var>rw-r--r--</var>)).</kbd>
+<kbd is="sh_comment">When you list the contents of the blob, the permissions should match this.</kbd>
+<kbd is="sh">chmod 644 hello.txt hola.txt hi.txt</kbd>
+<kbd is="sh_comment">Create a <var>blob</var> called <var>selamat.blob</var> with the files <var>hello.txt</var>, <var>hola.txt</var>, and <var>hi.txt</var>.</kbd>
+<kbd is="sh">./blobby -c selamat.blob hello.txt hola.txt hi.txt</kbd>
+Adding: hello.txt
+Adding: hola.txt
+Adding: hi.txt
+<kbd is="sh_comment">List the contents of <var>selamat.blob</var>.</kbd>
+<kbd is="sh">./blobby -l selamat.blob</kbd>
+100644     6 hello.txt
+100644     5 hola.txt
+100644     3 hi.txt
+<kbd is="sh_comment">Make a directory called <var>tmp</var>.</kbd>
+<kbd is="sh">mkdir -p tmp/</kbd>
+<kbd is="sh_comment">Change into the <var>tmp</var> directory.</kbd>
+<kbd is="sh">cd tmp/</kbd>
+<kbd is="sh_comment">Forcibly remove all files inside the <var>tmp</var> directory.</kbd>
+<kbd is="sh">rm -f * .*</kbd>
+<kbd is="sh_comment">Use your program to extract the contents of <var>selamat.blob</var>.</kbd>
+<kbd is="sh">../blobby -x ../selamat.blob</kbd>
+Extracting: hello.txt
+Extracting: hola.txt
+Extracting: hi.txt
+<kbd is="sh_comment">Check that the extracted file <var>hello.txt</var> is the same as the source file <var>../hello.txt</var>.</kbd>
+<kbd is="sh">diff -s ../hello.txt hello.txt</kbd>
+Files ../hello.txt and hello.txt are identical
+<kbd is="sh_comment">Check that the extracted file <var>hola.txt</var> is the same as the source file <var>../hola.txt</var>.</kbd>
+<kbd is="sh">diff -s ../hola.txt hola.txt</kbd>
+Files ../hola.txt and hola.txt are identical
+<kbd is="sh_comment">Check that the extracted file <var>hi.txt</var> is the same as the source file <var>../hi.txt</var>.</kbd>
+<kbd is="sh">diff -s ../hi.txt hi.txt</kbd>
+Files ../hi.txt and hi.txt are identical
+<kbd is="sh_comment">Go back into the directory with your code.</kbd>
+<kbd is="sh">cd ../</kbd>
+<kbd is="sh_comment">Remove the <var>tmp</var> directory and everything inside it.</kbd>
+<kbd is="sh">rm -rf tmp/</kbd>
+</pre>
+<aside class="hint">
+    Use <cite><a title="man 3 fopen" href="http://man7.org/linux/man-pages/man3/fopen.3.html">fopen</a></cite> and  <cite><a title="man 3 fputc" href="http://man7.org/linux/man-pages/man3/fputc.3.html">fputc</a></cite> to create the new blob.
+    <p>
+    In our <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//lec/files/slides">lectures on files</a>
+    we covered obtaining file metadata including its size and mode (permissions) in the <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//topic/files/stat.c">stat.c</a> example.
+</p></aside>
+<aside class="note">
+    You must add/store files in the order they are given.
+</aside>
+<h3 id="Subset_3">Subset 3</h3>
+
+Given the <b>-c</b> command line argument <code>blobby.c</code> should:
+<p>
+Be able to add files in sub-directories, for examples:
+</p><p>
+</p><pre is="tty"><kbd is="sh_comment">Create a <var>blob</var> called <var>a.blob</var> with the file <var>"hello.txt"</var> that is contained within 2 levels of directories.</kbd>
+<kbd is="sh">./blobby -c a.blob examples/2_files.d/hello.txt </kbd>
+Adding: examples
+Adding: examples/2_files.d
+Adding: examples/2_files.d/hello.txt
+</pre>
+<p>
+If a directory is specified when creating a <i>blob</i> <code>blobby.c</code>
+should add the entire directory tree to the <i>blob</i>.
+</p><p>
+</p><pre is="tty"><kbd is="sh_comment">Create a blob called a.blob with *all* the contents within the directory "3_files.subdirectory.d"</kbd>
+<kbd is="sh_comment">which is in the "examples" directory.</kbd>
+<kbd is="sh">./blobby -c a.blob examples/3_files.subdirectory.d</kbd>
+Adding: examples
+Adding: examples/3_files.subdirectory.d
+Adding: examples/3_files.subdirectory.d/goodbye
+Adding: examples/3_files.subdirectory.d/goodbye/last_goodbye.txt
+Adding: examples/3_files.subdirectory.d/hello
+Adding: examples/3_files.subdirectory.d/hello/hello.txt
+Adding: examples/3_files.subdirectory.d/these_days.txt
+</pre>
+<p>
+Given the <b>-l</b> command line argument and a <i>blob</i> containing directories, <code>blobby.c</code> should:
+</p><p>
+Be able to list files and directories, for example:
+</p><p>
+</p><pre is="tty"><kbd is="sh">./blobby -l examples/1_file.subdirectory.blob </kbd>
+040755     0 hello
+100644    56 hello/hello.txt
+</pre>
+<p>
+Given the <b>-x</b> command line argument and a <i>blob</i> containing directories, <code>blobby.c</code> should:
+</p><p>
+Be able to extract files and directories, for example:
+</p><p>
+</p><pre is="tty"><kbd is="sh">./blobby -x examples/3_files.subdirectory.blob </kbd>
+Creating directory: goodbye
+Extracting: goodbye/last_goodbye.txt
+Creating directory: hello
+Extracting: hello/hello.txt
+Extracting: these_days.txt
+</pre>
+<p>
+</p><aside class="hint">
+In our <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//lec/files/slides">lectures on files</a>
+we covered creating a directory in the <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//topic/files/mkdir.c">mkdir.c</a> example
+and listing a directories contents in the <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//topic/files/list_directory.c">list_directory.c</a> example.
+<p>
+Traversing a directory tree is challenging and can be done in several ways.
+</p></aside>
+<aside class="note">
+    The <i>blobby</i> reference implementation will add subdirectories in alphabetical order<br>
+    This behaviour doesn't need to be matched.<br>
+    Your implementation can add subdirectories in any order.
+    <p>
+    If a file in a different directory is added to a <i>blob</i>, then
+    the directories in the path need to be added to the <i>blob</i>.
+    </p><p>
+    When extracting a <i>blob</i> with directories, the directory needs to be created
+    if it does not already exist and the directories permissions need to be set to those specified in <i>blob</i>
+</p><p></p></aside>
+<h3 id="Subset_4">Subset 4</h3>
+
+Given the <code>-c</code> and the <code>-z</code> command line argument <code>blobby.c</code> should:
+<p>
+Compress all bytes of the <i>blob</i> using the
+external program <cite><a title="man 1 xz" href="https://manpages.debian.org/jump?q=xz.1">xz</a></cite>.
+</p><p>
+The function <cite><a title="man 3 posix_spawn" href="http://man7.org/linux/man-pages/man3/posix_spawn.3.html">posix_spawn</a></cite> or <cite><a title="man 3 posix_spawnp" href="http://man7.org/linux/man-pages/man3/posix_spawnp.3.html">posix_spawnp</a></cite>
+must be used to run <cite><a title="man 1 xz" href="https://manpages.debian.org/jump?q=xz.1">xz</a></cite>.
+</p><p>
+</p><pre is="tty"><kbd is="sh_comment">Create a <var>blob</var> called <var>h.blob</var> with the file <var>selamat.txt</var>.</kbd>
+<kbd is="sh_comment">Using the <var>"xz"</var> program for compression.</kbd>
+<kbd is="sh">./blobby -z -c h.blob selamat.txt</kbd>
+Adding: selamat.txt
+<kbd is="sh_comment">Show the file type of <var>h.blob</var> to confirm it was compressed using <var>"xz"</var>.</kbd>
+<kbd is="sh">file h.blob</kbd>
+h.blob: XZ compressed data
+</pre>
+<p>
+The <code>-z</code> option does not need to be specified when extracting (<code>-x</code>)
+or listing (<code>-l</code>) compressed <i>blob</i>s and is ignored if it is specified.
+</p><p>
+<code>blobby.c</code> should automatically recognize <i>blob</i>s created with <code>-z</code>
+when extracting (<code>-x</code>) or listing (<code>-l</code>)
+</p><p>
+</p><pre is="tty"><kbd is="sh">./blobby -l examples/text_file.compressed.blob</kbd>
+100644  56  hello.txt
+<kbd is="sh">./blobby -l examples/4_files.compressed.blob</kbd>
+100644  256 256.bin
+100644  56  hello.txt
+100444  166 last_goodbye.txt
+100464  148 these_days.txt
+<kbd is="sh">./blobby -l examples/hello_world.compressed.blob</kbd>
+100644  87  hello.c
+100644  82  hello.cpp
+100644  65  hello.d
+100644  77  hello.go
+100644  32  hello.hs
+100644  117 hello.java
+100644  30  hello.js
+100754  47  hello.pl
+100754  97  hello.py
+100644  45  hello.rs
+100644  107 hello.s
+100754  41  hello.sh
+100644  24  hello.sql
+</pre>
+<aside class="hint">
+Subset 4 is highly challenging.
+The <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//topic/processes/spawn_read_pipe.c">spawn_read_pipe</a> example
+and the <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//topic/processes/spawn_write_pipe.c">spawn_write_pipe.c</a> example
+from our <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3//lec/processes/slides">lectures on processes</a>
+show most of the necessary operations but implementing this subset will require research
+and careful experimentation.
+</aside>
+<aside class="note">
+    You are not permitted to use:
+    <cite><a title="man 3 system" href="http://man7.org/linux/man-pages/man3/system.3.html">system</a></cite>, <cite><a title="man 3 popen" href="http://man7.org/linux/man-pages/man3/popen.3.html">popen</a></cite>, <cite><a title="man 2 fork" href="http://man7.org/linux/man-pages/man2/fork.2.html">fork</a></cite>/<cite><a title="man 2 execve" href="http://man7.org/linux/man-pages/man2/execve.2.html">execve</a></cite>
+    or any other C functions to run <cite><a title="man 1 xz" href="https://manpages.debian.org/jump?q=xz.1">xz</a></cite>.
+    <p>
+    You must run <cite><a title="man 1 xz" href="https://manpages.debian.org/jump?q=xz.1">xz</a></cite> as
+    an external program via <cite><a title="man 3 posix_spawn" href="http://man7.org/linux/man-pages/man3/posix_spawn.3.html">posix_spawn</a></cite> or <cite><a title="man 3 posix_spawnp" href="http://man7.org/linux/man-pages/man3/posix_spawnp.3.html">posix_spawnp</a></cite>.
+    </p><p>
+    Temporary files are not permitted.
+    </p><p>
+    Compressed <i>blob</i> files do not necessarily end with <code>.compressed.blob</code>.<br>
+    This has been done with the provided example files purely as a convenience.<br>
+</p><p></p><p></p></aside>
+<p>
+</p><h2>Reference implementation</h2>
+
+A reference implementation is available as <code>1521 blobby</code>
+which can use to find the correct output for any input, like this:
+<p>
+</p><pre is="tty"><kbd is="sh">1521 blobby -l &lt;<i>blob</i> file to list&gt;</kbd>
+<kbd is="sh_comment"><code>[]</code> means <var>"optionally"</var>, <code>...</code> means <var>"repeated"</var></kbd>
+<kbd is="sh">1521 blobby [-z] -c &lt;<i>blob</i> file to create&gt; &lt;file to add to the <i>blob</i>&gt; [...]</kbd>
+<kbd is="sh">1521 blobby -x &lt;<i>blob</i> file to extract&gt;</kbd>
+</pre>
+<aside class="hint">
+    All the examples in the in the <b>Subsets</b> above are runnable using the reference implementation.
+    <p>
+    Simply replace <code>./blobby</code> with <code>1521 blobby</code>.
+</p></aside>
+
+Provision of a reference implementation is
+a common, efficient and effective method to provide or define
+an operational specification,
+and it's something you will likely need to work with after you leave UNSW.
+<p>
+Where any aspect of this assignment is undefined in this specification
+you should match the reference implementation's behaviour.
+</p><p>
+Discovering and matching
+the reference implementation's behaviour
+is deliberately part of the assignment.
+</p><p>
+If you discover what you believe to be
+a bug in the reference implementation,
+report it in the class forum.
+If it is a bug, we may fix the bug,
+or indicate that you do not need to match
+the reference implementation's behaviour in this case.
+
+
+</p><h2 id="Blob_Format">Blob Format</h2>
+<i>blob</i>s must follow exactly the format produced by the reference implementation.
+<p>
+A <i>blob</i> consists of 1 or more <i>blobette</i>s.
+Each <i>blobette</i> contains the information about one file or directory.
+
+</p><table class="table table-sm table-striped">
+<thead>
+</thead><caption>blobette format</caption>
+<tbody><tr>
+<th>Field Length (bytes)</th>
+<th>Field Name</th>
+<th>Possible Values</th>
+<th>Description</th>
+</tr>
+
+<tr><td>1               </td><td>magic_number     </td><td>0x42</td><td>byte 0 in every blobette must be 0x42 (ASCII 'B')</td></tr>
+<tr><td>3               </td><td>mode             </td><td> </td><td>file type and permissions as returned in <code>st_mode</code> field from <cite><a title="man 2 lstat" href="http://man7.org/linux/man-pages/man2/lstat.2.html">lstat</a></cite></td></tr>
+<tr><td>2               </td><td>pathname_length  </td><td>1..65535                          </td><td>number of bytes in file/directory pathname</td></tr>
+<tr><td>6               </td><td>content_length   </td><td>0..281474976710655                </td><td>number of bytes in file <small>0 for directories</small></td></tr>
+<tr><td>pathname_length </td><td>pathname         </td><td> </td><td>file/directory pathname</td></tr>
+<tr><td>content_length  </td><td>contents         </td><td> </td><td>bytes (contents) of file <small>empty for directories</small></td></tr>
+<tr><td>1               </td><td>hash             </td><td>0..255                            </td><td><code>blobby_hash()</code> of all bytes of this blobette <small>except this byte</small></td></tr>
+</tbody></table>
+<i>mode</i>, <i>pathname_length</i> and <i>content_length</i> are always stored in <a href="https://en.wikipedia.org/wiki/Endianness">big-endian format</a>.
+It is recommended you construct their values from their individual bytes using bit-operations.
+<p>
+Side-note: an interesting property of the <i>blob</i> format is
+the concatenation of 2 or more <i>blob</i>s is a valid <i>blob</i>.
+</p><p>
+We can use the reference implementation to create simple <i>blob</i>s and inspect their contents.<br>
+For example, using the <code>print_bytes.c</code> program written as a lab exercise:
+</p><p>
+</p><pre is="tty"><kbd is="sh">echo hola &gt; hi.txt</kbd>
+<kbd is="sh">chmod 640 hi.txt</kbd>
+<kbd is="sh">1521 blobby -c h.blob hi.txt</kbd>
+Adding: hi.txt
+<kbd is="sh">./print_bytes h.blob</kbd>
+byte    0:  66 0x42 'B'
+byte    1:   0 0x00
+byte    2: 129 0x81
+byte    3: 160 0xa0
+byte    4:   0 0x00
+byte    5:   6 0x06
+byte    6:   0 0x00
+byte    7:   0 0x00
+byte    8:   0 0x00
+byte    9:   0 0x00
+byte   10:   0 0x00
+byte   11:   5 0x05
+byte   12: 104 0x68 'h'
+byte   13: 105 0x69 'i'
+byte   14:  46 0x2e '.'
+byte   15: 116 0x74 't'
+byte   16: 120 0x78 'x'
+byte   17: 116 0x74 't'
+byte   18: 104 0x68 'h'
+byte   19: 111 0x6f 'o'
+byte   20: 108 0x6c 'l'
+byte   21:  97 0x61 'a'
+byte   22:  10 0x0a
+byte   23:  95 0x5f '_'
+</pre>
+
+Note in the above example <i>pathname_length</i> is <b>6</b> <i>content_length</i> is <b>5</b>
+and the blobby hash is <b>0x5f</b>.
+<p>
+The Linux utility <cite><a title="man 1 xxd" href="https://manpages.debian.org/jump?q=xxd.1">xxd</a></cite> is a good
+way to inspect <i>blob</i>s, for example,
+here is a <i>blob</i> containing 2 files (2 <i>blobette</i>s).
+</p><pre is="tty"><kbd is="sh">xxd examples/2_files.blob</kbd>
+00000000: 4200 81a4 0009 0000 0000 0038 6865 6c6c  B..........8hell
+00000010: 6f2e 7478 7448 656c 6c6f 2043 4f4d 5031  o.txtHello COMP1
+00000020: 3532 310a 4920 686f 7065 2079 6f75 2061  521.I hope you a
+00000030: 7265 2065 6e6a 6f79 696e 6720 7468 6973  re enjoying this
+00000040: 2061 7373 6967 6e6d 656e 742e 0a66 4200   assignment..fB.
+00000050: 81a4 0010 0000 0000 00a6 6c61 7374 5f67  ..........last_g
+00000060: 6f6f 6462 7965 2e74 7874 5468 6973 2069  oodbye.txtThis i
+00000070: 7320 6f75 7220 6c61 7374 2067 6f6f 6462  s our last goodb
+00000080: 7965 0a49 2068 6174 6520 746f 2066 6565  ye.I hate to fee
+00000090: 6c20 7468 6520 6c6f 7665 2062 6574 7765  l the love betwe
+000000a0: 656e 2075 7320 6469 650a 4275 7420 6974  en us die.But it
+000000b0: 2773 206f 7665 720a 4a75 7374 2068 6561  's over.Just hea
+000000c0: 7220 7468 6973 2061 6e64 2074 6865 6e20  r this and then
+000000d0: 4927 6c6c 2067 6f0a 596f 7520 6761 7665  I'll go.You gave
+000000e0: 206d 6520 6d6f 7265 2074 6f20 6c69 7665   me more to live
+000000f0: 2066 6f72 0a4d 6f72 6520 7468 616e 2079   for.More than y
+00000100: 6f75 276c 6c20 6576 6572 206b 6e6f 770a  ou'll ever know.
+00000110: 64                                       d
+</pre>
+<p>
+In this example the first <i>blobette</i> starts at byte <code>0x00000000</code>
+and has the hash value <code>0x66 (ASCII 'f')</code>.<br>
+While the second <i>blobette</i> starts at byte <code>0x0000004E</code>
+and has the hash value <code>0x64 (ASCII 'd')</code>.
+</p><p>
+Also usable are the <cite><a title="man 1 od" href="https://manpages.debian.org/jump?q=od.1">od</a></cite></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+and <cite><a title="man 1 hexdump" href="https://manpages.debian.org/jump?q=hexdump.1">hexdump</a></cite>
+utilities.
+
+<h2>Blobby Hash</h2>
+
+Each <i>blobette</i> contains a hash value
+calculated from the other values of the <i>blobette</i>.
+<p>
+This allows us to detect if any bytes of the <i>blob</i> have been changed,
+for example by disk or network errors.
+</p><p>
+The hash value is calculated using the <code>blobby_hash()</code> function.<br>
+You are given code which already implements <code>blobby_hash()</code>.
+</p><p>
+If we create a tiny <i>blob</i> containing a single 1 byte file like this:
+</p><p>
+</p><pre is="tty"><kbd is="sh_comment">write a single <var>newline (ASCII '\n')</var> to the file <var>"a"</var></kbd>
+<kbd is="sh">echo &gt; a</kbd>
+<kbd is="sh">1521 blobby -c a.blob a</kbd>
+</pre>
+<p>
+We can inspect the <i>blob</i> with <cite><a title="man 1 xxd" href="https://manpages.debian.org/jump?q=xxd.1">xxd</a></cite>
+and see its hash is <code>0x6d (ASCII 'm')</code>.
+</p><p>
+</p><pre is="tty"><kbd is="sh">xxd a.blob</kbd>
+00000000: 4200 81a4 0001 0000 0000 0001 610a 6d    B...........a.m
+</pre>
+<p>
+These are the calls to <code>blobby_hash()</code> which calculate this value:
+</p><p>
+</p><pre is="tty">blobby_hash(00, 42) = de
+blobby_hash(de, 00) = 3f
+blobby_hash(3f, 81) = 81
+blobby_hash(81, a4) = fc
+blobby_hash(fc, 00) = c8
+blobby_hash(c8, 01) = 57
+blobby_hash(57, 00) = a3
+blobby_hash(a3, 00) = ab
+blobby_hash(ab, 00) = 69
+blobby_hash(69, 00) = 7f
+blobby_hash(7f, 00) = 11
+blobby_hash(11, 01) = fb
+blobby_hash(fb, 61) = 3b
+blobby_hash(3b, 0a) = 6d
+</pre>
+<p>
+The inital hash value starts as 0,<br>
+But then becomes the resulting hash value of the previos call to <code>blobby_hash()</code>
+</p><p>
+</p><pre is="tty">blobby_hash(&lt;inital hash value&gt;, &lt;byte value&gt;) = &lt;resulting hash value&gt;
+</pre>
+<h2>Getting Started</h2>
+
+Create a new directory for this assignment called <code>blobby</code>,<br>
+change to this directory, and fetch the provided examples:<br>
+by running these commands:
+<p>
+</p><pre is="tty"><kbd is="sh">mkdir -m 700 blobby</kbd>
+<kbd is="sh">cd blobby</kbd>
+<kbd is="sh">1521 fetch blobby</kbd>
+<kbd is="sh">unzip examples.zip
+</kbd></pre>
+<p>
+Or, if you're not working on CSE, you can download the
+<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/activities/blobby/files.ln/examples.zip"><code>examples.zip</code></a>
+and
+<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/activities/blobby/files.cp/blobby.c">starting code</a>
+</p><p>
+You have been given starting code for this assignment in
+<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/activities/blobby/files.cp/blobby.c"><code>blobby.c</code></a>
+which already implements handling command line arguments.
+</p><p>
+</p><pre is="tty"><kbd is="sh">dcc blobby.c -o blobby</kbd>
+<kbd is="sh">./blobby</kbd>
+Usage:
+    ./blobby -l &lt;blob-file&gt;
+    ./blobby -x &lt;blob-file&gt;
+    ./blobby [-z] -c &lt;blob-file&gt; pathnames [...]
+</pre>
+<p>
+The supplied code calls:
+</p><ul>
+<li> the function <code>list_blob()</code> to list the contents of a <i>blob</i>
+<small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_0">subset 0</a>)</small>
+</li><li> the function <code>extract_blob()</code> to extract files from a <i>blob</i>
+<small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_1">subset 1</a>)</small>
+</li><li> the function <code>create_blob()</code> to create a <i>blob</i>
+<small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_2">subset 2</a>)</small>
+</li></ul>
+<p>
+You need to add code to these functions.
+</p><p>
+You will need to add extra functions and <code>#define</code>s.
+</p><p>
+You may optionally create extra <code>.c</code> or <code>.h</code> files if you choose.
+
+</p><h2>Error Handling</h2>
+
+Error checking is an important part of this assignment and automarking will test error handling.
+<p>
+Error messages should be one line (only) and be written to <code>stderr</code> (not <code>stdout</code>).
+</p><p>
+<code>blobby.c</code> should  <code>exit</code> with status 1 after an error.
+</p><p>
+<code>blobby.c</code> should check all file operations for errors.
+</p><p>
+As much as possible match the reference implementation's error messages exactly.
+</p><p>
+The reference implementation uses <cite><a title="man 3 perror" href="http://man7.org/linux/man-pages/man3/perror.3.html">perror</a></cite> to report errors
+from file operations and other system calls.
+</p><p>
+It is not necessary to remove files and directories already created or partially created
+when an error occurs.
+</p><p>
+You may extract a file or directory from a <i>blobette</i> before
+determining if the <i>blobette</i> hash is correct.
+</p><p>
+You may <i>not</i> extract the file or directory from a <i>blobette</i> before
+determining if the <i>blobette</i> magic number is correct.<br>
+You can extract previos file or directory from a <i>blobette</i>.
+</p><p>
+Where multiple errors messages could be produced, for example,
+if two non-existent files are specified to be added to a <i>blob</i>,
+<code>blobby.c</code> may produce any one of the error messages.
+
+</p><h2>Assumptions and Clarifications</h2>
+<ul class="list-group">
+<li class="list-group-item">
+        Like all good programmers, you should make as few assumptions as possible.
+
+    </li><li class="list-group-item">
+        If in doubt, match the output of the reference implementation.
+
+    </li><li class="list-group-item">
+<code>blobby.c</code> only has to handle ordinary files and directories.<br>
+<code>blobby.c</code> does not have to handle symbolic links, devices or other special files.<br>
+<code>blobby.c</code> will not be given directories containing symbolic links, devices or other special files.<br>
+<code>blobby.c</code> does not have to handle hard links.
+
+    </li><li class="list-group-item">
+        If completing a <code>blobby</code> command would produce multiple errors,
+        you may produce any of the errors and stop.<br>
+        You do not have to prooduce the particular error that the reference implementation does.
+
+    </li><li class="list-group-item">
+        If a blobette pathname contains a directory then a blobette for the directory
+        will appear in the blob beforehand.
+        <p>
+        For example, if there is a blobette for the pathname <b>a/b/file.txt</b> then
+        there will be preceding blobettes for the directories <b>a</b> and <b>a/b</b>,
+        </p><p>
+        You may also assume the blobbete for the directory, specifies the directory is writeable.
+
+    </p></li><li class="list-group-item">
+        When adding an entire directory <small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_3">subset 3</a>)</small> to a <i>blob</i> you may add
+        the directory contents in any order to the <i>blob</i>,
+        after the directory <i>blobette</i>.<br>
+        Your do not have to match the order the reference implementation uses.
+
+    </li><li class="list-group-item">
+        When a <code>blobby</code> command specifies adding files with common sub-directory.<br>
+        You may add a <i>blobette</i> for the sub-directory multiple times. For example give this command:
+        <p>
+</p><pre is="tty"><kbd is="sh">./blobby -c a.blob b/file1 b/file2</kbd>
+</pre>
+<p>
+        You may add two (duplicate) blobettes for <code>b</code>.
+
+    </p></li><li class="list-group-item">
+        You can assume the pathname of a blob being created with <b>-c</b>,
+        will not also be added to the blob, and will not be in a directory being added
+        to the blob
+
+    </li><li class="list-group-item">
+        You may call functions from any C library available by default on CSE Linux systems:<br>
+        including <abbr>e.g.</abbr> <code>stdio.h</code>, <code>stdlib.h</code>, <code>string.h</code>, <code>math.h</code>, <code>assert.h</code>).
+
+    </li><li class="list-group-item">
+        You may not use functions from other libraries;
+        in other words, you cannot use dcc's <code>-l</code> flag.
+
+    </li><li class="list-group-item">
+        You must submit C code only.
+        You may not submit code in any other language.
+
+    </li><li class="list-group-item">
+        You may not use <cite><a title="man 3 system" href="http://man7.org/linux/man-pages/man3/system.3.html">system</a></cite>, <cite><a title="man 3 popen" href="http://man7.org/linux/man-pages/man3/popen.3.html">popen</a></cite>, <cite><a title="man 2 fork" href="http://man7.org/linux/man-pages/man2/fork.2.html">fork</a></cite>, <cite><a title="man 2 execve" href="http://man7.org/linux/man-pages/man2/execve.2.html">execve</a></cite>, <cite><a title="man 3 posix_spawn" href="http://man7.org/linux/man-pages/man3/posix_spawn.3.html">posix_spawn</a></cite>,
+        or any other C functions to run external programs.
+        <p>
+        The only exception is that you are permitted to use <cite><a title="man 3 posix_spawn" href="http://man7.org/linux/man-pages/man3/posix_spawn.3.html">posix_spawn</a></cite> or <cite><a title="man 3 posix_spawnp" href="http://man7.org/linux/man-pages/man3/posix_spawnp.3.html">posix_spawnp</a></cite> to run <cite><a title="man 1 xz" href="https://manpages.debian.org/jump?q=xz.1">xz</a></cite> <small>(<a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/assignments/ass2/index.html#Subset_4">subset 4</a>)</small>.
+
+    </p></li><li class="list-group-item">
+        If you need clarification on what you can and cannot use or do for this assignment:<br>
+        ask in the class forum.
+
+    </li><li class="list-group-item">
+        You are not permitted to create or use temporary files.
+
+    </li><li class="list-group-item">
+        You are required to submit intermediate versions of your assignment:<br>
+        See below for details.
+
+    </li><li class="list-group-item">
+        Your program must not require extra compile options.<br>
+        It must compile with:
+<pre is="tty"><kbd is="sh">dcc *.c -o blobby</kbd>
+</pre>
+        It will be run with <code>dcc</code> when marking.<br>
+        Run-time errors from illegal C will cause your code to fail automarking.
+
+    </li><li class="list-group-item">
+        If your program writes out debugging output, it will fail automarking tests:<br>
+        make sure you disable debugging output before submission.
+</li><br><p></p><p></p><p></p><p></p><p></p></ul>
+<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+
+
+
+
+
+
+
+
+<section class="exercise ">
+    <header><h3>Assessment</h3></header>
+    
+
+
+
+<h2>Testing</h2>
+<p>
+When you think your program is working,
+you can use <code>autotest</code>
+to run some simple automated tests:
+</p><p>
+
+</p><pre is="tty"><kbd is="sh">1521 autotest blobby blobby.c <var>[any other .c or .h files]</var></kbd>
+</pre>
+
+
+<p>
+If you only want to run a subset of the tests avaible with autotest.<br>
+You can specify a filter:
+</p><p>
+
+</p><pre is="tty"><kbd is="sh">1521 autotest blobby subset<var>?</var> blobby.c <var>[any other .c or .h files]</var></kbd>
+</pre>
+
+
+<p>
+<code>1521 autotest</code> will not test everything.<br>
+Always do your own testing.
+</p><p>
+Automarking will be run by the lecturer after the submission deadline,
+using a superset of tests to those <code>autotest</code> runs for you.
+
+</p><aside class="warning">
+    The errors from <code>1521 autotest</code> will become less and less useful
+    as you continue into later subsets.
+    <p>
+    Our ability to show what error has occured becomes substantually harder
+    than our ability to detect errors in subsets 3 and 4.
+    </p><p>
+    Thus, <code>1521 autotest</code> may show a failed test
+    and not give the best explanation as to why the test has failed in later subsets.
+</p></aside>
+
+
+
+<h3>Submission</h3>
+<p>
+When you are finished working on the assignment,
+you must submit your work by running <code>give</code>:
+
+
+</p><pre is="tty"><kbd is="sh">give cs1521 ass2_blobby blobby.c <var>[other .c or .h files]</var> </kbd>
+</pre>
+
+
+<p>
+You must run <code>give</code> before <strong>Sunday       November 22 21:00 2020</strong>
+to obtain the marks for this assignment.
+Note that this is an individual exercise,
+the work you submit with <code>give</code> must be entirely your own.
+
+</p><p>
+You can run <code>give</code> multiple times.<br>
+Only your last submission will be marked.
+
+</p><p>
+If you are working at home, you may find it more convenient
+to upload your work via
+<a href="https://cgi.cse.unsw.edu.au/~give/Student/give.php">give's web interface</a>.
+
+</p><p>
+You <em>cannot</em> obtain marks by e-mailing your code to tutors or lecturers.
+
+</p><p>
+You can check your latest submission on CSE servers with:
+</p><pre is="tty"><kbd is="sh">COMP1521 classrun -check ass2_blobby</kbd>
+</pre>
+
+<p>
+You can check the files you have submitted <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/student/">here</a>.
+
+</p><p>
+Manual marking will be done by your tutor,
+who will mark for style and readability,
+as described in the <strong>Assessment</strong> section below.
+After your tutor has assessed your work,
+you can <a href="https://cgi.cse.unsw.edu.au/~cs1521/20T3/student/">view your results here</a>;
+The resulting mark will also be available
+<a href="https://cgi.cse.unsw.edu.au/~give/Student/sturec.php">via give's web interface</a>.
+
+
+
+
+</p><h3>Due Date</h3>
+<p>
+This assignment is tentatively due <strong>Sunday       November 22 21:00 2020</strong>.
+</p><p>
+If your assignment is submitted after this date,
+each hour it is late
+reduces the maximum mark it can achieve by 2%.
+For example,
+if an assignment worth 74% was submitted 10 hours late,
+the late submission would have no effect.
+If the same assignment was submitted 15 hours late,
+it would be awarded 70%,
+the maximum mark it can achieve at that time.
+
+
+
+</p><h2>Assessment Scheme</h2>
+<p>
+This assignment will contribute <b><em>15 marks</em></b> to your final COMP1521 mark.
+</p><p>
+<b><em>80%</em></b> of the marks for assignment 2 will come
+from the performance of your code on a large series of tests.
+</p><p>
+<b><em>20%</em></b> of the marks for assignment 2 will come from hand marking.<br>
+These marks will be awarded on the basis of clarity, commenting, elegance and style.<br>
+In other words, you will be assessed on how easy it is for a human to read and understand your program.
+</p><p>
+An indicative assessment scheme follows.<br>
+The lecturer may vary the assessment scheme after inspecting the assignment submissions,<br>
+but it is likely to be broadly similar to the following:
+
+
+</p><table class="table table-sm w-75 mx-auto">
+<tbody>
+<tr><th scope="row">HD (95+%)
+    </th><td>beautiful documented code,<br>
+        perfectly readable code,<br>
+        all subsets (0-4) working for all blobs.
+</td></tr><tr><th scope="row">HD (85+%)
+    </th><td>well documented code,<br>
+        very readable code,<br>
+        subsets 0-3 working for all blobs.
+</td></tr><tr><th scope="row">DN (75+%)
+    </th><td>some documentation in code,<br>
+        readable code,<br>
+        subsets 0-2 working for all blobs.
+</td></tr><tr><th scope="row">CR (65%)
+    </th><td>some documentation in code,<br>
+        readable code,<br>
+        subset 0-1 working for all blobs.
+</td></tr><tr><th scope="row">PS (60%)
+    </th><td>subset 0 working for all blobs.
+</td></tr><tr><th scope="row">0%
+    </th><td>knowingly providing your work to anyone;<br>
+        and it is subsequently submitted (by anyone).
+</td></tr><tr><th scope="row">0 FL<br> for COMP1521
+    </th><td>submitting any other person's work;<br>
+        this includes joint work.
+</td></tr><tr><th scope="row">academic<br> misconduct
+    </th><td>submitting another person's work without their consent;<br>
+        paying another person to do work for you.
+</td></tr></tbody>
+</table>
+
+
+
+
+<h3>Intermediate Versions of Work</h3>
+<p>
+You are required to submit intermediate versions of your assignment.
+</p><p>
+Every time you work on the assignment
+and make some progress
+you should copy your work to your CSE account
+and submit it using the <code>give</code> command below.
+It is fine if intermediate versions do not compile
+or otherwise fail submission tests.
+Only the final submitted version of your assignment will be marked.
+</p><p>
+All these intermediate versions of your work
+will be placed in a Git repository
+and made available to you via a web interface
+at <code>https://gitlab.cse.unsw.edu.au/<var>z5555555</var>/20T3-comp1521-ass2_blobby</code>
+(replacing <i>z5555555</i> with your own zID).
+This will allow you to retrieve earlier versions of your code if needed.
+
+
+
+</p><h3>Attribution of Work</h3>
+
+<p>
+This is an individual assignment.
+
+</p><p>
+The work you submit must be entirely your own work,
+apart from any exceptions explicitly included
+in the assignment specification above.
+Submission of work partially or completely derived from any other person
+or jointly written with any other person is not permitted.
+
+</p><p>
+You are only permitted to request help with the assignment
+in the course forum, help sessions,
+or from the teaching staff (the lecturer(s) and tutors) of COMP1521.
+
+</p><p>
+Do not provide or show your assignment work to any other person
+(including by posting it on the forum),
+apart from the teaching staff of COMP1521.
+If you knowingly provide or show your assignment work
+to another person for any reason,
+and work derived from it is submitted,
+you may be penalized,
+even if that work was submitted
+without your knowledge or consent;
+this may apply even if your work is submitted by
+a third party unknown to you.
+You will not be penalized
+if your work is taken
+without your consent or knowledge.
+</p><p>
+Do not place your assignment work in online repositories such as github
+or any where else that is publically accessible.
+You may use a private repository.
+</p><p>
+Submissions that violate these conditions will be penalised.
+Penalties may include negative marks,
+automatic failure of the course,
+and possibly other academic discipline.
+We are also required to report
+acts of plagiarism or other student misconduct:
+if students involved hold scholarships,
+this may result in a loss of the scholarship.
+This may also result in the loss of a student visa.
+
+</p><p>
+Assignment submissions will be examined,
+both automatically and manually,
+for such submissions.
+
+
+
+    </p></section>  
+
+
+<h2>Change Log</h2>
+<dl class="row">
+<dt class="col-3">
+    Version 1.0<br>
+    <small>(2020-11-03 13:00:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Initial release.</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.1<br>
+    <small>(2020-11-06 11:00:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Update subset 3 autotests to ignore order of files in the blob</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.2<br>
+    <small>(2020-11-07 07:00:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Clean-up the spec html, no changes to the assignment</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.3<br>
+    <small>(2020-11-09 13:10:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Hints improved - mainly links to relevant lecture examples</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.4<br>
+    <small>(2020-11-10 15:30:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Bug in reference implementation handling of blobs with invalid content length fixed</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.4<br>
+    <small>(2020-11-12 13:30:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Clarification added that blobette for any directory in a pathnames will appear first</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.5<br>
+    <small>(2020-11-15 15:30:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Clarification added, that a blob will not be added to itself.</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.6<br>
+    <small>(2020-11-17 11:30:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Clarification added, that directories in blobettes will specify they are writeable, if a file has to be added to the directory.</li>
+    </ul>
+  </dd><dt class="col-3">
+    Version 1.7<br>
+    <small>(2020-11-21 17:30:00)</small>
+  </dt>
+  <dd class="col-9">
+    <ul>
+      <li>Correctly show relative paths in the descriptions of autotests. The commands used by the autotests remain unchanged.</li><li>1521 blobby will behave better in the (non-assessable) scenario that the destination blob file anme is attempted to be added into the blob.</li>
+    </ul>
+  </dd>
+</dl>
+
+
+
+
+</main>
+
+<footer class="mt-3 pt-3 bg-dark text-center no-print">
+<p class="text-muted">
+<strong>COMP1521 20T3: Computer Systems Fundamentals</strong>
+is brought to you by <br>
+the <a href="https://www.cse.unsw.edu.au/">School of Computer Science and Engineering</a><br>
+at the <a href="https://www.unsw.edu.au/">University of New South Wales</a>, Sydney.<br>
+For all enquiries, please email the class account at
+<a href="mailto:@cse.unsw.edu.au">cs1521@cse.unsw.edu.au</a><br>
+
+<small>CRICOS Provider 00098G</small>
+</p>
+
+
+</footer>
+
+
+</body></html>
